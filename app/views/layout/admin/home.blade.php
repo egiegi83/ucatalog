@@ -45,20 +45,23 @@
 				    <p>{{ Form::label('Data Di Nascita') }}</p>
 				    {{ $errors->first('data') }}
 				    <p>
-				
 				    {{ Form::text('data_giorno', Input::old('data_giorno'), array('placeholder' => 'giorno dd')) }}
 				    {{ Form::text('data_mese', Input::old('data_mese'), array('placeholder' => 'mese mm')) }}
 				    {{ Form::text('data_anno', Input::old('data_anno'), array('placeholder' => 'anno yyyy')) }}
 				    </p>
-				    
-				    <p>{{ Form::label('Seleziona Grado') }}</p>
-				    <p> <?php if (Session::has('gradeError')) echo Session::get('gradeError'); ?> </p>
-				    <p>{{ Form::checkbox('amministratore', true) }} {{ Form::label('Amministratore') }} </p>
-				    <p>{{ Form::checkbox('responsabilevqr', true) }} {{ Form::label('ResponsabileVQR') }}  </p>
-				    <p>{{ Form::checkbox('ricercatore', true, true, array('id'=>'cb_ricercatore')) }} {{ Form::label('Ricercatore') }}  </p>
-				   <div id="div_ratio">
-						<p>{{ Form::radio('grado',1) }} {{ Form::label('Direttore di Dipartimento - solo se ricercatore') }} </p>
-						<p>{{ Form::radio('grado',2) }} {{ Form::label('Responsabile area Scientifica - solo se ricercatore') }} </p>
+					<p>{{ Form::label('Seleziona tipo') }}</p>
+						{{ Form::select('seleziona_tipo', array(
+						'' => 'Seleziona tipo', 
+						'1' => 'Ricercatore', 
+						'2' => 'Direttore di Dipartimento',
+						'3' => 'Responsabile Area Scientifica',
+						'4' => 'Responsabile VQR',
+					)) }}
+					@if($errors->first('seleziona_tipo'))
+						<label>{{ $errors->first('seleziona_tipo') }}</label>
+					@endif
+						
+						
 				    </div>
 				   
 				    
