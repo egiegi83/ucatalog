@@ -45,9 +45,9 @@
 				    <p>{{ Form::label('Data Di Nascita') }}</p>
 				    {{ $errors->first('data') }}
 				    <p>
-				    {{ Form::text('data_giorno', Input::old('data_giorno'), array('placeholder' => 'giorno dd')) }}
-				    {{ Form::text('data_mese', Input::old('data_mese'), array('placeholder' => 'mese mm')) }}
-				    {{ Form::text('data_anno', Input::old('data_anno'), array('placeholder' => 'anno yyyy')) }}
+					{{ Form::selectRange('data_giorno',1,31) }} /
+					{{ Form::selectMonth('data_mese') }} /
+					{{ Form::selectRange('data_anno', 1990, date('Y') ) }}
 				    </p>
 					<p>{{ Form::label('Seleziona tipo') }}</p>
 						{{ Form::select('seleziona_tipo', array(
