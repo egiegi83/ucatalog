@@ -28,101 +28,116 @@ class AccountController extends BaseController {
 	 * @return boolean
 	 */
 	public function postAggiungiAccount (){
+		//Regole di controllo input
 		$rules = array(
 			'email'    => 'required|email',
 			'password' => 'required|min:4|max:20',
 			'password_confirmation' => 'required|same:password',
-			'nome' => 'required|min:3',
-			'cognome' => 'required|min:3',
+			'nome' => 'required|min:2',
+			'cognome' => 'required|min:2',
 			'data_giorno' => 'required',
 			'data_mese' => 'required',
 			'data_anno' => 'required',
-			'amministratore' => '',
-			'responsabilevqr' => '',
-			'ricercatore' => '',
-			'grado' => ''
+			'seleziona_tipo' => 'required',
 		);
 		
 		//Prelevo tutti i dati dalle Input
-		$email = Input::get('email');
-		$password = Input::get('password');
-		$password2 = Input::get('password_confirmation');
-		$nome = Input::get('nome');
-		$cognome = Input::get('cognome');
-		$data_giorno = Input::get('data_giorno');
-		$data_mese = Input::get('data_mese');
-		$data_anno = Input::get('data_anno');
-		$amministratore = Input::get('amministratore');
-		$responsabilevqr = Input::get('responsabilevqr');
-		$ricercatore = Input::get('ricercatore');
-		$grado = Input::get('grado');
+		$dati=Input::all();
 		
 		//faccio il controllo con il Validator
-		$validator = Validator::make(Input::all(), $rules);
+		$validator = Validator::make($dati, $rules);
 		if($validator->fails()){
 			return Redirect::to('admin')
 				->withErrors($validator)	
 				->withInput(Input::all());
 		}
-				
-		if(($amministratore == true) && ($ricercatore == true || $responsabilevqr == true)) //controllo grado 1
-			return Redirect::to('admin')
-				->with('gradeError', 'non può essere contemporaneamente Amministratore e (Ricercatore o ResponsabileVQR)')
-				->withInput(Input::except('amministratore','responsabilevqr','ricercatore','grado'));
-				
-		if($amministratore == false && $ricercatore == false && $responsabilevqr == false) //controllo grado 2
-			return Redirect::to('admin')
-				->with('gradeError', 'L\'utente deve avere una specializzazione')
-				->withInput(Input::except('amministratore','responsabilevqr','ricercatore','grado'));
-		
-		if($ricercatore == false && $grado > 0)//controllo grado 3
-			return Redirect::to('admin')
-				->with('gradeError', 'non può essere Specializzato senza essere un ricercatore')
-				->withInput(Input::except('grado'));
-		
-		
-		if(!isset($amministratore)) $amministratore = false;
 		
 		//tutti i test passati, creiamo l'utente.
 
 
-		//controllo grado e dataDiNascita
-		$dataDiNascita = $data_giorno.'/'.$data_mese.'/'.$data_anno;
-		if($amministratore == true){
-			$gradoToString = 'Amministratore';
-			
-		} else {
-			if($responsabilevqr == true){ 
-				$gradoToString = 'ResponsabileVQR'; //ResponsabileVQR
-				
-				//deve esistere il model ResponsabileVQR
-			}
-			if($ricercatore == true){
-				 $gradoToString = (isset($gradoToString)) ? $gradoToString.', Ricercatore' : 'Ricercatore'; //Ricercatore
-				 
-			}
-			if(isset($grado))
-			switch($grado){ //Ricercatore + (DirettoreDipartimento | ResponsabileAreaScientifica)
-				case 1: $gradoToString = $gradoToString.' -> DirettoreDipartimento'; //DirettoreDipartimento
-						
-						//deve esistere il model Dipartimento e DirettoreDipartimento
-						break;
-				case 2:	$gradoToString = $gradoToString.' -> ResponsabileAreaScientifica'; //ResponsabileAreaScientifica
-						
-						//deve esistere il model AreaScientifica e ResponsabileAreaScientifica
-						break;
-			}
-		}
-		
+		//controllo dataDiNascita
+		$dataDiNascita = $dati['data_giorno'].'/'.$dati['data_mese'].'/'.$dati['data_anno'];
+
 		//creiamo l'oggetto objDataDiNascita per il database
 		$objDataDiNascita = new DateTime();
-		$objDataDiNascita->setDate(intval($data_anno), intval($data_mese), intval($data_giorno));
+		$objDataDiNascita->setDate(intval($dati['data_anno']), intval($dati['data_mese']), intval($dati['data_giorno']));
+		
 		
 		//creiamo l'utente
 		$myUser = new User();
-		$myUser->setAll($email, $password, $nome, $cognome, $objDataDiNascita, $amministratore);//settiamo i campi utente
-		$myUser->save(); //salviamo l'utente
+		$myUser->setEmail($dati['email']);
+		$myUser->setPassword($dati['password']);
+		$myUser->setNome($dati['nome']);
+		$myUser->setCognome($dati['cognome']);
+		$myUser->setData($objDataDiNascita);
+		$myUser->setTipo($dati[seleziona_tipo]
 		
+		if($dati['seleziona_tipo']=='4'){  //se responsabileVQR
+			//crea utente e ResponsabileVQR e salva nel db
+			$myUser->save();
+			$responsabile=new ResponsabileVQR();
+			$myUser->responsabileVQR()->save($responsabile);
+		}else{ 
+		//se non è ResponsabileVQR
+		//controllo su ruolo e diparimento
+			$rules = array(
+				'ruolo'    => 'required',
+				'dipartimento' => 'required',
+			);
+			$datiRic=Input::only('ruolo','dipartimento');
+			$validator = Validator::make($datiRic, $rules);
+			if($validator->fails()){
+				return Redirect::to('admin')
+					->withErrors($validator)	
+					->withInput(Input::all());
+			}
+			
+			switch ($dati['seleziona_tipo']) {
+				case '1':			//se Ricercatore
+					//crea Ricercatore e salva nel db
+					$ricercatore=new Ricercatore();
+					$ricercatore->setDipartimento($datiRic['ruolo']);
+					$ricercatore->setRuolo($datiRic['dipartimento']);
+					$myUser->save();
+					$myUser->ricercatore()->save($ricercatore); 
+					break;
+				case '2':			//se Direttore di Dipartimento
+					//crea Ricercatore e DirettoreDiDipartimento e salva nel db
+					$ricercatore=new Ricercatore();
+					$ricercatore->setDipartimento($datiRic['dipartimento']);
+					$ricercatore->setRuolo($datiRic['ruolo']);
+					$myUser->save();
+					$myUser->ricercatore()->save($ricercatore); 
+					$direttore= new DirettoreDiDipartimento();
+					$direttore->ricercatore_id=$ricercatore->id;
+					$direttore->dipartimento_id=$ricercatore->dipartimento_id;
+					$direttore->save();
+					break;
+				case '3':			//se Responsabile Area Scientifica
+					$rules = array(							//controllo su select Area Scientifica
+						'area'    => 'required',
+					);
+					$datiArea=Input::only('area');					
+					$validator = Validator::make($datiArea, $rules);
+					if($validator->fails()){
+						return Redirect::to('admin')
+							->withErrors($validator)	
+							->withInput(Input::all());
+					}
+					//cree Ricercatore e Responsabile e salva nel db
+					$ricercatore=new Ricercatore();
+					$ricercatore->setDipartimento($datiRic['dipartimento']);
+					$ricercatore->setRuolo($datiRic['ruolo']);
+					$myUser->save();
+					$myUser->ricercatore()->save($ricercatore); 
+					$responsabile= new ResponsabileAreaScientifica();
+					$responsabile->ricercatore_id=$ricercatore->id;
+					$responsabile->dipartimento_id=$ricercatore->dipartimento_id;
+					$responsabile->save();
+					break;
+			}
+		}
+				
 		return Redirect::to('createduser')
 			->with('email',$email)
 			->with('password',$password)
