@@ -22,7 +22,7 @@ class ProdottiController extends BaseController {
 	
 	public function postEliminaProdottiSelezionati(){
 		$ids=Input::get('data');
-		Auth::getUser()->ricercatore->prodottiBozza()->find($ids)->forceDelete();
+		Auth::getUser()->ricercatore->prodottiBozza()->find($ids)->remove();
 	}
 	
 	public function postModifica(){

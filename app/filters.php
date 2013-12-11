@@ -128,7 +128,7 @@ Route::filter('ricercatore', function()
 
 Route::filter('direttore', function()
 {
-		if (Auth::getUser()->ricercatore->tipo!=1)  return Redirect::guest('/');
+		if(Auth::getUser()->ricercatore->tipo!=1)  return Redirect::guest('/');
 });
 
 
