@@ -12,8 +12,13 @@ class AutenticazioneController extends BaseController {
 	|
 	*/
 	
+	public function __construct(){
+		$this->beforeFilter('auth',array('except' =>'postLogin'));
+		$this->beforeFilter('guest',array('only' =>'postLogin'));
+	}
+	
 	// effettua il login nel sistema
-	public function doLogin(){
+	public function postLogin(){
 		$rules = array(
 			'email'    => 'required|email', // controlla se è effettivamente una email
 			'password' => 'required|alphaNum|min:3' // la password deve essere alfanumerica e di min 3 caratteri
@@ -38,31 +43,15 @@ class AutenticazioneController extends BaseController {
 			} 
 			else{	 	
 				// il login non ha avuto successo
-				return Redirect::to('/')->with('message', Hash::make('prova'));;
+				return Redirect::to('/')->with('message', 'Errore login');
 			}
 		}
 	}
 	
 	// effettua il logout dal sistema
-	public function doLogout(){
+	public function postLogout(){
 		Auth::logout();
 		return Redirect::to('/');
-	}
-	
-	public function showProfile(){
-		
-		if( Auth::check()){
-			$utente = Auth::getUser();
-			$ricercatore = Auth::getUser()->ricercatore()->get()->first();
-			$prodotti = Prodotto::where('ricercatore_id','=',$ricercatore->id);
-			return View::make('dashboard')
-			->with('utente',$utente)
-			->with('prodotti',$prodotti->get());
-		}
-		else{
-			return Redirect::to('/');
-		}
-		
 	}
 
 	

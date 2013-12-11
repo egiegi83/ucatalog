@@ -11,14 +11,48 @@
 |
 */
 
-Route::get('/', function()
-{
-	return View::make('login');
+Route::get('/',function(){
+	return View::make('layout.home');
 });
 
-Route::post('/login', 'AutenticazioneController@doLogin');
+Route::controller('user', 'AutenticazioneController');
+Route::controller('dashboard', 'ProfiloController');
+Route::controller('prodotti', 'ProdottiController');
+Route::controller('admin', 'AccountController');
 
-Route::post('/logout', 'AutenticazioneController@doLogout');
+/*
+Route::group(array('before' => 'auth'), function(){
 
-Route::get('/dashboard', 'AutenticazioneController@showProfile');
+	
+	Route::get('/dashboard/prodotti/aggiungi','AutenticazioneController@showFormAddProdotto');
+	
+	Route::post('/dashboard/prodotti/salva','ProdottiController@addProdotto');
+	
+	//constrollo se admin
+	Route::get('/admin','AutenticazioneController@showAdminHome');
+	Route::post('/admin','UtentiController@addUser');
+});
+*/
+Route::post('/search',function(){
+	if (Request::ajax()){
+		$query = Input::get('Cerca');	
+		
+		$response = Response::json(Prodotto::where('titolo','like','%'.$query.'%')->get()->toArray());
+		
+		$response->header('Content-Type', 'application/json');
+		return $response;
+	}
+});
+
+Route::post('/autori/tag',function(){
+	if (Request::ajax()){
+		$query = Input::get('q');	
+		if(strlen(trim($query))>0){
+			$response = Response::json(User::where('nome','like','%'.$query.'%')->get()->toArray());
+			$response->header('Content-Type', 'application/json');
+			return $response;
+		}
+		return;
+	}
+});
 

@@ -35,7 +35,8 @@ App::after(function($request, $response)
 
 Route::filter('auth', function()
 {
-	if (Auth::guest()) return Redirect::guest('login');
+	//if (Auth::guest()) return Redirect::guest('login');
+	if (Auth::guest()) return Redirect::to('/');
 });
 
 
@@ -60,6 +61,8 @@ Route::filter('guest', function()
 	if (Auth::check()) return Redirect::to('/');
 });
 
+
+
 /*
 |--------------------------------------------------------------------------
 | CSRF Protection Filter
@@ -77,4 +80,83 @@ Route::filter('csrf', function()
 	{
 		throw new Illuminate\Session\TokenMismatchException;
 	}
+});
+
+
+
+
+
+/*
+|--------------------------------------------------------------------------
+| admin Filter
+|--------------------------------------------------------------------------
+|
+| The "guest" filter checks that the current user is "Amministratore". 
+|
+*/
+
+Route::filter('admin', function()
+{
+	if (!Auth::getUser()->is_amministratore) 
+		return Redirect::guest('/');
+});
+
+/*
+|--------------------------------------------------------------------------
+| ricercatore Filter
+|--------------------------------------------------------------------------
+|
+| The "guest" filter checks that the current user is "Ricercatore". 
+|
+*/
+
+Route::filter('ricercatore', function()
+{
+	if (Auth::getUser()->ricercatore_id==NULL) 
+		return Redirect::guest('/');
+});
+
+/*
+|--------------------------------------------------------------------------
+| direttore Filter
+|--------------------------------------------------------------------------
+|
+| The "guest" filter checks that the current user is "direttore". 
+|
+*/
+
+Route::filter('direttore', function()
+{
+		$ricercatore = Auth::getUser()->ricercatore()->get()->first();
+		if ($ricercatore->tipo!=1)  return Redirect::guest('/');
+});
+
+
+/*
+|--------------------------------------------------------------------------
+| responsabileArea Filter
+|--------------------------------------------------------------------------
+|
+| The "guest" filter checks that the current user is "Responsabile Area Scientifica". 
+|
+*/
+
+Route::filter('responsabileArea', function()
+{
+	$ricercatore = Auth::getUser()->ricercatore()->get()->first();
+	if ($ricercatore->tipo!=2) return Redirect::guest('/');
+});
+
+/*
+|--------------------------------------------------------------------------
+| responsabileVQR Filter
+|--------------------------------------------------------------------------
+|
+| The "guest" filter checks that the current user is "Responsabile VQR". 
+|
+*/
+
+Route::filter('responsabileVQR', function()
+{
+	if (Auth::getUser()->responsabileVQR_id!=NULL) return Redirect::guest('/');
 });
