@@ -8,7 +8,6 @@
 		</ul>
 	</nav>
 	<div>
-<<<<<<< HEAD
 		@foreach ($prodotti as $p) 
 			<article class="prodotto trall @if(Session::has('newid') && $p->id == Session::get('newid')) {{ 'newid' }} @endif" data-id="{{ $p->id }}" @if(!$p->is_definitivo) {{ 'selectable' }} @endif>
 				<header>
@@ -24,17 +23,6 @@
 						<span class="icon lock" title="Prodotto definitivo"></span>
 					@endif
 					
-=======
-		@foreach ($prodotti as $p)
-			<article class="prodotto trall" data-id="{{ $p->id }}">
-				<header>
-					<hgroup>
-						<h1>{{ $p->titolo }}</h1>
-						<h2><a href="#">{{ $p->tipo }}</a></h2>
-					</hgroup>
-					<span class="icon edit" title="Modifica" data-id="{{ $p->id }}"></span>
-					<span class="icon remove" title="Elimina" data-id="{{ $p->id }}"></span>
->>>>>>> 82660096c95a2b520f1508555c103a87ce2f5328
 				 </header>
 				 <section>
 				 	{{ $p->descrizione }}

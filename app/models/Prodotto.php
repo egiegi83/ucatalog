@@ -26,11 +26,7 @@ class Prodotto extends Eloquent {
 	 */	
 	public function ricercatore() {
 		
-<<<<<<< HEAD
 		return $this->hasOne('Ricercatore', 'id');
-=======
-		return $this->hasOne('Ricercatore', 'ricercatore_id');
->>>>>>> 82660096c95a2b520f1508555c103a87ce2f5328
 		
 	}
 	
@@ -40,11 +36,7 @@ class Prodotto extends Eloquent {
 	 */
 	public function dipartimento() {
 		
-<<<<<<< HEAD
 		return $this->hasOne('Dipartimento', 'id');
-=======
-		return $this->hasOne('Dipartimento', 'dipartimento_id');
->>>>>>> 82660096c95a2b520f1508555c103a87ce2f5328
 		
 	}
 	
@@ -54,11 +46,7 @@ class Prodotto extends Eloquent {
 	 */
 	public function areaScientifica() {
 		
-<<<<<<< HEAD
 		return $this->hasOne('AreaScientifica','id');
-=======
-		return $this->hasOne('AreaScientifica','area_scientifica_id');
->>>>>>> 82660096c95a2b520f1508555c103a87ce2f5328
 	
 	}
 	
