@@ -1,0 +1,10 @@
+ <!DOCTYPE HTML>
+<html>
+<body>
+
+ <div id='content'>
+  This is our model data: {{ $data }}!
+ </div>
+
+</body>
+</html> 

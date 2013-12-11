@@ -1,0 +1,19 @@
+@extends('master')
+@section('login')
+	 {{ $utente->nome . " " . $utente->cognome}}
+@stop
+
+@section('section')
+	Lista di prodotti 
+	</br> 
+	@foreach ($prodotti as $prodotto)
+		<p> 
+			</br>
+			{{ $prodotto->titolo }}
+		</p>
+	@endforeach
+	<p>
+	<p>{{ Form::open(array('action' => 'AutenticazioneController@doLogout')) }}</p>
+		<p>{{ Form::submit('log out') }}</p>
+	<p>{{ Form::close() }}</p>
+@stop

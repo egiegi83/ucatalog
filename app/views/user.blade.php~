@@ -1,0 +1,27 @@
+@extends('layout')
+
+@section('css')
+    <style>
+    	#login{
+    		background: red;
+    		width:200px;
+    		height:200px;
+    		position:absolute;
+    		top:50%;
+    		left:50%;
+    		margin:-100px;
+    	}
+    </style>
+@stop
+
+@section('js')
+    <script>
+    
+    </script>
+@stop
+
+@section('content')
+	<div id="login">
+		ciao
+	</div>
+@stop

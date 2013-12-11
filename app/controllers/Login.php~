@@ -1,0 +1,28 @@
+<?php
+class Login extends BaseController{
+	/**
+	 * Login
+	 *
+	 * @return void
+	 */
+	 
+	 protected function getLogin(){
+	 	return Session::has('logged') ? View::make('home') : View::make('login');
+	 }
+	 
+	 protected function doLogin(){
+		if(Auth::attempt($userdata)){
+			// il login ha avuto successo
+			return Redirect::to('dashboard');
+		} 
+		else{	 	
+			// il login non ha avuto successo
+			return Redirect::to('/')->with('message', 'Login Failed');;
+		}
+	 }
+	 
+ 	 protected function doLogout(){
+	 	Session::forget('logged');
+	 	return Redirect::to('/');
+	 }
+}

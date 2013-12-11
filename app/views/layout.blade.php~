@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title></title>
+		<!--<link rel="stylesheet" type="text/css" href="css/layout.css" />-->
+		<style>
+			*{ margin:0; padding:0; }
+			body{
+				background:#eee;
+			}
+		</style>
+		@yield('css')
+		<script type="text/javascript">
+		
+		</script>
+	    @yield('js')
+	</head>
+    <body>
+        <header>
+        	<h1>uCatalog</h1>
+        </heade>
+        
+        <section>
+		    @yield('content')
+        </section>
+    </body>
+</html>

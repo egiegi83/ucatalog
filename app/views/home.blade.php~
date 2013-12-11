@@ -1,0 +1,25 @@
+@extends('layout')
+
+@section('css')
+    <style>
+    	#login{
+    		background: #4d4;
+    		width:200px;
+    		height:200px;
+    		position:absolute;
+    		top:50%;
+    		left:50%;
+    		margin:-100px;
+    	}
+    </style>
+@stop
+
+@section('content')
+	<div id="login">
+		You are logged
+		
+		{{ Form::open(array('action' => 'Login@doLogout','method' => 'post')) }}
+			{{ Form::submit('logout') }}
+		{{ Form::close() }}
+	</div>
+@stop
