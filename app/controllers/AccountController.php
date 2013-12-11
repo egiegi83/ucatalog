@@ -109,7 +109,7 @@ class AccountController extends BaseController {
 					$myUser->save();
 					$myUser->ricercatore()->save($ricercatore); 
 					$direttore= new DirettoreDiDipartimento();
-					$direttore->dipartimento_id=$ricercatore->dipartimento_id;
+					$direttore->setDipartimento($ricercatore->dipartimento_id);
 					$ricercatore->direttore()->save($direttore);
 					break;
 				case '3':			//se Responsabile Area Scientifica
@@ -130,7 +130,7 @@ class AccountController extends BaseController {
 					$myUser->save();
 					$myUser->ricercatore()->save($ricercatore); 
 					$responsabile= new ResponsabileAreaScientifica();
-					$responsabile->area_scientifica_id=$datiArea['area'];
+					$responsabile->setArea($datiArea['area']);
 					$ricercatore->responsabile()->save($responsabile);
 					break;
 			}
