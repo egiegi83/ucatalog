@@ -19,11 +19,6 @@ class AreaScientifica extends Eloquent {
 	
 	public $timestamps = false;
 	
-	
-	public function prodotti() {
-		return $this->hasMany('Prodotto', 'area_scientifica_id');
-	}
-	
 	/**
 	 * Restituisce l'ID.
 	 * @return integer

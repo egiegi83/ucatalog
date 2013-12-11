@@ -13,15 +13,13 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
 	|	del database dove sono memorizzati tutti gli utenti del sistema.
 	|
 	*/
-	
-	
+
+
 	/**
 	 * La tabella del database usata dal modello
 	 * @var string
 	 */
 	protected $table = 'utenti';
-
-	public $timestamps = false;
 
 	/**
 	 * The attributes excluded from the model's JSON form.
@@ -66,6 +64,80 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
 	public function getReminderEmail()
 	{
 		return $this->email;
+	}
+	
+	/**
+	* Restituisce il nome.
+	* @return string
+	*/
+	public function getNome(){
+		return $this->nome;
+	}
+	
+	/**
+	* Restituisce il cognome.
+	* @return string
+	*/
+	public function getCognome(){
+		return $this->cognome;
+	}
+	
+	/**
+	* Restituisce la data di nascita.
+	* @return string
+	*/
+	public function getDatadiNascita(){
+		return $this->data_di_nascita;
+	}
+	
+	/**
+	* Restituisce vero se è amministratore, altrimenti falso.
+	* @return string
+	*/
+	public function getIsAmministratore(){
+		return $this->is_amministratore;
+	}
+	
+	/**
+	 * Modifica la password.
+	 * @return string
+	 */
+	public function setPassword($password)
+	{
+		$this->password=Hash::make($password);
+	}
+	
+	/**
+	 * Modifica l'email.
+	 * @return string
+	 */
+	public function setEmail($email)
+	{
+		$this->email=$email;
+	}
+	
+	/**
+	* Modifica il nome.
+	* @return string
+	*/
+	public function setNome($nome){
+		$this->nome=$nome;
+	}
+	
+	/**
+	* Modifica il cognome.
+	* @return string
+	*/
+	public function setCognome($cognome){
+		$this->cognome=$cognome;
+	}
+	
+	/**
+	* Modifica la data di nascita.
+	* @return string
+	*/
+	public function setData($data){
+		$this->data_di_nascita=$data;
 	}
 
 }

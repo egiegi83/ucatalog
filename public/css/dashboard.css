@@ -60,9 +60,8 @@ article.prodotto{
 	max-width:260px;
 	font-size:14px;
 	margin:4px;
-	cursor:not-allowed;
 }
-article.prodotto:hover{ border-color:#c5c5c5;  }
+article.prodotto:hover{ border-color:#c5c5c5; cursor:pointer; }
 article.prodotto.selected{border-color:#009645; box-shadow:0 0 10px #009645;}
 article.prodotto>*{ padding:5px 10px; }
 article.prodotto .icon{ width:14px; height:14px; background-size:contain; display:inline-block; margin-right:5px; }
@@ -74,8 +73,6 @@ article.prodotto header>.icon{ position:absolute; top:6px; right:2px; }
 article.prodotto header>.icon+.icon{ right:20px;}
 article.prodotto header h1{ line-height:22px; font-size:16px;}
 article.prodotto header h2{ line-height: 18px; font-size:14px; font-weight:normal;}
-article.prodotto header h3{ line-height: 18px; font-size:12px; font-weight:normal; }
-article.prodotto header h3 a{ color:#888; font-style:italic; }
 article.prodotto section{
 	border-top:1px solid #ddd;
 	display:block;
@@ -87,18 +84,6 @@ article.prodotto footer{
 }
 article.prodotto footer span{ display:block; }
 
-article.prodotto.newid{ 
-	animation: shownewp .5s 1s ease-out both;
-	-webkit-animation: shownewp .5s 1s ease-out both;
-	-moz-animation: shownewp .5s 1s ease-out both;
-	-o-animation: shownewp .5s 1s ease-out both;
-	-ms-animation: shownewp .5s 1s ease-out both;
-}
-@keyframes shownewp{ from{opacity:0; left:-100px; top:-100px;} to{opacity:1; left:0; top:0;}}
-@-webkit-keyframes shownewp{ from{opacity:0; left:-100px; top:-100px;} to{opacity:1; left:0; top:0;}}
-@-moz-keyframes shownewp{ from{opacity:0; left:-100px; top:-100px;} to{opacity:1; left:0; top:0;}}
-@-o-keyframes shownewp{ from{opacity:0; left:-100px; top:-100px;} to{opacity:1; left:0; top:0;}}
-@-ms-keyframes shownewp{ from{opacity:0; left:-100px; top:-100px;} to{opacity:1; left:0; top:0;}}
 
 /*
 	*
@@ -129,24 +114,20 @@ form span>label:before{
 }
 
 form>div.autori{ display:block; clear:both;  }
-form>.hiddeni{
+form>div.trop{  
+	height:0px; width:0; overflow:hidden; opacity:0; margin:0; 
+	border:0px solid #c5c5c5; 
 	background:#ddd;
-	border:0px solid #c5c5c5;
-	overflow:hidden; padding:0px;
-	height:0px; width:0px;
-	margin-top:-1px;
+	display:block; clear:both;
 }
-form>.hiddeni.open{ border-width:1px; padding:3px 0; overflow:auto; height:auto; width:616px; }
-
-form>.hiddeni>span{  display:none; }
-form>.hiddeni>span.open{  display:inline-block;  margin:3px 7px; }
-
+form>div.trop.open{ padding:5px 0; height:auto; width:auto; overflow:visible; opacity:1; margin:-1px 10px 10px 10px; border-width:1px; }
 form>p{ display:block; clear:both; }
 form>p.btnc{text-align:center;}
 form>p.btnc>*{ margin: 10px; }
 
 form>p.date>input{width:80px;  margin:0 5px;}
 
+form>div.trop>*{ margin:5px 14px; display:inline-block; }
 
 form select[name=tipo]{ margin-bottom:0px; }
 form input[type=file]{ margin-top:10px; }

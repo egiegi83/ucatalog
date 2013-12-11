@@ -17,6 +17,8 @@ class Ricercatore extends Eloquent{
 	 */
 	protected $table = 'ricercatori';
 	
+	public $timestamps = false;
+	
 	/**
 	* La tabella non ha un campo timestamps
 	* @var boolean
@@ -29,21 +31,6 @@ class Ricercatore extends Eloquent{
 	public function prodotti()
 	{
 		return $this->hasMany('Prodotto');
-	}
-	
-	/*
-	*  Ritorna solo i prodotti bozza del ricercatore
-	*/
-	public function prodottiBozza()
-	{
-		return $this->prodotti()->where('is_definitivo','=','0');
-	}
-	/*
-	* Ritorna solo i prodotti definitivi del ricercatore
-	*/
-	public function prodottiDefinitivi()
-	{
-		return $this->prodotti()->where('is_definitivo','=','1');
 	}
 
 	/**

@@ -1,9 +1,0 @@
-<?php
-
-class DemoModel {
- 
-  static public function getData()
-  {
-    return 'Model data put me in a view please.';
-  }
-}
