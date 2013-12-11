@@ -19,6 +19,12 @@ class DirettoreDiDipartimento extends Eloquent{
 	protected $table = 'direttori_di_dipartimento';
 
 	/**
+	* La tabella non ha un campo timestamps
+	* @var boolean
+	*/
+	public $timestamps = false;
+
+	/**
 	*	Relazione: ogni direttore di dipartimento è un ricercatore.
 	*	@return mixed
 	*/
