@@ -1,4 +1,5 @@
 ucatalog = {
+<<<<<<< HEAD
 	basePath: 'ucatalog',
 	
 	url: function(s){
@@ -12,6 +13,17 @@ ucatalog = {
 		
 			return url.length==1 ? { controller: url[url.length-1]} : { controller: url[url.length-2], action: url[url.length-1] };
 		}
+=======
+	basePath: 'u_catalog',
+	
+	url: function(){
+		var 	url=document.URL,
+		bp=url.indexOf(uc.basePath);
+		url = url.substr(bp + uc.basePath.length + 1,url.length);
+		url = url.split('/');
+		
+		return url.length==1 ? { controller: url[url.length-1]} : { controller: url[url.length-2], action: url[url.length-1] };
+>>>>>>> 82660096c95a2b520f1508555c103a87ce2f5328
 	},
 	query: function(selector){
 		return document.querySelectorAll(selector);
@@ -20,11 +32,14 @@ ucatalog = {
 		matchesSelector = el.matches || el.webkitMatchesSelector || el.mozMatchesSelector || el.msMatchesSelector;
 		return matchesSelector.bind(el)(selector);
 	},
+<<<<<<< HEAD
 	each: function(els,callback){
 		for(var i=0; len=els.length, i<len; i++){
 			callback.call(els[i],i,els);
 		}
 	},
+=======
+>>>>>>> 82660096c95a2b520f1508555c103a87ce2f5328
 	addEvent: function(els,type,callback){
 		if(els.length)
 			for(var i=0;len = els.length, i < len; i++){
@@ -38,8 +53,12 @@ ucatalog = {
 				callback.call(event.target, event);
 			}
 		},false);
+<<<<<<< HEAD
 	}, 
 	post: function(url,data,complete){
+=======
+	}, post: function(url,data,complete){
+>>>>>>> 82660096c95a2b520f1508555c103a87ce2f5328
 		var xhr=new XMLHttpRequest();
 		xhr.addEventListener("load",function (evt) {
 			if(xhr.status == 200) complete.call(xhr,xhr.response,evt);

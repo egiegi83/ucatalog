@@ -61,7 +61,12 @@
 						<label>{{ $errors->first('seleziona_tipo') }}</label>
 					@endif
 						
+<<<<<<< HEAD
 						
+=======
+						<!-- se selezionato Ricercatore o Direttore Dipartimento o Responsabile Area scientifica -> Aggiungere campo Ruolo -->
+						<!-- se selezionato Ricercatore o Direttore Dipartimento o Responsabile Area scientifica -> Aggiungere select con i Dipartimenti  -->
+>>>>>>> 82660096c95a2b520f1508555c103a87ce2f5328
 				    </div>
 				   
 				    

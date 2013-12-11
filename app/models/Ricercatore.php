@@ -16,6 +16,11 @@ class Ricercatore extends Eloquent{
 	 * @var string
 	 */
 	protected $table = 'ricercatori';
+<<<<<<< HEAD
+=======
+	
+	public $timestamps = false;
+>>>>>>> 82660096c95a2b520f1508555c103a87ce2f5328
 	
 	/**
 	* La tabella non ha un campo timestamps
@@ -30,6 +35,7 @@ class Ricercatore extends Eloquent{
 	{
 		return $this->hasMany('Prodotto');
 	}
+<<<<<<< HEAD
 	
 	/*
 	*  Ritorna solo i prodotti bozza del ricercatore
@@ -45,6 +51,8 @@ class Ricercatore extends Eloquent{
 	{
 		return $this->prodotti()->where('is_definitivo','=','1');
 	}
+=======
+>>>>>>> 82660096c95a2b520f1508555c103a87ce2f5328
 
 	/**
 	*	Relazione: ogni ricercatore è un utente.
@@ -54,4 +62,8 @@ class Ricercatore extends Eloquent{
 	{
 		return $this->belongsTo('User');
 	}
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> 82660096c95a2b520f1508555c103a87ce2f5328

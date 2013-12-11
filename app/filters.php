@@ -128,7 +128,12 @@ Route::filter('ricercatore', function()
 
 Route::filter('direttore', function()
 {
+<<<<<<< HEAD
 		if (Auth::getUser()->ricercatore->tipo!=1)  return Redirect::guest('/');
+=======
+		$ricercatore = Auth::getUser()->ricercatore()->get()->first();
+		if ($ricercatore->tipo!=1)  return Redirect::guest('/');
+>>>>>>> 82660096c95a2b520f1508555c103a87ce2f5328
 });
 
 
@@ -143,7 +148,12 @@ Route::filter('direttore', function()
 
 Route::filter('responsabileArea', function()
 {
+<<<<<<< HEAD
 	if (Auth::getUser()->ricercatore->tipo!=2) return Redirect::guest('/');
+=======
+	$ricercatore = Auth::getUser()->ricercatore()->get()->first();
+	if ($ricercatore->tipo!=2) return Redirect::guest('/');
+>>>>>>> 82660096c95a2b520f1508555c103a87ce2f5328
 });
 
 /*

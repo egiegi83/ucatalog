@@ -30,7 +30,11 @@
 						@if (Auth::getUser()->is_amministratore)
 							{{ URL::to('/admin') }}
 						@else
+<<<<<<< HEAD
 							{{ URL::to('/dashboard') }}
+=======
+							{ URL::to('/dashboard') }}
+>>>>>>> 82660096c95a2b520f1508555c103a87ce2f5328
 						@endif
 						">{{ Auth::getUser()->nome . " " . Auth::getUser()->cognome}}</a>
 						

@@ -1,12 +1,21 @@
 uc.addEvent(window,'load',function(){
 	var ca=uc.url();
 	
+<<<<<<< HEAD
 	if(ca.action != 'aggiungi-prodotto') uc.query('body>section>nav a[href *= "' + ca.controller + (ca.action ? '/'+ca.action : '') + '"]')[0].parentNode.classList.add('current');
+=======
+	if(ca.action != 'aggiungi-prodotto') uc.query('body>section>nav a[href $= "' + ca.controller + (ca.action ? '/'+ca.action : '') + '"]')[0].parentNode.classList.add('current');
+>>>>>>> 82660096c95a2b520f1508555c103a87ce2f5328
 	uc.query('body>section>section')[0].classList.add('loaded');
 	
 	switch(ca.action){
 		case 'prodotti':
+<<<<<<< HEAD
 			uc.addEvent(uc.query('body>section>section article.prodotto[selectable]'),'click',function(){
+=======
+			var ips=uc.query('#ips')[0];
+			uc.addEvent(uc.query('body>section>section article.prodotto'),'click',function(){
+>>>>>>> 82660096c95a2b520f1508555c103a87ce2f5328
 				this.classList.toggle('selected');
 			});
 			
@@ -16,12 +25,17 @@ uc.addEvent(window,'load',function(){
 				for(var i=0; len=ps.length, i<len; i++){
 					tmp[i]=ps[i].dataset.id;
 				}
+<<<<<<< HEAD
 				pspe = '{"data":["' + tmp.join('","') + '"]}';
 				uc.post(uc.url('prodotti/elimina-prodotti-selezionati'),pspe,function(){
 					for(var i=0; len=ps.length, i<len; i++){
 						ps[i].classList.add('removed');
 					}
 				})
+=======
+				ips.value = '{"data":["' + tmp.join('","') + '"]}';
+				console.log(ips.value);
+>>>>>>> 82660096c95a2b520f1508555c103a87ce2f5328
 			});
 				
 			break;
@@ -31,6 +45,7 @@ uc.addEvent(window,'load',function(){
 			tb_autori=uc.query('#tb_autori')[0],
 			tbc=uc.query('#tbc')[0],
 			res=uc.query('#tag_autori')[0],
+<<<<<<< HEAD
 			ha=uc.query('#hid_autori')[0],
 			lbs=false,
 			hi=uc.query('#addProdotto div.hiddeni.trop')[0];
@@ -47,6 +62,16 @@ uc.addEvent(window,'load',function(){
 					uc.each(uc.query('#addProdotto form .hiddeni span'), function(){ this.classList.remove('open') });
 					hi.classList.remove('open');
 				}
+=======
+			ha=uc.query('#hid_autori')[0],lbs=false;
+				
+			uc.addEvent(uc.query('#addProdotto select[name=tipo]'),'change',function(e){
+				var divs=uc.query('#addProdotto form div');
+				for(var i=0; len=divs.length, i<len; i++) 
+					divs[i].classList.remove('open');
+				console.log(this.value);
+				if(this.value != 0)	uc.query('#addProdotto form div[data-type="'+ this.value +'"]')[0].classList.add('open');
+>>>>>>> 82660096c95a2b520f1508555c103a87ce2f5328
 			});
 			
 			uc.addEvent(tb_autori,'keyup',function(e){
