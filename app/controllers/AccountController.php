@@ -70,7 +70,7 @@ class AccountController extends BaseController {
 		$myUser->setNome($dati['nome']);
 		$myUser->setCognome($dati['cognome']);
 		$myUser->setData($objDataDiNascita);
-		$myUser->setTipo($dati[seleziona_tipo]
+		$myUser->setTipo($dati['seleziona_tipo']);
 		
 		if($dati['seleziona_tipo']=='4'){  //se responsabileVQR
 			//crea utente e ResponsabileVQR e salva nel db
@@ -109,9 +109,8 @@ class AccountController extends BaseController {
 					$myUser->save();
 					$myUser->ricercatore()->save($ricercatore); 
 					$direttore= new DirettoreDiDipartimento();
-					$direttore->ricercatore_id=$ricercatore->id;
 					$direttore->dipartimento_id=$ricercatore->dipartimento_id;
-					$direttore->save();
+					$ricercatore->direttore()->save($direttore);
 					break;
 				case '3':			//se Responsabile Area Scientifica
 					$rules = array(							//controllo su select Area Scientifica
@@ -131,9 +130,8 @@ class AccountController extends BaseController {
 					$myUser->save();
 					$myUser->ricercatore()->save($ricercatore); 
 					$responsabile= new ResponsabileAreaScientifica();
-					$responsabile->ricercatore_id=$ricercatore->id;
-					$responsabile->dipartimento_id=$ricercatore->dipartimento_id;
-					$responsabile->save();
+					$responsabile->area_scientifica_id=$datiArea['area'];
+					$ricercatore->responsabile()->save($responsabile);
 					break;
 			}
 		}
