@@ -4,7 +4,7 @@ class AccountController extends BaseController {
 
 	/*
 	|--------------------------------------------------------------------------
-	| Account Controller c
+	| Account Controller
 	|--------------------------------------------------------------------------
 	|
 	|	Questo controller consente la creazione, la modifica e la cancellazione
