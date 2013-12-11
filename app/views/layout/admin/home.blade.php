@@ -60,9 +60,40 @@
 					@if($errors->first('seleziona_tipo'))
 						<label>{{ $errors->first('seleziona_tipo') }}</label>
 					@endif
-						
-						<!-- se selezionato Ricercatore o Direttore Dipartimento o Responsabile Area scientifica -> Aggiungere campo Ruolo -->
-						<!-- se selezionato Ricercatore o Direttore Dipartimento o Responsabile Area scientifica -> Aggiungere select con i Dipartimenti  -->
+						<p>{{ Form::label('Seleziona Ruolo') }}</p>
+						{{ Form::select(ruolo', array(
+						'' => 'Seleziona ruolo', 
+						'1' => 'Professore ordinario', 
+						'2' => 'Professore associato',
+						'3' => 'Ricercatore ',
+						'4' => 'Borsista post-dottorato',
+						'5' => 'Assegnista di ricerca',
+						'6' => 'Dottorando',
+					)) }}
+					@if($errors->first('ruolo'))
+						<label>{{ $errors->first('ruolo') }}</label>
+					@endif
+						<p>{{ Form::label('Seleziona Dipartimento') }}</p>
+						{{ Form::select(dipartimento', array(
+						'' => 'Seleziona dipartimento', 
+						'1' => 'Dipartimento di Scienze del Patrimonio Culturali', 
+						'2' => 'Dipartimento di Chimica e Biologia',
+						'3' => 'Dipartimento di Scienze Giuridiche ',
+						'4' => 'Dipartimento di Fisica "E.R. Caianiello"',
+						'5' => 'Dipartimento di Informatica',
+						'6' => 'Dipartimento di Ingegneria Civile',
+						'7' => 'Dipartimento di Ingegneria dell'informazione, Ingegneria elettrica e Matematica Applicata',
+						'8' => 'Dipartimento di Ingegneria Industriale',
+						'9' => 'Dipartimento di Matematica',
+						'10' => 'Dipartimento di Scienze Economiche e Statistiche',
+						'11' => 'Dipartimento di Farmacia',
+						'12' => 'Dipartimento di Medicina e Chirurgia',
+						'13' => 'Dipartimento di Scienze Umane, Filosofiche e della Formazione',
+						'14' => 'Dipartimento di Scienze Politiche, Sociali e della Comunicazione',
+					)) }}
+					@if($errors->first('dipartimento'))
+						<label>{{ $errors->first('dipartimento') }}</label>
+					@endif
 				    </div>
 				   
 				    
