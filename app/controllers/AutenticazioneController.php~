@@ -17,6 +17,10 @@ class AutenticazioneController extends BaseController {
 		$this->beforeFilter('guest',array('only' =>'postLogin'));
 	}
 	
+	public function getIndex(){
+		return View::make('layout.home');
+	}
+	
 	// effettua il login nel sistema
 	public function postLogin(){
 		$rules = array(

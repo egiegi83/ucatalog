@@ -60,23 +60,23 @@ class AccountController extends BaseController {
 		//faccio il controllo con il Validator
 		$validator = Validator::make(Input::all(), $rules);
 		if($validator->fails()){
-			return Redirect::to('admin')
+			return Redirect::to('/admin')
 				->withErrors($validator)	
 				->withInput(Input::all());
 		}
 				
 		if(($amministratore == true) && ($ricercatore == true || $responsabilevqr == true)) //controllo grado 1
-			return Redirect::to('admin')
+			return Redirect::to('/admin')
 				->with('gradeError', 'non può essere contemporaneamente Amministratore e (Ricercatore o ResponsabileVQR)')
 				->withInput(Input::except('amministratore','responsabilevqr','ricercatore','grado'));
 				
 		if($amministratore == false && $ricercatore == false && $responsabilevqr == false) //controllo grado 2
-			return Redirect::to('admin')
+			return Redirect::to('/admin')
 				->with('gradeError', 'L\'utente deve avere una specializzazione')
 				->withInput(Input::except('amministratore','responsabilevqr','ricercatore','grado'));
 		
 		if($ricercatore == false && $grado > 0)//controllo grado 3
-			return Redirect::to('admin')
+			return Redirect::to('/admin')
 				->with('gradeError', 'non può essere Specializzato senza essere un ricercatore')
 				->withInput(Input::except('grado'));
 		
@@ -123,7 +123,7 @@ class AccountController extends BaseController {
 		$myUser->setAll($email, $password, $nome, $cognome, $objDataDiNascita, $amministratore);//settiamo i campi utente
 		$myUser->save(); //salviamo l'utente
 		
-		return Redirect::to('createduser')
+		return Redirect::to('/createduser')
 			->with('email',$email)
 			->with('password',$password)
 			->with('nome',$nome)
