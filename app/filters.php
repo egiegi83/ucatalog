@@ -9,6 +9,7 @@
 | which may be used to do any work before or after a request into your
 | application. Here you may also register your custom route filters.
 |
+|	I filtri di Antonio Carpinelli
 */
 
 App::before(function($request)
