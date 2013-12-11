@@ -128,7 +128,6 @@ class Ricercatore extends Eloquent{
 				$this->ruolo="Dottorando";
 				break;
 		}
-		$this->ruolo=$ruolo;
 	}
 	
 	/**

@@ -94,6 +94,29 @@
 					@if($errors->first('dipartimento'))
 						<label>{{ $errors->first('dipartimento') }}</label>
 					@endif
+					
+							<p>{{ Form::label('Seleziona Area di Ricerca') }}</p>
+							{{ Form::select('area', array(
+							'' => 'Seleziona area di ricerca', 
+							'1' => 'Scienze matematiche e informatiche', 
+							'2' => 'Scienze fisiche',
+							'3' => 'Scienze chimiche',
+							'4' => 'Scienze della terra',
+							'5' => 'Scienze biologiche',
+							'6' => 'Scienze mediche',
+							'7' => 'Scienze agrarie e veterinarie',
+							'8' => 'Ingegneria civile ed architetturale',
+							'9' => "Ingegneria industriale e dell'informazione",
+							'10' => "Scienze dell'antichità, filologo-letterarie e storico-artistiche",
+							'11' => 'Scienze storiche, filosofiche, psicologiche, pedagogiche',
+							'12' => 'Scienze giuridiche',
+							'13' => 'Scienze economiche e statistiche',
+							'14' => 'Scienze politiche e sociali',
+						)) }}
+						@if($errors->first('area'))
+							<label>{{ $errors->first('area') }}</label>
+						@endif
+
 				    </div>
 				   
 				    

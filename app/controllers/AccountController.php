@@ -30,7 +30,7 @@ class AccountController extends BaseController {
 	public function postAggiungiAccount (){
 		//Regole di controllo input
 		$rules = array(
-			'email'    => 'required|email',
+			'email'    => 'required|email|unique:utenti,email',
 			'password' => 'required|min:4|max:20',
 			'password_confirmation' => 'required|same:password',
 			'nome' => 'required|min:2',
@@ -96,8 +96,8 @@ class AccountController extends BaseController {
 				case '1':			//se Ricercatore
 					//crea Ricercatore e salva nel db
 					$ricercatore=new Ricercatore();
-					$ricercatore->setDipartimento($datiRic['ruolo']);
-					$ricercatore->setRuolo($datiRic['dipartimento']);
+					$ricercatore->setDipartimento($datiRic['dipartimento']);
+					$ricercatore->setRuolo($datiRic['ruolo']);
 					$myUser->save();
 					$myUser->ricercatore()->save($ricercatore); 
 					break;
@@ -134,15 +134,9 @@ class AccountController extends BaseController {
 					$ricercatore->responsabile()->save($responsabile);
 					break;
 			}
-		}
-				
-		return Redirect::to('createduser')
-			->with('email',$email)
-			->with('password',$password)
-			->with('nome',$nome)
-			->with('cognome',$cognome)
-			->with('dataDiNascita',$dataDiNascita)
-			->with('grado',$gradoToString);
+		}	
+		//modificare View di return
+		return 'fatto';
 	}
 		
 		
