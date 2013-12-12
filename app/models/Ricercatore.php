@@ -31,6 +31,21 @@ class Ricercatore extends Eloquent{
 	{
 		return $this->hasMany('Prodotto');
 	}
+	
+	/*
+	*  Ritorna solo i prodotti bozza del ricercatore
+	*/
+	public function prodottiBozza()
+	{
+		return $this->prodotti()->where('is_definitivo','=','0');
+	}
+	/*
+	* Ritorna solo i prodotti definitivi del ricercatore
+	*/
+	public function prodottiDefinitivi()
+	{
+		return $this->prodotti()->where('is_definitivo','=','1');
+	}
 
 	/**
 	*	Relazione: ogni ricercatore è un utente.

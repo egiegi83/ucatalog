@@ -3,7 +3,7 @@ ucatalog = {
 	
 	url: function(s){
 		if(typeof s !== 'undefined'){
-			return 'http://'+document.domain+'/'+uc.basePath + (s[0] == '/' ? s : '/'+s);
+			return 'http://'+document.host+'/'+uc.basePath + (s[0] == '/' ? s : '/'+s);
 		} else { 
 			var 	url=document.URL,
 			bp=url.indexOf(uc.basePath);

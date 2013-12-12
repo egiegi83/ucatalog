@@ -6,7 +6,7 @@ uc.addEvent(window,'load',function(){
 	
 	switch(ca.action){
 		case 'prodotti':
-			uc.addEvent(uc.query('body>section>section article.prodotto[selectable]'),'click',function(){
+			uc.addEvent(uc.query('body>section>section article.prodotto'),'click',function(){
 				this.classList.toggle('selected');
 			});
 			

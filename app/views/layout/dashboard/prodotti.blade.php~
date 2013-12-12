@@ -8,6 +8,7 @@
 		</ul>
 	</nav>
 	<div>
+	asdasd
 		@foreach ($prodotti as $p) 
 			<article class="prodotto trall @if(Session::has('newid') && $p->id == Session::get('newid')) {{ 'newid' }} @endif" data-id="{{ $p->id }}" @if(!$p->is_definitivo) {{ 'selectable' }} @endif>
 				<header>
