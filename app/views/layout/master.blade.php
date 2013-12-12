@@ -32,7 +32,7 @@
 						@else
 							{{ URL::to('/dashboard') }}
 						@endif
-						">{{ Auth::getUser()->nome . " " . Auth::getUser()->cognome}}</a>
+						">{{ Auth::getUser()->nome . " " . Auth::getUser()->cognome . " (tipo ". Auth::getUser()->tipo . " )" }}</a>
 						
 						<span class="icon mail"></span>
 						

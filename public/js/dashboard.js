@@ -1,13 +1,12 @@
 uc.addEvent(window,'load',function(){
 	var ca=uc.url();
 	
-	if(ca.action != 'aggiungi-prodotto') uc.query('body>section>nav a[href $= "' + ca.controller + (ca.action ? '/'+ca.action : '') + '"]')[0].parentNode.classList.add('current');
+	if(ca.action != 'aggiungi-prodotto') uc.query('body>section>nav a[href *= "' + ca.controller + (ca.action ? '/'+ca.action : '') + '"]')[0].parentNode.classList.add('current');
 	uc.query('body>section>section')[0].classList.add('loaded');
 	
 	switch(ca.action){
 		case 'prodotti':
-			var ips=uc.query('#ips')[0];
-			uc.addEvent(uc.query('body>section>section article.prodotto'),'click',function(){
+			uc.addEvent(uc.query('body>section>section article.prodotto[selectable]'),'click',function(){
 				this.classList.toggle('selected');
 			});
 			
@@ -17,8 +16,12 @@ uc.addEvent(window,'load',function(){
 				for(var i=0; len=ps.length, i<len; i++){
 					tmp[i]=ps[i].dataset.id;
 				}
-				ips.value = '{"data":["' + tmp.join('","') + '"]}';
-				console.log(ips.value);
+				pspe = '{"data":["' + tmp.join('","') + '"]}';
+				uc.post(uc.url('prodotti/elimina-prodotti-selezionati'),pspe,function(){
+					for(var i=0; len=ps.length, i<len; i++){
+						ps[i].classList.add('removed');
+					}
+				})
 			});
 				
 			break;
@@ -28,14 +31,22 @@ uc.addEvent(window,'load',function(){
 			tb_autori=uc.query('#tb_autori')[0],
 			tbc=uc.query('#tbc')[0],
 			res=uc.query('#tag_autori')[0],
-			ha=uc.query('#hid_autori')[0],lbs=false;
-				
+			ha=uc.query('#hid_autori')[0],
+			lbs=false,
+			hi=uc.query('#addProdotto div.hiddeni.trop')[0];
+			
 			uc.addEvent(uc.query('#addProdotto select[name=tipo]'),'change',function(e){
-				var divs=uc.query('#addProdotto form div');
+				var divs=uc.query('#addProdotto form span[data-type]');
 				for(var i=0; len=divs.length, i<len; i++) 
 					divs[i].classList.remove('open');
 				console.log(this.value);
-				if(this.value != 0)	uc.query('#addProdotto form div[data-type="'+ this.value +'"]')[0].classList.add('open');
+				if(this.value != 0) {
+					uc.each(uc.query('#addProdotto form .hiddeni span[data-type ~="'+ this.value +'"]'), function(){ this.classList.add('open') });
+					hi.classList.add('open');
+				} else {
+					uc.each(uc.query('#addProdotto form .hiddeni span'), function(){ this.classList.remove('open') });
+					hi.classList.remove('open');
+				}
 			});
 			
 			uc.addEvent(tb_autori,'keyup',function(e){

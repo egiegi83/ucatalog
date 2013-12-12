@@ -32,6 +32,23 @@ class Ricercatore extends Eloquent{
 		return $this->hasMany('Prodotto');
 	}
 
+	/*
+	* Meglio nel controller questo metodo
+	*  Ritorna solo i prodotti bozza del ricercatore
+	*/
+	public function prodottiBozza()
+	{
+		return $this->prodotti()->where('is_definitivo','=','0');
+	}
+	/*
+	* Meglio nel controller questo metodo
+	* Ritorna solo i prodotti definitivi del ricercatore
+	*/
+	public function prodottiDefinitivi()
+	{
+		return $this->prodotti()->where('is_definitivo','=','1');
+	}
+	
 	/**
 	*	Relazione: ogni ricercatore è un utente.
 	*	@return mixed
@@ -51,7 +68,7 @@ class Ricercatore extends Eloquent{
 	}
 
 	/**
-	*	Relazione: ogni direttore di dipartimento è un ricercatore.
+	*	Relazione: ogni responsabile è un ricercatore.
 	*	@return mixed
 	*/
 	public function responsabile()
@@ -60,7 +77,7 @@ class Ricercatore extends Eloquent{
 	}
 	
 	/**
-	*	Relazione: ogni direttore di dipartimento appartiene ad un dipartimento.
+	*	Relazione: ogni ricercatore appartiene ad un dipartimento.
 	*	@return mixed
 	*/
 	public function dipartimento()
@@ -85,5 +102,5 @@ class Ricercatore extends Eloquent{
 	{
 		return $this->ruolo=$ruolo;
 	}
-		
+
 }

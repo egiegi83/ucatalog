@@ -1,13 +1,17 @@
 ucatalog = {
-	basePath: 'u_catalog',
+	basePath: 'ucatalog',
 	
-	url: function(){
-		var 	url=document.URL,
-		bp=url.indexOf(uc.basePath);
-		url = url.substr(bp + uc.basePath.length + 1,url.length);
-		url = url.split('/');
+	url: function(s){
+		if(typeof s !== 'undefined'){
+			return 'http://'+document.domain+'/'+uc.basePath + (s[0] == '/' ? s : '/'+s);
+		} else { 
+			var 	url=document.URL,
+			bp=url.indexOf(uc.basePath);
+			url = url.substr(bp + uc.basePath.length + 1,url.length);
+			url = url.split('/');
 		
-		return url.length==1 ? { controller: url[url.length-1]} : { controller: url[url.length-2], action: url[url.length-1] };
+			return url.length==1 ? { controller: url[url.length-1]} : { controller: url[url.length-2], action: url[url.length-1] };
+		}
 	},
 	query: function(selector){
 		return document.querySelectorAll(selector);
@@ -15,6 +19,11 @@ ucatalog = {
 	match: function(el,selector){
 		matchesSelector = el.matches || el.webkitMatchesSelector || el.mozMatchesSelector || el.msMatchesSelector;
 		return matchesSelector.bind(el)(selector);
+	},
+	each: function(els,callback){
+		for(var i=0; len=els.length, i<len; i++){
+			callback.call(els[i],i,els);
+		}
 	},
 	addEvent: function(els,type,callback){
 		if(els.length)
@@ -29,7 +38,8 @@ ucatalog = {
 				callback.call(event.target, event);
 			}
 		},false);
-	}, post: function(url,data,complete){
+	}, 
+	post: function(url,data,complete){
 		var xhr=new XMLHttpRequest();
 		xhr.addEventListener("load",function (evt) {
 			if(xhr.status == 200) complete.call(xhr,xhr.response,evt);

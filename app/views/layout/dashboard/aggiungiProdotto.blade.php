@@ -54,7 +54,7 @@
 							<span id="selected_autori"></span>
 							<span id="tb_autori" placeholder="Autore" contenteditable="true"></span>
 						</div>
-						<div id="tag_autori" class="trop"></div>
+						<div id="tag_autori" ></div>
 						{{ Form::hidden('autori', null, array('autocomplete'=>'off','id' => 'hid_autori' )) }}
 					</div>
 				</div>
@@ -80,163 +80,107 @@
 					)) 
 				}}
 				
-				<!-- Articolo su rivista -->	
-				<div data-type="rivista" class="trop">
-					<span>
+				<div class="hiddeni trop">
+					<!-- Rivista -->
+					<span data-type="rivista" >
 						{{ Form::text('titolo_rivista', null, array('placeholder'=>'Titolo rivista','autocomplete'=>'off' )) }}
 						@if($errors->first('titolo_rivista'))
 							<label>{{ $errors->first('titolo_rivista') }}</label>
 						@endif
 					</span>
-					
-					<span>
+				
+					<span data-type="rivista" >
 						{{ Form::text('issn', null, array('placeholder'=>'ISSN','autocomplete'=>'off' )) }}
 						@if($errors->first('issn'))
 							<label>{{ $errors->first('issn') }}</label>
 						@endif
 					</span>
-					
-					<span>
-						{{ Form::text('doi', null, array('placeholder'=>'DOI','autocomplete'=>'off' )) }}			
-						@if($errors->first('doi'))
-							<label>{{ $errors->first('doi') }}</label>
-						@endif
-					</span>
-					
-					<span>
+				
+					<span data-type="rivista libro convegno" >
 						{{ Form::text('pagina_iniziale', null, array('placeholder'=>'Pagina iniziale','autocomplete'=>'off' )) }}		
 						@if($errors->first('pagina_iniziale'))
 							<label>{{ $errors->first('pagina_iniziale') }}</label>
 						@endif
 					</span>
-					
-					<span>
+				
+					<span data-type="rivista libro convegno" >
 						{{ Form::text('pagina_finale', null, array('placeholder'=>'Pagina finale','autocomplete'=>'off' )) }}		
 						@if($errors->first('pagina_finale'))
 							<label>{{ $errors->first('pagina_finale') }}</label>
 						@endif
 					</span>
-					
-					<span>
+				
+					<span data-type="rivista" >
 						{{ Form::text('numero_rivista', null, array('placeholder'=>'Numero rivista','autocomplete'=>'off' )) }}		
 						@if($errors->first('numero_rivista'))
 							<label>{{ $errors->first('numero_rivista') }}</label>
 						@endif
 					</span>
-				</div>
-				
-				<!-- Libro/Capitolo di libro -->	
-				<div data-type="libro" class="trop">
-					<span>
+
+					<!-- Libro -->
+					<span data-type="libro convegno rivista" >
 						{{ Form::text('doi', null, array('placeholder'=>'DOI','autocomplete'=>'off' )) }}
 						@if($errors->first('doi'))
 							<label>{{ $errors->first('doi') }}</label>
 						@endif	
 					</span>
-					<span>
+					<span data-type="libro" >
 						{{ Form::text('titolo_capitolo', null, array('placeholder'=>'Titolo Capitolo','autocomplete'=>'off' )) }}
 						@if($errors->first('titolo_capitolo'))
 							<label>{{ $errors->first('titolo_capitolo') }}</label>
 						@endif
 					</span>
-					
-					<span>
+				
+					<span data-type="libro convegno" >
 						{{ Form::text('isbn', null, array('placeholder'=>'ISBN','autocomplete'=>'off' )) }}
 						@if($errors->first('area_di_ricerca'))
 							<label>{{ $errors->first('area_di_ricerca') }}</label>
 						@endif
-					</span>
-					<span>
-						{{ Form::text('pagina_iniziale', null, array('placeholder'=>'Pagina iniziale','autocomplete'=>'off' )) }}
-						@if($errors->first('pagina_iniziale'))
-							<label>{{ $errors->first('pagina_iniziale') }}</label>
-						@endif
-					</span>		
-					<span>
-						{{ Form::text('pagina_finale', null, array('placeholder'=>'Pagina finale','autocomplete'=>'off' )) }}
-						@if($errors->first('area_di_ricerca'))
-							<label>{{ $errors->first('area_di_ricerca') }}</label>
-						@endif
-					</span>		
-					<span>
-						{{ Form::text('editore_libro', null, array('placeholder'=>'Editore','autocomplete'=>'off' )) }}
-						@if($errors->first('editore_libro'))
-							<label>{{ $errors->first('editore_libro') }}</label>
+					</span>	
+					<span data-type="libro convegno" >
+						{{ Form::text('editore', null, array('placeholder'=>'Editore','autocomplete'=>'off' )) }}
+						@if($errors->first('editore'))
+							<label>{{ $errors->first('editore') }}</label>
 						@endif
 					</span>
-					<span>
+					<span data-type="libro" >
 						{{ Form::text('numero_capitolo', null, array('placeholder'=>'Numero Capitolo','autocomplete'=>'off' )) }}
 						@if($errors->first('numero_capitolo'))
 							<label>{{ $errors->first('numero_capitolo') }}</label>
 						@endif
 					</span>
-				</div>
 				
-				<!-- Atto di convegno -->
-				<div data-type="convegno" class="trop">
-					<span>
-						{{ Form::text('doi', null, array('placeholder'=>'DOI','autocomplete'=>'off' )) }}
-						@if($errors->first('doi'))
-							<label>{{ $errors->first('doi') }}</label>
-						@endif
-					</span>
-					<span>
-						{{ Form::text('isbn', null, array('placeholder'=>'ISBN','autocomplete'=>'off' )) }}
-						@if($errors->first('isbn'))
-							<label>{{ $errors->first('isbn') }}</label>
-						@endif
-					</span>
-					<span>
-						{{ Form::text('pagina_iniziale', null, array('placeholder'=>'Pagina iniziale','autocomplete'=>'off' )) }}
-						@if($errors->first('pagina_iniziale'))
-							<label>{{ $errors->first('pagina_iniziale') }}</label>
-						@endif
-					</span>	
-					<span>
-						{{ Form::text('pagina_finale', null, array('placeholder'=>'Pagina finale','autocomplete'=>'off' )) }}
-						@if($errors->first('pagina_finale'))
-							<label>{{ $errors->first('pagina_finale') }}</label>
-						@endif
-					</span>	
-					<span>
-						{{ Form::text('editore_convegno', null, array('placeholder'=>'Editore','autocomplete'=>'off' )) }}
-						@if($errors->first('editore_convegno'))
-							<label>{{ $errors->first('editore_convegno') }}</label>
-						@endif
-					</span>
-					<span>
+					<!-- Atto di convegno -->
+					<span data-type="convegno" >
 						{{ Form::text('nome_convegno', null, array('placeholder'=>'Nome convegno','autocomplete'=>'off' )) }}
 						@if($errors->first('nome_convegno'))
 							<label>{{ $errors->first('nome_convegno') }}</label>
 						@endif
 					</span>
-					<span>
+					<span data-type="convegno" >
 						{{ Form::text('data_convegno', null, array('placeholder'=>'Data convegno','autocomplete'=>'off' )) }}
 						@if($errors->first('data_convegno'))
 							<label>{{ $errors->first('data_convegno') }}</label>
 						@endif
 					</span>
-					<span>
+					<span data-type="convegno" >
 						{{ Form::text('luogo_convegno', null, array('placeholder'=>'Luogo convegno','autocomplete'=>'off' )) }}
 						@if($errors->first('luogo_convegno'))
 							<label>{{ $errors->first('luogo_convegno') }}</label>
 						@endif
 					</span>
-				</div>
 				
-				<!-- Commento specifico/Edizione critica/Traduzione -->
-				<div data-type="commenti" class="trop">
-					<span>
+					<!-- Commento specifico/Edizione critica/Traduzione -->
+					<span data-type="commenti" >
 						{{ Form::text('lingua', null, array('placeholder'=>'lingua','autocomplete'=>'off' )) }}
 						@if($errors->first('lingua'))
 							<label>{{ $errors->first('lingua') }}</label>
 						@endif
 					</span>
-				</div>
+		
 				
-				<!-- Altro -->
-				<div data-type="altro" class="trop">
-					<span>
+					<!-- Altro -->
+					<span data-type="altro" >
 						{{ Form::text('altra_tipologia', null, array('placeholder'=>'Altra tipologia	','autocomplete'=>'off' )) }}
 						@if($errors->first('altra_tipologia'))
 							<label>{{ $errors->first('altra_tipologia') }}</label>

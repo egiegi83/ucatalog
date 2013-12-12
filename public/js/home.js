@@ -3,7 +3,7 @@ uc.addEvent(window,'load',function(){
 			ac = uc.query('#autocomplete')[0];
 		
 	uc.addEvent(tb_search,'keyup',function(){
-		uc.post('/u_catalog/search', {Cerca:this.value},function(data,e){
+		uc.post('search', {Cerca:this.value},function(data,e){
 			data=JSON.parse(data);
 			tmp='<ul>';
 			for(d in data){

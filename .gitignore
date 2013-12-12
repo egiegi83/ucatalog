@@ -1,0 +1,10 @@
+# File che github ignora al momento del commit
+
+*.*~
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db

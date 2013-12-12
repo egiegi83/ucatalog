@@ -30,7 +30,7 @@ class Prodotto extends Eloquent {
 	 */	
 	public function ricercatore() {
 		
-		return $this->hasOne('Ricercatore', 'ricercatore_id');
+		return $this->hasOne('Ricercatore', 'id');
 		
 	}
 	
@@ -40,7 +40,7 @@ class Prodotto extends Eloquent {
 	 */
 	public function dipartimento() {
 		
-		return $this->hasOne('Dipartimento', 'dipartimento_id');
+		return $this->hasOne('Dipartimento', 'id');
 		
 	}
 	
@@ -50,7 +50,7 @@ class Prodotto extends Eloquent {
 	 */
 	public function areaScientifica() {
 		
-		return $this->hasOne('AreaScientifica','area_scientifica_id');
+		return $this->hasOne('AreaScientifica','id');
 	
 	}
 	
