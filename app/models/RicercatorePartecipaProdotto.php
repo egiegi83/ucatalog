@@ -30,7 +30,7 @@ class RicercatorePartecipaProdotto extends Eloquent {
 	 * @return mixed
 	 */
 	public function prodotto() {
-		return $this->hasOne('Prodotto', 'prodotto_id');
+		return $this->hasOne('Prodotto', 'id');
 	}
 
 	/**
@@ -38,41 +38,54 @@ class RicercatorePartecipaProdotto extends Eloquent {
 	 * @return mixed
 	 */
 	public function ricercatore() {
-		return $this->hasOne('Ricercatore', 'ricercatore_id');
+		return $this->belongsTo('Ricercatore', 'ricercatore_id');
 	}
 
 	/**
-	 * Resituisce il nome del Ricercatore.
+	 * Resituisce il nome del Ricercatore non riconosciuto dal DB.
 	 * @return string
 	 */
-	public function getNome() {
-
-		return $this->nome;
-
+	public function getCoautore() {
+		return $this->coautore;
 	}
-
 	/**
-	 * Resituisce il cognome del Ricercatore.
-	 * @return string
+	 * Resituisce il Ricercatore.
+	 * @return int
 	 */
-	public function getCognome() {
-		return $this->cognome;
+	public function getRicercatoreId() {
+		return $this->ricercatore_id;
+	}
+	
+	/**
+	 * Resituisce prodotto.
+	 * @return int
+	 */
+	public function getProdottoId() {
+		return $this->prodotto_id;
 	}
 
 	/**
-	 * Modifica il nome del Ricercatore.
+	 * Setta il ricercatore come stringa (non riconosciuto nel DB).
 	 * @param string
 	 */
-	public function setNome($nome) {
-		$this->nome = $nome;
+	public function setCoautore($coautore) {
+		$this->coautore = $coautore;
 	}
 
 	/**
-	 * Modifica il cognome del Ricercatore.
-	 * @param string
+	 * Setta il ricercatore.
+	 * @param int
 	 */
-	public function setCognome($cognome) {
-		$this->cognome = $cognome;
+	public function setRicercatoreId($id) {
+		$this->ricercatore_id = $id;
+	}
+	
+	/**
+	 * Setta il prodotto.
+	 * @param int
+	 */
+	public function setProdottoId($id) {
+		$this->prodotto_id = $id;
 	}
 
 }

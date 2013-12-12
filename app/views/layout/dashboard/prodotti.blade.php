@@ -1,5 +1,9 @@
 @extends('layout.dashboard')
 
+@section('substyle')
+	{{ HTML::style('css/article.css'); }}
+@stop
+
 @section('content.dashboard')
 	<nav>
 		<ul>
@@ -28,7 +32,22 @@
 				 	{{ $p->descrizione }}
 				</section>
 				<footer>
-					<span>Autori: <a href="#">Tu</a></span>
+					@if(count($autors = $p->ricercatorePartecipaProdotto()->get()) > 0)
+					  	<span class="autori">Autori:
+					  	@foreach($autors->toarray() as $a)
+					 		 <?php if(isset($f)) echo ','; ?>
+					 		 @if($a['ricercatore_id'])
+					 		 	<a href="{{ URL::to('/$a->id'); }}">
+					 		 		<?php  $u = RicercatorePartecipaProdotto::find($a['id'])->get()->first()->ricercatore->utente->toarray(); ?>
+					 		 		{{ $u['nome'].' '.$u['cognome']}}
+				 		 		</a>
+							@else
+								{{ $a['coautore'] }}
+							@endif
+							<?php $f=true; ?>
+						@endforeach
+				  		</span>
+				  	@endif
 					<span><a href="#"><span class="icon allegato"></span>Allegato</a></span>
 					<span>Pubblicato il {{ substr(date_format(date_create($p->data_pubblicazione),'d-m-Y H:i:s'),0,10); }}</span>
 				</footer>

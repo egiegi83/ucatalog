@@ -6,11 +6,12 @@ uc.addEvent(window,'load',function(){
 	
 	switch(ca.action){
 		case 'prodotti':
-			uc.addEvent(uc.query('body>section>section article.prodotto[selectable]'),'click',function(){
-				this.classList.toggle('selected');
+			uc.addEvent(uc.query('body>section>section article.prodotto[selectable] .remove'),'click',function(){
+				this.parentNode.parentNode.classList.toggle('selected');
 			});
 			
-			uc.addEvent(uc.query('#del_prodotti'),'click',function(){
+			uc.addEvent(uc.query('#del_prodotti'),'click',function(e){
+				e.preventDefault();
 				var ps=uc.query('body>section>section article.prodotto.selected'),
 				tmp=[];
 				for(var i=0; len=ps.length, i<len; i++){
@@ -21,6 +22,11 @@ uc.addEvent(window,'load',function(){
 					for(var i=0; len=ps.length, i<len; i++){
 						ps[i].classList.add('removed');
 					}
+					window.setTimeout(function(){
+						for(i=0; len=ps.length, i<len; i++){
+							ps[i].style.display='none';
+						}
+					},500);
 				})
 			});
 				
@@ -93,7 +99,7 @@ uc.addEvent(window,'load',function(){
 			}
 				
 			function searchRicercatore(e){
-				uc.post('/u_catalog/autori/tag', {q: this.textContent},function(data,e){
+				uc.post(uc.url('autori/tag'), {q: this.textContent},function(data,e){
 					data=JSON.parse(data);
 					tmp='<ul>';
 					if(data.length){

@@ -48,7 +48,7 @@ Route::post('/autori/tag',function(){
 	if (Request::ajax()){
 		$query = Input::get('q');	
 		if(strlen(trim($query))>0){
-			$response = Response::json(User::where('nome','like','%'.$query.'%')->get()->toArray());
+			$response = Response::json(User::where('nome','like','%'.$query.'%')->where('ricercatore_id','<>','NULL')->get()->toArray());
 			$response->header('Content-Type', 'application/json');
 			return $response;
 		}

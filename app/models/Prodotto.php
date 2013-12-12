@@ -67,7 +67,7 @@ class Prodotto extends Eloquent {
 	 * @return mixed
 	 */
 	public function ricercatorePartecipaProdotto() {
-		return $this->belongsTo('RicercatorePartecipaProdotto');
+		return $this->hasMany('RicercatorePartecipaProdotto','prodotto_id');
 	}	
 	
 	/**

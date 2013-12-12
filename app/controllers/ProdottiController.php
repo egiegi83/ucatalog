@@ -21,8 +21,10 @@ class ProdottiController extends BaseController {
 	
 	public function postEliminaProdottiSelezionati(){
 		$ids=Input::get('data');
-		print_r(Auth::getUser()->ricercatore->prodottiBozza());
-		Auth::getUser()->ricercatore->prodottiBozza()->delete($ids);
+		$ps=Auth::getUser()->ricercatore->prodottiBozza();
+		foreach($ids as $id){
+			$ps->where('prodotti.id','=',$id)->delete();
+		}
 	}
 	
 	public function postModifica(){
@@ -70,6 +72,20 @@ class ProdottiController extends BaseController {
 		$product->ricercatore_id=Auth::getUser()->ricercatore_id;
 		$product->save();
 		
+		if(Input::has('autori')){
+			$autori=json_decode(Input::get('autori'))->data;
+			foreach($autori as $a){
+				$rpp = new RicercatorePartecipaProdotto;
+				$rpp->setProdottoId($product->id);
+				if(intval($a)) {
+					$rpp->setRicercatoreId($a);
+				} else {
+					$rpp->setCoautore($a);
+				}
+				$rpp->save();
+			}
+		}
+		
 		return Redirect::to('dashboard/prodotti')->with('newid',$product->id);
 	}
 	
@@ -83,7 +99,7 @@ class ProdottiController extends BaseController {
 	
 	// regole di base più quelle per la tipologia del prodotto scelto
 	private static function getAllRules(){
-		$rules = $this::getBasicRules();
+		$rules = ProdottiController::getBasicRules();
 		
 		// regole per tipologia in un array temporaneo
 		switch (Input::get('tipo')) {

@@ -1,7 +1,9 @@
 @extends('layout.master')
 
 @section('style')
-	{{ HTML::style('css/dashboard.css'); }}
+	{{ HTML::style('css/panel.css'); }}
+	@section('substyle')
+	@show
 @stop
 
 @section('script')

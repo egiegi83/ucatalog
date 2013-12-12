@@ -1,5 +1,9 @@
 @extends('layout.dashboard')
 
+@section('substyle')
+	{{ HTML::style('css/dashboard.css'); }}
+@stop
+
 @section('content.dashboard')
 	<h1>Aggiungi prodotto</h1>
 	<div id="addProdotto">

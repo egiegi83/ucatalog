@@ -1,6 +1,6 @@
 @extends('layout.master')
 @section('style')
-	{{ HTML::style('css/dashboard.css'); }}
+	{{ HTML::style('css/panel.css'); }}
 @stop
 
 @section('script')
