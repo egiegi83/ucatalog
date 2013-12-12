@@ -1,10 +1,30 @@
 # File che github ignora al momento del commit
 
+
+# ubuntu hidden file
 *.*~
+
+# mac os hidden file
 .DS_Store
 .DS_Store?
 ._*
 .Spotlight-V100
 .Trashes
+
+# windows hidden file
 ehthumbs.db
 Thumbs.db
+
+# database config file
+app/config/database.php
+
+# index file
+public/index.php
+
+# folder and file that do not require synchronization
+*.md
+*.xml
+server.php
+vendor/**
+bootstrap/**
+app/storage/**
