@@ -27,6 +27,7 @@
 		<td>Cognome</td>
 		<td>Email</td>
 		<td>Tipo</td>
+		<td>Modifica</td>
 	</tr>
 	@foreach ($users as $user)
 		<?php switch($user->tipo)
@@ -48,7 +49,7 @@
 				break;
 		}?>
 		<tr><td>{{$user->cognome }}</td>
-		<td>{{$user->nome }}</td><td> {{$user->email }}</td><td> <?php echo $tipo; ?> </td></tr>
+		<td>{{$user->nome }}</td><td> {{$user->email }}</td><td> <?php echo $tipo; ?> </td><td><a href="admin/modifica/<?php echo $user->id;?>">Modifica</a></tr>
 	@endforeach
 </table>
 			</div>
