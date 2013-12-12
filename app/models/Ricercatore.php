@@ -17,8 +17,6 @@ class Ricercatore extends Eloquent{
 	 */
 	protected $table = 'ricercatori';
 	
-	public $timestamps = false;
-	
 	/**
 	* La tabella non ha un campo timestamps
 	* @var boolean
