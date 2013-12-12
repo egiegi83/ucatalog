@@ -63,12 +63,12 @@
 						<p>{{ Form::label('Seleziona Ruolo') }}</p>
 						{{ Form::select('ruolo', array(
 						'' => 'Seleziona ruolo', 
-						'1' => 'Professore ordinario', 
-						'2' => 'Professore associato',
-						'3' => 'Ricercatore ',
-						'4' => 'Borsista post-dottorato',
-						'5' => 'Assegnista di ricerca',
-						'6' => 'Dottorando',
+						'Professore ordinario' => 'Professore ordinario', 
+						'Professore associato' => 'Professore associato',
+						'Ricercatore' => 'Ricercatore',
+						'Borsista post-dottorato' => 'Borsista post-dottorato',
+						'Assegnista di ricerca' => 'Assegnista di ricerca',
+						'Dottorando' => 'Dottorando',
 					)) }}
 					@if($errors->first('ruolo'))
 						<label>{{ $errors->first('ruolo') }}</label>
