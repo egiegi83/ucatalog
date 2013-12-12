@@ -129,12 +129,9 @@ Route::filter('ricercatore', function()
 
 Route::filter('direttore', function()
 {
-<<<<<<< HEAD
+
 	if (!Auth::getUser()->tipo=='2')  
 		return Redirect::guest('/');
-=======
-		if (Auth::getUser()->ricercatore->tipo!=1)  return Redirect::guest('/');
->>>>>>> cddebd50c2c953d63d814082db35d89dc7fb3965
 });
 
 
@@ -149,12 +146,9 @@ Route::filter('direttore', function()
 
 Route::filter('responsabileArea', function()
 {
-<<<<<<< HEAD
+
 	if (!Auth::getUser()->tipo=='3')  
 		return Redirect::guest('/');
-=======
-	if (Auth::getUser()->ricercatore->tipo!=2) return Redirect::guest('/');
->>>>>>> cddebd50c2c953d63d814082db35d89dc7fb3965
 });
 
 /*
