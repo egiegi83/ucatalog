@@ -31,7 +31,7 @@ class Ricercatore extends Eloquent{
 	{
 		return $this->hasMany('Prodotto');
 	}
-	
+
 	/*
 	*  Ritorna solo i prodotti bozza del ricercatore
 	*/
@@ -40,13 +40,13 @@ class Ricercatore extends Eloquent{
 		return $this->prodotti()->where('is_definitivo','=','0');
 	}
 	/*
-	* Ritorna solo i prodotti definitivi del ricercatore
+	* Meglio nel controller questo metodo
 	*/
 	public function prodottiDefinitivi()
 	{
 		return $this->prodotti()->where('is_definitivo','=','1');
 	}
-
+	
 	/**
 	*	Relazione: ogni ricercatore è un utente.
 	*	@return mixed
@@ -57,7 +57,25 @@ class Ricercatore extends Eloquent{
 	}
 	
 	/**
-	*	Relazione: ogni direttore di dipartimento appartiene ad un dipartimento.
+	*	Relazione: ogni direttore di dipartimento è un ricercatore.
+	*	@return mixed
+	*/
+	public function direttore()
+	{
+		return $this->hasOne('DirettoreDiDipartimento', 'ricercatore_id');
+	}
+
+	/**
+	*	Relazione: ogni responsabile è un ricercatore.
+	*	@return mixed
+	*/
+	public function responsabile()
+	{
+		return $this->hasOne('ResponsabileAreaScientifica', 'ricercatore_id');
+	}
+	
+	/**
+	*	Relazione: ogni ricercatore appartiene ad un dipartimento.
 	*	@return mixed
 	*/
 	public function dipartimento()
@@ -75,12 +93,48 @@ class Ricercatore extends Eloquent{
 	}
 	
 	/**
+	* Restituisce il dipartimento del Ricercatore.
+	* @return string
+	*/
+	public function getDipartimento(){
+		return $this->dipartimento_id;
+	}
+	
+	/**
 	*	Modifica il ruolo del ricercatore.
 	*	@return mixed
 	*/
 	public function setRuolo($ruolo)
 	{
-		return $this->ruolo=$ruolo;
+		switch ($ruolo) {
+			case '1':
+				$this->ruolo="Professore ordinario";
+				break;
+			case '2':
+				$this->ruolo="Professorea associato";
+				break;
+			case '3':
+				$this->ruolo="Ricercatore";
+				break;
+			case '4':
+				$this->ruolo="Borsista post-dottorato";
+				break;
+			case '5':
+				$this->ruolo="Assegnista di ricerca";
+				break;
+			case '6':
+				$this->ruolo="Dottorando";
+				break;
+		}
 	}
-		
+	
+	/**
+	*	Modifica il dipartimento del ricercatore.
+	*	@return mixed
+	*/
+	public function setDipartimento($dipartimento)
+	{
+		$this->dipartimento_id=$dipartimento;
+	}
+
 }

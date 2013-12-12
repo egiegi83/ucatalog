@@ -98,7 +98,7 @@ Route::filter('csrf', function()
 
 Route::filter('admin', function()
 {
-	if (!Auth::getUser()->is_amministratore) 
+	if (!Auth::getUser()->tipo=='0') 
 		return Redirect::guest('/');
 });
 
@@ -113,7 +113,7 @@ Route::filter('admin', function()
 
 Route::filter('ricercatore', function()
 {
-	if (Auth::getUser()->ricercatore_id==NULL) 
+	if (!Auth::getUser()->tipo=='1') 
 		return Redirect::guest('/');
 });
 
@@ -123,12 +123,15 @@ Route::filter('ricercatore', function()
 |--------------------------------------------------------------------------
 |
 | The "guest" filter checks that the current user is "direttore". 
+|	
 |
 */
 
 Route::filter('direttore', function()
 {
-		if (Auth::getUser()->ricercatore->tipo!=1)  return Redirect::guest('/');
+
+	if (!Auth::getUser()->tipo=='2')  
+		return Redirect::guest('/');
 });
 
 
@@ -138,12 +141,14 @@ Route::filter('direttore', function()
 |--------------------------------------------------------------------------
 |
 | The "guest" filter checks that the current user is "Responsabile Area Scientifica". 
-|
+| - da aggiornare in base ai cambi al db
 */
 
 Route::filter('responsabileArea', function()
 {
-	if (Auth::getUser()->ricercatore->tipo!=2) return Redirect::guest('/');
+
+	if (!Auth::getUser()->tipo=='3')  
+		return Redirect::guest('/');
 });
 
 /*
@@ -152,10 +157,11 @@ Route::filter('responsabileArea', function()
 |--------------------------------------------------------------------------
 |
 | The "guest" filter checks that the current user is "Responsabile VQR". 
-|
+|- da aggiornare in base ai cambi al db
 */
 
 Route::filter('responsabileVQR', function()
 {
-	if (Auth::getUser()->responsabileVQR_id!=NULL) return Redirect::guest('/');
+	if (!Auth::getUser()->tipo=='4')  
+		return Redirect::guest('/');
 });

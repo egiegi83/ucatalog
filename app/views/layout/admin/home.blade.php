@@ -60,9 +60,63 @@
 					@if($errors->first('seleziona_tipo'))
 						<label>{{ $errors->first('seleziona_tipo') }}</label>
 					@endif
-						
-						<!-- se selezionato Ricercatore o Direttore Dipartimento o Responsabile Area scientifica -> Aggiungere campo Ruolo -->
-						<!-- se selezionato Ricercatore o Direttore Dipartimento o Responsabile Area scientifica -> Aggiungere select con i Dipartimenti  -->
+						<p>{{ Form::label('Seleziona Ruolo') }}</p>
+						{{ Form::select('ruolo', array(
+						'' => 'Seleziona ruolo', 
+						'1' => 'Professore ordinario', 
+						'2' => 'Professore associato',
+						'3' => 'Ricercatore ',
+						'4' => 'Borsista post-dottorato',
+						'5' => 'Assegnista di ricerca',
+						'6' => 'Dottorando',
+					)) }}
+					@if($errors->first('ruolo'))
+						<label>{{ $errors->first('ruolo') }}</label>
+					@endif
+						<p>{{ Form::label('Seleziona Dipartimento') }}</p>
+						{{ Form::select('dipartimento', array(
+						'' => 'Seleziona dipartimento', 
+						'1' => 'Dipartimento di Scienze del Patrimonio Culturali', 
+						'2' => 'Dipartimento di Chimica e Biologia',
+						'3' => 'Dipartimento di Scienze Giuridiche ',
+						'4' => 'Dipartimento di Fisica "E.R. Caianiello"',
+						'5' => 'Dipartimento di Informatica',
+						'6' => 'Dipartimento di Ingegneria Civile',
+						'7' => "Dipartimento di Ingegneria dell'informazione, Ingegneria elettrica e Matematica Applicata",
+						'8' => 'Dipartimento di Ingegneria Industriale',
+						'9' => 'Dipartimento di Matematica',
+						'10' => 'Dipartimento di Scienze Economiche e Statistiche',
+						'11' => 'Dipartimento di Farmacia',
+						'12' => 'Dipartimento di Medicina e Chirurgia',
+						'13' => 'Dipartimento di Scienze Umane, Filosofiche e della Formazione',
+						'14' => 'Dipartimento di Scienze Politiche, Sociali e della Comunicazione',
+					)) }}
+					@if($errors->first('dipartimento'))
+						<label>{{ $errors->first('dipartimento') }}</label>
+					@endif
+					
+							<p>{{ Form::label('Seleziona Area di Ricerca') }}</p>
+							{{ Form::select('area', array(
+							'' => 'Seleziona area di ricerca', 
+							'1' => 'Scienze matematiche e informatiche', 
+							'2' => 'Scienze fisiche',
+							'3' => 'Scienze chimiche',
+							'4' => 'Scienze della terra',
+							'5' => 'Scienze biologiche',
+							'6' => 'Scienze mediche',
+							'7' => 'Scienze agrarie e veterinarie',
+							'8' => 'Ingegneria civile ed architetturale',
+							'9' => "Ingegneria industriale e dell'informazione",
+							'10' => "Scienze dell'antichità, filologo-letterarie e storico-artistiche",
+							'11' => 'Scienze storiche, filosofiche, psicologiche, pedagogiche',
+							'12' => 'Scienze giuridiche',
+							'13' => 'Scienze economiche e statistiche',
+							'14' => 'Scienze politiche e sociali',
+						)) }}
+						@if($errors->first('area'))
+							<label>{{ $errors->first('area') }}</label>
+						@endif
+
 				    </div>
 				   
 				    

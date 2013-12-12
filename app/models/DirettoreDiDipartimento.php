@@ -23,15 +23,15 @@ class DirettoreDiDipartimento extends Eloquent{
 	* @var boolean
 	*/
 	public $timestamps = false;
-
+		
 	/**
-	*	Relazione: ogni direttore di dipartimento è un ricercatore.
+	*	Relazione: ogni direttore è un ricercatore.
 	*	@return mixed
 	*/
 	public function ricercatore()
 	{
-		return $this->hasOne('Ricercatore', 'ricercatore_id');
-	}	
+		return $this->belongsTo('Ricercatore');
+	}
 	
 	/**
 	*	Relazione: ogni direttore di dipartimento appartiene ad un dipartimento.
@@ -42,5 +42,21 @@ class DirettoreDiDipartimento extends Eloquent{
 		return $this->hasOne('Dipartimento', 'dipartimento_id');
 	}
 	
+	/**
+	* Restituisce il dipartimento del Direttore.
+	* @return string
+	*/
+	public function getDipartimento(){
+		return $this->dipartimento_id;
+	}
+	
+	/**
+	*	Modifica il dipartimento del direttore.
+	*	@return mixed
+	*/
+	public function setDipartimento($dipartimento)
+	{
+		return $this->dipartimento_id=$dipartimento;
+	}
 
 }
