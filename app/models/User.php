@@ -160,8 +160,8 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
 	* Modifica il tipo d'utente.
 	* @return string
 	*/
-	public function setTipo(){
-		$this->tipo;
+	public function setTipo($tipo){
+		$this->tipo=$tipo;
 	}
 
 }
