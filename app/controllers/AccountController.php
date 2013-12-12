@@ -106,9 +106,14 @@ class AccountController extends BaseController {
 		return 'fatto';
 	}
 		
-	//Restituisce la view per la modifica dell'utente
+	/**
+	* Resistuisce la view per la modifica dell'utente
+	*
+	* @param id
+	* @return mixed
+	*/
 	public function getModifica($id=null){
-		$utente=User::where('utenti.id',$id)->first(); 
+		$utente=User::find($id); 
 		if($utente==null) //se l'id non è presente nel DB
 			return Redirect::to('admin');
 			
@@ -157,6 +162,12 @@ class AccountController extends BaseController {
 				}
 		}
 	}
+	
+	public function getListaUtenti(){
+		$users=DB::table('utenti')->where('is_valid','1')->get();
+		return View::make('layout.admin.lista')->with('users', $users);
+	}
+	
 	
 	//Modifica Utente nel DB
 	public function postUpdate($id=null){
