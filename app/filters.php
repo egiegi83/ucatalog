@@ -128,8 +128,7 @@ Route::filter('ricercatore', function()
 
 Route::filter('direttore', function()
 {
-		$ricercatore = Auth::getUser()->ricercatore()->get()->first();
-		if ($ricercatore->tipo!=1)  return Redirect::guest('/');
+		if (Auth::getUser()->ricercatore->tipo!=1)  return Redirect::guest('/');
 });
 
 
@@ -144,8 +143,7 @@ Route::filter('direttore', function()
 
 Route::filter('responsabileArea', function()
 {
-	$ricercatore = Auth::getUser()->ricercatore()->get()->first();
-	if ($ricercatore->tipo!=2) return Redirect::guest('/');
+	if (Auth::getUser()->ricercatore->tipo!=2) return Redirect::guest('/');
 });
 
 /*
