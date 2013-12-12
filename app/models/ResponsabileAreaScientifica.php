@@ -25,13 +25,13 @@ class ResponsabileAreaScientifica extends Eloquent{
 	public $timestamps = false;
 
 	/**
-	*	Relazione: ogni direttore di dipartimento è un ricercatore.
+	*	Relazione: ogni responsabile è un ricercatore.
 	*	@return mixed
 	*/
 	public function ricercatore()
 	{
-		return $this->hasOne('Ricercatore', 'ricercatore_id');
-	}	
+		return $this->belongsTo('Ricercatore');
+	}
 
 	/**
 	*	Relazione: ogni responsabile di area scientifica appartiene ad un'area scientifica.
