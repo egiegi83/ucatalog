@@ -95,12 +95,29 @@ class Ricercatore extends Eloquent{
 	}
 	
 	/**
+	* Restituisce il dipartimento del Ricercatore.
+	* @return string
+	*/
+	public function getDipartimento(){
+		return $this->dipartimento_id;
+	}
+	
+	/**
 	*	Modifica il ruolo del ricercatore.
 	*	@return mixed
 	*/
 	public function setRuolo($ruolo)
 	{
 		return $this->ruolo=$ruolo;
+	}
+	
+	/**
+	*	Modifica il dipartimento del ricercatore.
+	*	@return mixed
+	*/
+	public function setDipartimento($dipartimento)
+	{
+		return $this->dipartimento_id=$dipartimento;
 	}
 
 }

@@ -40,5 +40,22 @@ class ResponsabileAreaScientifica extends Eloquent{
 	public function areaScientifica()
 	{
 		return $this->hasOne('AreaScientifica', 'area_scientifica_id');
+	}
+	
+	/**
+	* Restituisce l'area scientifica del Responsabile.
+	* @return string
+	*/
+	public function getArea(){
+		return $this->area_scientifica_id;
+	}
+	
+	/**
+	*	Modifica l'area scientifica del Responsabile.
+	*	@return mixed
+	*/
+	public function setArea($area)
+	{
+		return $this->area_scientifica_id=$area;
 	}	
 }

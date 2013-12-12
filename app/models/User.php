@@ -42,6 +42,16 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
 	{
 		return $this->hasOne('Ricercatore','utente_id');
 	}
+	
+	/**
+	*	Relazione: ogni responsabileVQR è un utente.
+	*	@return mixed
+	*/
+	public function responsabileVQR()
+	{
+		return $this->hasOne('ResponsabileVQR','utente_id');
+	}
+	
 	/**
 	 * Get the unique identifier for the user.
 	 *
@@ -102,8 +112,7 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
 	*/
 	public function getTipo(){
 		return $this->tipo;
-	}
-	
+	}	
 	
 	/**
 	 * Modifica la password.
