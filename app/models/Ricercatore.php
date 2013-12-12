@@ -108,7 +108,27 @@ class Ricercatore extends Eloquent{
 	*/
 	public function setRuolo($ruolo)
 	{
-		return $this->ruolo=$ruolo;
+		switch ($ruolo) {
+			case '1':
+				$this->ruolo="Professore ordinario";
+				break;
+			case '2':
+				$this->ruolo="Professorea associato";
+				break;
+			case '3':
+				$this->ruolo="Ricercatore";
+				break;
+			case '4':
+				$this->ruolo="Borsista post-dottorato";
+				break;
+			case '5':
+				$this->ruolo="Assegnista di ricerca";
+				break;
+			case '6':
+				$this->ruolo="Dottorando";
+				break;
+		}
+		$this->ruolo=$ruolo;
 	}
 	
 	/**
@@ -117,7 +137,7 @@ class Ricercatore extends Eloquent{
 	*/
 	public function setDipartimento($dipartimento)
 	{
-		return $this->dipartimento_id=$dipartimento;
+		$this->dipartimento_id=$dipartimento;
 	}
 
 }

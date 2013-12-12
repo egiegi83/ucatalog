@@ -161,7 +161,7 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
 	* @return string
 	*/
 	public function setTipo(){
-		return $this->tipo;
+		$this->tipo;
 	}
 
 }
