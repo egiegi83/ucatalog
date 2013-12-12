@@ -1,0 +1,5 @@
+# File che github ignora al momento del commit
+
+*.php~
+*.css~
+*.js~
