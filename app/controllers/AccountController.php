@@ -20,9 +20,7 @@ class AccountController extends BaseController {
 	
 	//Restituisce la View per l'inserimento di un nuovo utente
 	public function getIndex(){
-		return View::make('layout.admin.home')
-			->with('dipartimenti',$this->getDipartimenti())
-			->with('aree_di_ricerca',$this->getAreeDiRicerca());
+		return View::make('layout.admin.home');
 	}
 	
 	/**
@@ -271,7 +269,7 @@ class AccountController extends BaseController {
 		);
 		if($tipo!='4'){ //se non è ResponsabileVQR i campi ruolo e dipartimento sono obbligatori
 			$rules['ruolo']= 'required';
-			$rules=['dipartimento'] ='required';
+			$rules['dipartimento'] ='required';
 		}
 		if($tipo=='3')// se ResponsabileAreaScientifica il campo area è obbligatorio
 			$rules['area']='required';
