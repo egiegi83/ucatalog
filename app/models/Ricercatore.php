@@ -42,6 +42,15 @@ class Ricercatore extends Eloquent{
 	}
 	
 	/**
+	*	Relazione: ogni direttore di dipartimento appartiene ad un dipartimento.
+	*	@return mixed
+	*/
+	public function dipartimento()
+	{
+		return $this->hasOne('Dipartimento', 'dipartimento_id');
+	}
+	
+	/**
 	*	Restituisce il ruolo del ricercatore.
 	*	@return mixed
 	*/
