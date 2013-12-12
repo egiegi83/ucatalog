@@ -19,6 +19,10 @@ class RicercatorePartecipaProdotto extends Eloquent {
 	 */
 	protected $table = 'ricercatore_partecipa_prodotto';
 	
+	/**
+	* La tabella non ha un campo timestamps
+	* @var boolean
+	*/
 	public $timestamps = false;
 
 	/**

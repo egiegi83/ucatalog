@@ -22,6 +22,7 @@ class Ricercatore extends Eloquent{
 	* @var boolean
 	*/
 	public $timestamps = false;
+	
 	/**
 	*	Relazione: ogni ricercatore può essere proprietario di diversi prodotti.
 	*	@return mixed

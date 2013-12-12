@@ -18,6 +18,10 @@ class AllegatoProdotto extends Eloquent {
 	 */
 	protected $table = 'allegati_prodotto';
 	
+	/**
+	* La tabella non ha un campo timestamps
+	* @var boolean
+	*/
 	public $timestamps = false;
 
 	/**

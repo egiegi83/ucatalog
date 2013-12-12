@@ -18,6 +18,10 @@ class Prodotto extends Eloquent {
 	 */
 	protected $table = 'prodotti';
 	
+	/**
+	* La tabella non ha un campo timestamps
+	* @var boolean
+	*/
 	public $timestamps = false;
 	
 	/**

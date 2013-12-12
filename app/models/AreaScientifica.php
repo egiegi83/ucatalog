@@ -17,6 +17,10 @@ class AreaScientifica extends Eloquent {
 	 */
 	protected $table = 'area_scientifica';
 	
+	/**
+	* La tabella non ha un campo timestamps
+	* @var boolean
+	*/
 	public $timestamps = false;
 	
 	/**

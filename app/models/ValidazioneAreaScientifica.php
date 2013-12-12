@@ -19,6 +19,10 @@ class ValidazioneAreaScientifica extends Eloquent {
 	 */
 	protected $table = 'validazioni_area_scientifica';
 	
+	/**
+	* La tabella non ha un campo timestamps
+	* @var boolean
+	*/
 	public $timestamps = false;
 
 	/**
