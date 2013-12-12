@@ -41,4 +41,23 @@ class Ricercatore extends Eloquent{
 	{
 		return $this->belongsTo('User');
 	}
+	
+	/**
+	*	Restituisce il ruolo del ricercatore.
+	*	@return mixed
+	*/
+	public function getRuolo()
+	{
+		return $this->ruolo;
+	}
+	
+	/**
+	*	Modifica il ruolo del ricercatore.
+	*	@return mixed
+	*/
+	public function setRuolo($ruolo)
+	{
+		return $this->ruolo=$ruolo;
+	}
+		
 }

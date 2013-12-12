@@ -91,12 +91,13 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
 	}
 	
 	/**
-	* Restituisce vero se è amministratore, altrimenti falso.
+	* Restituisce il tipo d'utente.
 	* @return string
 	*/
-	public function getIsAmministratore(){
-		return $this->is_amministratore;
+	public function getTipo(){
+		return $this->tipo;
 	}
+	
 	
 	/**
 	 * Modifica la password.
@@ -138,6 +139,14 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
 	*/
 	public function setData($data){
 		$this->data_di_nascita=$data;
+	}
+	
+	/**
+	* Modifica il tipo d'utente.
+	* @return string
+	*/
+	public function setTipo(){
+		return $this->tipo;
 	}
 
 }
