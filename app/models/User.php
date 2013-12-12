@@ -20,6 +20,9 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
 	 * @var string
 	 */
 	protected $table = 'utenti';
+	protected $softDelete = false;
+
+protected $guarded = array();  // Important
 
 	/**
 	* La tabella non ha un campo timestamps
