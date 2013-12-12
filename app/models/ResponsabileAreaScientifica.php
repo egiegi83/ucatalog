@@ -37,7 +37,7 @@ class ResponsabileAreaScientifica extends Eloquent{
 	*	Relazione: ogni responsabile di area scientifica appartiene ad un'area scientifica.
 	*	@return mixed
 	*/
-	public function ricercatore()
+	public function areaScientifica()
 	{
 		return $this->hasOne('AreaScientifica', 'area_scientifica_id');
 	}	
