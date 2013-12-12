@@ -21,6 +21,7 @@ class ProdottiController extends BaseController {
 	
 	public function postEliminaProdottiSelezionati(){
 		$ids=Input::get('data');
+		print_r(Auth::getUser()->ricercatore->prodottiBozza());
 		Auth::getUser()->ricercatore->prodottiBozza()->delete($ids);
 	}
 	
