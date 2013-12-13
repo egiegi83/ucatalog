@@ -46,9 +46,12 @@ Route::post('/search',function(){
 
 Route::post('/autori/tag',function(){
 	if (Request::ajax()){
-		$query = Input::get('q');	
-		if(strlen(trim($query))>0){
-			$response = Response::json(User::where('nome','like','%'.$query.'%')->where('ricercatore_id','<>','NULL')->get()->toArray());
+		$s = Input::get('q');	
+		if(strlen(trim($s))>0){
+			$response = Response::json(Ricercatore::with(array('utente' => function($query){
+				global $s;
+				$query->where('nome','LIKE','%'.$s.'%');
+			}))->get()->toArray());
 			$response->header('Content-Type', 'application/json');
 			return $response;
 		}

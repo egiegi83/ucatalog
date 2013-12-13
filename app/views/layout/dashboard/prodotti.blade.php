@@ -32,17 +32,17 @@
 				 	{{ $p->descrizione }}
 				</section>
 				<footer>
-					@if(count($autors = $p->ricercatorePartecipaProdotto()->get()) > 0)
+					@if($rpps = $p->ricercatorePartecipaProdotto)
 					  	<span class="autori">Autori:
-					  	@foreach($autors->toarray() as $a)
+					  	@foreach($rpps as $rpp)
 					 		 <?php if(isset($f)) echo ','; ?>
-					 		 @if($a['ricercatore_id'])
-					 		 	<a href="{{ URL::to('/$a->id'); }}">
-					 		 		<?php  $u = RicercatorePartecipaProdotto::find($a['id'])->get()->first()->ricercatore->utente->toarray(); ?>
-					 		 		{{ $u['nome'].' '.$u['cognome']}}
+					 		 @if($rpp->ricercatore_id)
+					 		 	<a href="{{ URL::to('/$rpp->ricercatore_id'); }}">
+					 		 		<?php  $u = $rpp->ricercatore->utente; ?>
+					 		 		{{ $u->nome.' '.$u->cognome}}
 				 		 		</a>
 							@else
-								{{ $a['coautore'] }}
+								{{ $rpp->coautore }}
 							@endif
 							<?php $f=true; ?>
 						@endforeach

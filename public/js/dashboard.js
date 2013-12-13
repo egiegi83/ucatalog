@@ -62,7 +62,7 @@ uc.addEvent(window,'load',function(){
 			uc.addEvent(tb_autori,'focus',function(e){ searchRicercatore.call(this,e); });
 			uc.addEvent(document,'click',function(e){ if(e.target==tb_autori) return; res.classList.remove('open'); });
 				
-			function select_autor_ids(){
+			function getSelected_autors(){
 				var sps=sa.querySelectorAll('span');
 				arry=[];
 				for(var i=0;len=sps.length, i<len; i++){
@@ -74,7 +74,11 @@ uc.addEvent(window,'load',function(){
 						arry[i++]=tmp_a[a].trim();
 					}	
 				}
-				ha.value = '{"data":["' + arry.join('","') + '"]}';
+				return arry;
+			}	
+				
+			function select_autor_ids(){
+				ha.value = '{"data":["' + getSelected_autors().join('","') + '"]}';
 				console.log(ha.value);
 			};
 				
@@ -104,7 +108,7 @@ uc.addEvent(window,'load',function(){
 					tmp='<ul>';
 					if(data.length){
 						for(d in data){
-							tmp+='<li data-id="'+ data[d].id +'" onclick="select_autore(this)">'+ data[d].nome +' '+ data[d].cognome +'</li>';
+							tmp+='<li data-id="'+ data[d].id +'" onclick="select_autore(this)">'+ data[d].utente.nome +' '+ data[d].utente.cognome +'</li>';
 						}
 					} else {
 						tmp+='<li>Nessun risultato</li>';
@@ -115,6 +119,9 @@ uc.addEvent(window,'load',function(){
 			}
 			
 			select_autore = function(t){
+				var _sa=getSelected_autors(),f=false;
+				for(var j=0; len=_sa.length, j<len; j++){ if(_sa[j]==t.dataset.id){ f=true; break;}}
+				if(f) return;
 				tb_autori.textContent='';
 				sa.innerHTML += '<span data-id="' + t.dataset.id + '">'+t.innerHTML+'</span>';
 				tb_autori.focus();

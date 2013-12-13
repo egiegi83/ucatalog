@@ -21,9 +21,9 @@ class ProdottiController extends BaseController {
 	
 	public function postEliminaProdottiSelezionati(){
 		$ids=Input::get('data');
-		$ps=Auth::getUser()->ricercatore->prodottiBozza();
-		foreach($ids as $id){
-			$ps->where('prodotti.id','=',$id)->delete();
+		$ps=Auth::getUser()->ricercatore->prodottiBozza()->find($ids);
+		foreach($ps as $p){
+			$p->delete();
 		}
 	}
 	
@@ -68,8 +68,8 @@ class ProdottiController extends BaseController {
 		$product->setNomeConvegno($inputAll['nome_convegno']);
 		$product->setLingua($inputAll['lingua']);
 		$product->area_scientifica_id=($inputAll['area_di_ricerca']);
-		$product->dipartimento_id=Auth::getUser()->ricercatore()->get()->first()->dipartimento_id;
-		$product->ricercatore_id=Auth::getUser()->ricercatore_id;
+		$product->dipartimento_id=Auth::getUser()->ricercatore->dipartimento_id;
+		$product->ricercatore_id=Auth::getUser()->ricercatore->id;
 		$product->save();
 		
 		if(Input::has('autori')){
