@@ -47,7 +47,7 @@
 				    <p>
 					{{ Form::selectRange('data_giorno',1,31) }} /
 					{{ Form::selectMonth('data_mese') }} /
-					{{ Form::selectRange('data_anno', 1990, date('Y') ) }}
+					{{ Form::selectRange('data_anno', 1940, date('Y')-23 ) }}
 				    </p>
 					<p>{{ Form::label('Seleziona tipo') }}</p>
 						{{ Form::select('seleziona_tipo', array(

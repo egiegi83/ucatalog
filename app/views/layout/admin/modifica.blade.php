@@ -25,7 +25,7 @@
 			<p>	{{Form::model($user, array('url' => array('admin/update',$user->utente_id )))}}</p> 
 				     <p>{{ Form::label('email') }}</p>
 				    {{ $errors->first('email') }}
-				    <p>{{ Form::text('email') }}</p>
+				    <p>{{ Form::text('email',$user->getEmail(),array('disabled'=>'disabled'))}}</p>
 				    
 				    <p>{{ Form::label('password') }}</p>
 				    <p>{{ $errors->first('password') }}</p>
@@ -49,7 +49,7 @@
 					<?php list($year,$month,$day)=explode("-", $user->data_di_nascita); ?>
 					{{ Form::selectRange('data_giorno',1,31, substr($day,0,2)) }} /
 					{{ Form::selectMonth('data_mese', $month) }} /
-					{{ Form::selectRange('data_anno', 1990, date('Y'), $year) }}
+					{{ Form::selectRange('data_anno', 1940, date('Y')-23, $year) }}
 				    </p>
 					<p>{{ Form::label('Seleziona tipo') }}</p>
 						{{ Form::select('tipo', array(

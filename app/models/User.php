@@ -86,6 +86,16 @@ protected $guarded = array();  // Important
 	}
 	
 	/**
+	 * Get the e-mail address where password reminders are sent.
+	 *
+	 * @return string
+	 */
+	public function getEmail()
+	{
+		return $this->email;
+	}
+	
+	/**
 	* Restituisce il nome.
 	* @return string
 	*/
