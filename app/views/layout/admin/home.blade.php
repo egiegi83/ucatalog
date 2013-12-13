@@ -74,6 +74,10 @@
 						<label>{{ $errors->first('ruolo') }}</label>
 					@endif
 						<p>{{ Form::label('Seleziona Dipartimento') }}</p>
+						{{ Form::select('dipartimento', $dipartimenti) }}
+				
+				<!--	la vecchia select è sostituita dalla select dinamica
+					
 						{{ Form::select('dipartimento', array(
 						'' => 'Seleziona dipartimento', 
 						'1' => 'Dipartimento di Scienze del Patrimonio Culturali', 
@@ -91,11 +95,15 @@
 						'13' => 'Dipartimento di Scienze Umane, Filosofiche e della Formazione',
 						'14' => 'Dipartimento di Scienze Politiche, Sociali e della Comunicazione',
 					)) }}
+				-->
 					@if($errors->first('dipartimento'))
 						<label>{{ $errors->first('dipartimento') }}</label>
 					@endif
 					
 							<p>{{ Form::label('Seleziona Area di Ricerca') }}</p>
+							{{ Form::select('area', $aree_di_ricerca) }}
+					
+				<!--	la vecchia select è sostituita dalla select dinamica
 							{{ Form::select('area', array(
 							'' => 'Seleziona area di ricerca', 
 							'1' => 'Scienze matematiche e informatiche', 
@@ -113,6 +121,7 @@
 							'13' => 'Scienze economiche e statistiche',
 							'14' => 'Scienze politiche e sociali',
 						)) }}
+				-->
 						@if($errors->first('area'))
 							<label>{{ $errors->first('area') }}</label>
 						@endif

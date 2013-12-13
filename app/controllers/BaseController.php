@@ -36,7 +36,7 @@ class BaseController extends Controller {
 	*	utilizzato per la select nelle view di modifica e inserimento utente
 	*	@return array
 	*/
-	public static function getAreaScientifica(){
+	public static function getAreeDiRicerca(){
 		$areaArray = array();
 		$areaArray[''] = 'Seleziona area di ricerca';
 		foreach(AreaScientifica::all() as $area_scientifica){

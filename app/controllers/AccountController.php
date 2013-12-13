@@ -19,7 +19,9 @@ class AccountController extends BaseController {
 	}
 	
 	public function getIndex(){
-		return View::make('layout.admin.home');
+		return View::make('layout.admin.home')
+			->with('dipartimenti',$this->getDipartimenti())
+			->with('aree_di_ricerca',$this->getAreeDiRicerca());
 	}
 	
 	/**
