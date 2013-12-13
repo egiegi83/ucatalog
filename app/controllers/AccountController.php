@@ -103,7 +103,7 @@ class AccountController extends BaseController {
 			}
 		}	
 		//modificare View di return
-		return 'fatto';
+		return Redirect::to('admin/lista-utenti'); //aggiungere messaggio
 	}
 		
 	/**
@@ -267,7 +267,7 @@ class AccountController extends BaseController {
 					$user->responsabileVQR()->save($responsabile);
 					break;
 		}
-		return Redirect::to('admin'); //da cambiare o aggiungere messaggio
+		return Redirect::to('admin/lista-utenti'); //aggiungere messaggio
 	}
 	
 	/**
@@ -280,7 +280,7 @@ class AccountController extends BaseController {
 	}
 	
 	
-	private function getBasicRules(){
+	private function getBasicRules($tipo){
 		$rules =array(
 			'email'    => 'required|email|unique:utenti,email',
 			'password' => 'required|min:4|max:20',

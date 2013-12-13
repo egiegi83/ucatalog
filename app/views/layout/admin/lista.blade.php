@@ -49,7 +49,7 @@
 				break;
 		}?>
 		<tr><td>{{$user->cognome }}</td>
-		<td>{{$user->nome }}</td><td> {{$user->email }}</td><td> <?php echo $tipo; ?> </td><td><a href="admin/modifica/<?php echo $user->id;?>">Modifica</a></tr>
+		<td>{{$user->nome }}</td><td> {{$user->email }}</td><td> <?php echo $tipo; ?> </td><td><a href="modifica/<?php echo $user->id;?>">Modifica</a></tr>
 	@endforeach
 </table>
 			</div>
