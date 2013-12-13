@@ -38,8 +38,13 @@ class AutenticazioneController extends BaseController {
 		
 			// effettua il login dell'utente
 			if(Auth::attempt($userdata)){
-				// il login ha avuto successo
-				return Redirect::to('dashboard');
+				$tipo = Auth::user()->getTipo();
+				if($tipo == '0') 							// se è l'admministratore
+					return Redirect::intended('admin'); 
+				else if ($tipo == ('1' || '2' || '3') ) 	// se è un ricercatore (o direttore o responsabile area)
+					return Redirect::intended('dashboard');
+				else if ($tipo == '4')						// se è un responsabile VQR (provvisorio)
+					return Redirect::intended('dashboard');
 			} 
 			else{	 	
 				// il login non ha avuto successo

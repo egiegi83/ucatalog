@@ -113,7 +113,7 @@ Route::filter('admin', function()
 
 Route::filter('ricercatore', function()
 {
-	if (!Auth::getUser()->tipo=='1') 
+	if (!Auth::getUser()->tipo== ('1' || '2' || '3')) 
 		return Redirect::guest('/');
 });
 
