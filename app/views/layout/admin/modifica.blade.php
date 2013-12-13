@@ -76,7 +76,7 @@
 						<label>{{ $errors->first('ruolo') }}</label>
 					@endif
 						<p>{{ Form::label('Seleziona Dipartimento') }}</p>
-						{{ Form::select('dipartimento', $dipartimenti) }}
+						{{ Form::select('dipartimento_id', $dipartimenti) }}
 						
 					<!--	la vecchia select è sostituita dalla select dinamica
 							
@@ -103,7 +103,7 @@
 					@endif
 					
 							<p>{{ Form::label('Seleziona Area di Ricerca') }}</p>
-							{{ Form::select('area', $aree_di_ricerca) }}
+							{{ Form::select('area_scientifica_id', $aree_di_ricerca) }}
 								
 					<!--	la vecchia select è sostituita dalla select dinamica
 							{{ Form::select('area', array(
