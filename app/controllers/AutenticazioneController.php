@@ -34,13 +34,13 @@ class AutenticazioneController extends BaseController {
 				->withInput(Input::except('password')); // conserva gli input immessi, eccetto la password
 		} else {
 			// crea un array con i dati immessi nella form
-			$userdata = Input::only('email','password');
-		
+			$email = Input::get('email');
+			$password = Input::get('password');
 			// effettua il login dell'utente
-			if(Auth::attempt($userdata)){
+			if (Auth::attempt(array('email' => $email, 'password' => $password, 'active' => '1'))){
 				$tipo = Auth::user()->getTipo();
 				if($tipo == '0') 							// se è l'admministratore
-					return Redirect::intended('admin'); 
+					return Redirect::to('admin'); 
 				else if ($tipo == ('1' || '2' || '3') ) 	// se è un ricercatore (o direttore o responsabile area)
 					return Redirect::intended('dashboard');
 				else if ($tipo == '4')						// se è un responsabile VQR (provvisorio)
