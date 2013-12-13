@@ -20,7 +20,9 @@ class AccountController extends BaseController {
 	
 	//Restituisce la View per l'inserimento di un nuovo utente
 	public function getIndex(){
-		return View::make('layout.admin.home');
+		return View::make('layout.admin.home')
+			->with('dipartimenti',$this->getDipartimenti())
+			->with('aree_di_ricerca',$this->getAreeDiRicerca());
 	}
 	
 	/**
@@ -118,27 +120,39 @@ class AccountController extends BaseController {
 					$user=User::where('utenti.id',$id)
 						->Join('ricercatori', 'utenti.id', '=', 'ricercatori.utente_id')
 						->first();
-						return View::make('layout.admin.modifica')->with('user',$user);
+						return View::make('layout.admin.modifica')
+							->with('user',$user)
+							->with('dipartimenti',$this->getDipartimenti())
+							->with('aree_di_ricerca',$this->getAreeDiRicerca());
 						break;
 				case '2': //se Direttore di Dipartimento
 					$user=User::where('utenti.id',$id)
 						->Join('ricercatori', 'utenti.id', '=', 'ricercatori.utente_id')
 						->Join('direttori_di_dipartimento', 'ricercatori.id', '=', 'direttori_di_dipartimento.ricercatore_id')
 						->first();
-						return View::make('layout.admin.modifica')->with('user',$user);
+						return View::make('layout.admin.modifica')
+							->with('user',$user)
+							->with('dipartimenti',$this->getDipartimenti())
+							->with('aree_di_ricerca',$this->getAreeDiRicerca());
 						break;
 				case '3': //se responsabile area scientifica
 					$user=User::where('utenti.id',$id)
 						->Join('ricercatori', 'utenti.id', '=', 'ricercatori.utente_id')
 						->Join('responsabili_area_scientifica', 'ricercatori.id', '=', 'responsabili_area_scientifica.ricercatore_id')
 						->first();
-						return View::make('layout.admin.modifica')->with('user',$user);
+						return View::make('layout.admin.modifica')
+							->with('user',$user)
+							->with('dipartimenti',$this->getDipartimenti())
+							->with('aree_di_ricerca',$this->getAreeDiRicerca());
 						break;
 				case '4': // se Responsabile VQR
 					$user=User::where('utenti.id',$id)
 						->Join('responsabili_vqr', 'utenti.id', '=', 'responsabili_vqr.utente_id')
 						->first();
-						return View::make('layout.admin.modifica')->with('user',$user);
+						return View::make('layout.admin.modifica')
+							->with('user',$user)
+							->with('dipartimenti',$this->getDipartimenti())
+							->with('aree_di_ricerca',$this->getAreeDiRicerca());
 						break;
 				}
 		}
