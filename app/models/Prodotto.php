@@ -70,6 +70,76 @@ class Prodotto extends Eloquent {
 		return $this->hasMany('RicercatorePartecipaProdotto','prodotto_id');
 	}	
 	
+	/**   -----------------------------------------------------------
+	*	  	Relazioni per Tipologia di prodotto
+	*	  -----------------------------------------------------------
+	*/
+	
+	/**
+	 * Relazione: un prodotto può essere un articolo su rivista.
+	 * @return mixed 
+	 */
+	public function articoloSuRivista() {
+		
+		return $this->hasOne('ArticoloSuRivista','prodotto_id');
+	
+	}
+	/**
+	 * Relazione: un prodotto può essere un libro.
+	 * @return mixed 
+	 */
+	public function libro() {
+		
+		return $this->hasOne('Libro','prodotto_id');
+	
+	}
+
+	/**
+	 * Relazione: un prodotto può essere un Convegno/Atto di convegno.
+	 * @return mixed 
+	 */
+	public function convegno() {
+		
+		return $this->hasOne('Convegno','prodotto_id');
+	
+	}
+
+	/**
+	 * Relazione: un prodotto può essere una traduzione.
+	 * @return mixed 
+	 */
+	public function traduzione() {
+		
+		return $this->hasOne('Traduzione','prodotto_id');
+	
+	}
+
+	/**
+	 * Relazione: un prodotto può essere un brevetto.
+	 * @return mixed 
+	 */
+	public function brevetto() {
+		
+		return $this->hasOne('Brevetto','prodotto_id');
+	
+	}
+
+	/**
+	 * Relazione: un prodotto può essere un altro tipo di prodotto (tipologia personalizzata).
+	 * @return mixed 
+	 */
+	public function altroProdotto() {
+		
+		return $this->hasOne('AltroProdotto','prodotto_id');
+	
+	}
+	
+	
+	/**   -----------------------------------------------------------
+	*	  	Fine Relazioni per Tipologia di prodotto
+	*	  -----------------------------------------------------------
+	*/
+	
 	/**
 	 * Restituisce l'ID.
 	 * @return integer
@@ -141,143 +211,13 @@ class Prodotto extends Eloquent {
 	}
 
 	/**
-	 * Restituisce il codice DOI.
-	 * @return string
+	 * Restituisce il livello di validazione del prodotto.
+	 * @param string
 	 */
-	public function getDOI() {
-
-		return $this->doi;
-
-	}
-
-	/**
-	 * Restituisce il codice ISSN.
-	 * @return string
-	 */
-	public function getISSN() {
-
-		return $this->issn;
-
-	}
-
-	/**
-	 * Restituisce il titolo della rivista.
-	 * @return string
-	 */
-	public function getTitoloRivista() {
-
-		return $this->titolo_rivista;
-
-	}
-
-	/**
-	 * Restituisce la pagina iniziale.
-	 * @return string
-	 */
-	public function getPaginaIniziale() {
-
-		return $this->pagina_iniziale;
-
-	}
-
-	/**
-	 * Restituisce la pagina finale.
-	 * @return string
-	 */
-	public function getPaginaFinale() {
-
-		return $this->pagina_finale;
-
-	}
-
-	/**
-	 * Restituisce il numero della rivista.
-	 * @return string
-	 */
-	public function getNumeroRivista() {
-
-		return $this->numero_rivista;
-
-	}
-
-	/**
-	 * Restituisce l'editore.
-	 * @return string
-	 */
-	public function getEditore() {
-
-		return $this->editore;
-
-	}
-
-	/**
-	 * Restituisce il codice ISBN.
-	 * @return string
-	 */
-	public function getISBN() {
-
-		return $this->isbn;
-
-	}
-
-	/**
-	 * Restituisce il numero del capitolo.
-	 * @return string
-	 */
-	public function getNumeroCapitolo() {
-
-		return $this->numero_capitolo;
-
-	}
-
-	/**
-	 * Restituisce la tipologia.
-	 * @return string
-	 */
-	public function getAltraTipologia() {
-
-		return $this->altra_tipologia;
-
-	}
-
-	/**
-	 * Restituisce la data del convegno.
-	 * @return DateTime
-	 */
-	public function getDataConvegno() {
-
-		return $this->data_convegno;
-
-	}
-
-	/**
-	 * Restituisce il luogo del convegno.
-	 * @return string
-	 */
-	public function getLuogoConvegno() {
-
-		return $this->luogo_convegno;
-
-	}
-
-	/**
-	 * Restituisce il nome del convegno.
-	 * @return string
-	 */
-	public function getNomeConvegno() {
-
-		return $this->nome_convegno;
-
-	}
-
-	/**
-	 * Restituisce la lingua.
-	 * @return string
-	 */
-	public function getLingua() {
-
-		return $this->lingua;
-
+	public function getValidazione() {
+	
+		return $this->validazione;
+	
 	}
 
 	/**
@@ -329,147 +269,16 @@ class Prodotto extends Eloquent {
 		$this->data_pubblicazione = $data_pubblicazione;
 
 	}
-
+	
 	/**
-	 * Modifica il codice DOI.
+	 * Modifica il livello di validazione del prodotto.
 	 * @param string
 	 */
-	public function setDOI($doi) {
-
-		$this->doi = $doi;
-
+	public function setValidazione($validazione) {
+	
+		$this->validazione = $validazione;
+	
 	}
-
-	/**
-	 * Modifica il codice ISSN.
-	 * @param string
-	 */
-	public function setISSN($issn) {
-
-		$this->issn = $issn;
-
-	}
-
-	/**
-	 * Modifica il titolo della rivista.
-	 * @param string
-	 */
-	public function setTitoloRivista($titolo_rivista) {
-
-		$this->titolo_rivista = $titolo_rivista;
-
-	}
-
-	/**
-	 * Modifica la pagina iniziale.
-	 * @param string
-	 */
-	public function setPaginaIniziale($pagina_iniziale) {
-
-		$this->pagina_iniziale = $pagina_iniziale;
-
-	}
-
-	/**
-	 * Modifica la pagina finale.
-	 * @param string
-	 */
-	public function setPaginaFinale($pagina_finale) {
-
-		$this->pagina_finale = $pagina_finale;
-
-	}
-
-	/**
-	 * Modifica il numero della rivista.
-	 * @param string
-	 */
-	public function setNumeroRivista($numero_rivista) {
-
-		$this->numero_rivista = $numero_rivista;
-
-	}
-
-	/**
-	 * Modifica l'editore.
-	 * @param string
-	 */
-	public function setEditore($editore) {
-
-		$this->editore = $editore;
-
-	}
-
-	/**
-	 * Modifica il codice ISBN.
-	 * @param string
-	 */
-	public function setISBN($isbn) {
-
-		$this->isbn = $isbn;
-
-	}
-
-	/**
-	 * Modifica il numero del capitolo.
-	 * @param string
-	 */
-	public function setNumeroCapitolo($numero_capitolo) {
-
-		$this->numero_capitolo = $numero_capitolo;
-
-	}
-
-	/**
-	 * Modifica la tipologia.
-	 * @param string
-	 */
-	public function setAltraTipologia($altra_tipologia) {
-
-		$this->altra_tipologia = $altra_tipologia;
-
-	}
-
-	/**
-	 * Modifica la data del convegno.
-	 * @param DateTime
-	 */
-	public function setDataConvegno($data_convegno) {
-
-		$this->data_convegno = $data_convegno;
-
-	}
-
-	/**
-	 * Modifica il luogo del convegno.
-	 * @param string
-	 */
-	public function setLuogoConvegno($luogo_convegno) {
-
-		$this->luogo_convegno = $luogo_convegno;
-
-	}
-
-	/**
-	 * Modifica il nome del convegno.
-	 * @param string
-	 */
-	public function setNomeConvegno($nome_convegno) {
-
-		$this->nome_convegno = $nome_convegno;
-
-	}
-
-	/**
-	 * Modifica la lingua.
-	 * @param string
-	 */
-	public function setLingua($lingua) {
-
-		$this->lingua = $lingua;
-
-	}
-		
 }
 
 ?>

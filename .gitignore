@@ -27,4 +27,8 @@ public/index.php
 server.php
 vendor/**
 bootstrap/**
-app/storage/**
+app/storage/cache/**
+app/storage/logs/**
+app/storage/meta/**
+app/storage/sessions/**
+app/storage/views/**

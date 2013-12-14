@@ -20,15 +20,16 @@ class ProdottiController extends BaseController {
 	}
 	
 	public function postEliminaProdottiSelezionati(){
-		$ids=Input::get('data');
-		$ps=Auth::getUser()->ricercatore->prodottiBozza()->find($ids);
-		foreach($ps as $p){
-			$p->delete();
-			$sps=$p->allegatiProdotto;
-			foreach($sps as $sp){
-				unlink($sp->getURL());
+			$ids=Input::get('data');
+			var_dump(Input::get('data'));
+			$ps=Auth::getUser()->ricercatore->prodottiBozza()->find($ids);
+			foreach($ps as $p){
+				$sps=$p->allegatiProdotto;
+				foreach($sps as $sp){
+					unlink($sp->getURL());
+				}
+				$p->delete();
 			}
-		}
 	}
 	
 	public function postModifica(){
@@ -37,8 +38,10 @@ class ProdottiController extends BaseController {
 
 	public function postAggiungi(){
 		if(Input::has('save_def')) {
+			$is_def=1;
 			$validator =  Validator::make(Input::all(), $this::getAllRules());
 		} else if(Input::has('save_boz')){
+			$is_def=0;
 			$validator = Validator::make(Input::all(), $this::getBasicRules());
 		} else { 
 			return Redirect::to('dashboard/aggiungi-prodotto'); 
@@ -54,27 +57,76 @@ class ProdottiController extends BaseController {
 		$product= new Prodotto;
 		$product->setTitolo($inputAll['titolo']);
 		$product->setDescrizione($inputAll['descrizione']);
-		$product->setIsDefinitivo(0);
-		$product->setTipo($inputAll['tipo']);
+		$product->setIsDefinitivo($is_def);
 		$product->setDataPubblicazione($inputAll['data_p_year'].'-'.$inputAll['data_p_month'].'-'.$inputAll['data_p_day']);
-		$product->setDOI((strlen($inputAll['doi'])>0 ? $inputAll['doi'] : 0));
-		$product->setISSN((strlen($inputAll['issn'])>0 ? $inputAll['issn'] : 0));
-		$product->setISBN((strlen($inputAll['isbn'])>0 ? $inputAll['isbn'] : 0));
-		$product->setTitoloRivista($inputAll['titolo_rivista']);
-		$product->setPaginaIniziale($inputAll['pagina_iniziale']);
-		$product->setPaginaFinale($inputAll['pagina_finale']);
-		$product->setNumeroRivista((strlen($inputAll['numero_rivista']) > 0 ? $inputAll['numero_rivista'] : 0));
-		$product->setEditore($inputAll['editore']);
-		$product->setNumeroCapitolo((strlen($inputAll['numero_capitolo']) > 0 ? $inputAll['numero_capitolo'] : 0));
-		$product->setAltraTipologia($inputAll['altra_tipologia']);
-		$product->setDataConvegno($inputAll['data_convegno']);
-		$product->setLuogoConvegno($inputAll['luogo_convegno']);
-		$product->setNomeConvegno($inputAll['nome_convegno']);
-		$product->setLingua($inputAll['lingua']);
 		$product->area_scientifica_id=($inputAll['area_di_ricerca']);
 		$product->dipartimento_id=Auth::getUser()->ricercatore->dipartimento_id;
 		$product->ricercatore_id=Auth::getUser()->ricercatore->id;
+		$product->setTipo($inputAll['tipo']);
+		
 		$product->save();
+
+		switch ($inputAll['tipo']) {
+			case 'articoli_su_rivista':
+				$rivista = new ArticoloSuRivista;
+				$rivista->setTitoloRivista($inputAll['titolo_rivista']);
+				$rivista->setISSN((strlen($inputAll['issn'])>0 ? $inputAll['issn'] : 0));
+				$rivista->setPaginaIniziale($inputAll['pagina_iniziale']);
+				$rivista->setPaginaFinale($inputAll['pagina_finale']);
+				$rivista->setNumeroRivista((strlen($inputAll['numero_rivista']) > 0 ? $inputAll['numero_rivista'] : 0));
+				$rivista->setDOI((strlen($inputAll['doi'])>0 ? $inputAll['doi'] : 0));
+				$rivista->setEditore($inputAll['editore']);
+				$rivista->prodotto_id=$product->id;
+				$rivista->save();
+				break;
+			case 'libri':
+				$libro = new Libro;
+				$libro->setPaginaIniziale($inputAll['pagina_iniziale']);
+				$libro->setPaginaFinale($inputAll['pagina_finale']);
+				$libro->setDOI((strlen($inputAll['doi'])>0 ? $inputAll['doi'] : 0));
+				$libro->setTitoloLibro($inputAll['titolo_libro']);
+				$libro->setISBN((strlen($inputAll['isbn'])>0 ? $inputAll['isbn'] : 0));
+				$libro->setEditore($inputAll['editore']);
+				$libro->prodotto_id = $product->id;
+				$libro->save();
+				break;
+			case 'convegni':
+				$convegno = new Convegno;
+				$convegno->setPaginaIniziale($inputAll['pagina_iniziale']);
+				$convegno->setPaginaFinale($inputAll['pagina_finale']);
+				$convegno->setDOI((strlen($inputAll['doi'])>0 ? $inputAll['doi'] : 0));
+				$convegno->setISBN((strlen($inputAll['isbn'])>0 ? $inputAll['isbn'] : 0));
+				$convegno->setEditore($inputAll['editore']);
+				$convegno->setDataConvegno($inputAll['data_con_year'].'-'.$inputAll['data_con_month'].'-'.$inputAll['data_con_day']);
+				$convegno->setLuogoConvegno($inputAll['luogo_convegno']);
+				$convegno->setNomeConvegno($inputAll['nome_convegno']);
+				$convegno->prodotto_id = $product->id;
+				$convegno->save();
+				break;
+			case 'commenti':
+				$commento = new Traduzione;
+				$commento->setLingua($inputAll['lingua']);
+				$commento->prodotto_id = $product->id;
+				$commento->save();
+				break;
+			case 'brevetti':
+				$brevetto = new Brevetto;
+				$brevetto->prodotto_id = $product->id;
+				$brevetto->save();
+				break;
+			case 'traduzioni':
+				$traduzione = new Traduzione;
+				$traduzione->setLingua($inputAll['lingua']);
+				$traduzione->prodotto_id = $product->id;
+				$traduzione->save();
+				break;
+			case 'altri_prodotti':
+				$altra = new AltroProdotto;
+				$altra->setAltraTipologia($inputAll['altra_tipologia']);
+				$altra->prodotto_id = $product->id;
+				$altra->save();
+				break;
+		}
 		
 		if(Input::has('autori')){
 			$autori=json_decode(Input::get('autori'))->data;
@@ -89,8 +141,9 @@ class ProdottiController extends BaseController {
 				$rpp->save();
 			}
 		}
-		
-		if(($files = Input::file('allegati')) != NULL){
+	
+		if( Input::has('allegati')){
+			$files = Input::file('allegati');
 	   		$path = storage_path().'/users/'.Auth::getUser()->id;
 	   		
 	   		if(!file_exists($path)){
@@ -127,7 +180,8 @@ class ProdottiController extends BaseController {
 	public static function getBasicRules(){
 		return array('titolo' => 'required|max:40',
 									'area_di_ricerca' => 'required',
-									'descrizione' => 'required|max:255'); 
+									'descrizione' => 'required|max:255',
+									'tipo' => 	'required'); 
 	}
 	
 	// regole di base più quelle per la tipologia del prodotto scelto
@@ -136,44 +190,44 @@ class ProdottiController extends BaseController {
 		
 		// regole per tipologia in un array temporaneo
 		switch (Input::get('tipo')) {
-			case 'rivista':
+			case 'articoli_su_rivista':
 				$tmpr = array(
 					'doi' => 'alpha_num', 
 					'titolo_rivista' => 'required|max:50',
 					'issn' => 'required|between:13,13',
-					'pagina_iniziale_rivista' => 'required|max:5',
-					'pagina_finale_rivista' => 'required|max:5',
-					'numero_rivista' => 'required|max:8'
+					'pagina_iniziale_rivista' => 'max:5',
+					'pagina_finale_rivista' => 'max:5',
+					'numero_rivista' => 'max:8'
 				);
 				break;
-			case 'libro':
+			case 'libri':
 				$tmpr = array(
 					'doi' => 'alpha_num', 
 					'isbn' => 'required|between:13,13',
-					'pagina_iniziale_libro' => 'required|max:5',
-					'pagina_finale_libro' => 'required|max:5',
-					'editore_libro' => 'required|max:20'
+					'titolo_libro' => 'required|max:50',
+					'pagina_iniziale_libro' => 'max:5',
+					'pagina_finale_libro' => 'max:5',
+					'editore_libro' => 'max:20'
 				);
 				break;
-			case 'convegno':
+			case 'convegni':
 				$tmpr = array(
 					'doi' => 'alpha_num', 
-					'titolo_capitolo' => 'required|max:50',
-					'isbn' => 'required|between:13,13',
-					'pagina_iniziale' => 'required|max:5',
-					'pagina_finale' => 'required|max:5',
 					'nome_convegno' => 'required|max:30',
+					'isbn' => 'required|between:13,13',
+					'pagina_iniziale' => 'max:5',
+					'pagina_finale' => 'max:5',
 					'luogo_convegno' => 'max:30',
-					'editore_convegno' => 'required|max:20',
-					'data_convegno' => 'date_format:"dd/mm/YYYY"'
+					'editore_convegno' => 'max:20'
+					//'data_convegno' => 'date_format:"dd/mm/YYYY"'
 				);
 				break;
-			case 'commento':
+			case 'commenti':
 				$tmpr = array('lingua' => 'required|max:20');
 				break;
-			case 'brevetto':
+			case 'brevetti':
 				break;
-			case 'altro':
+			case 'altri_prodotti':
 				$tmpr = array('altra_tipologia' => 'required|max:30');		
 				break;
 		}
