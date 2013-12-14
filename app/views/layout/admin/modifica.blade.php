@@ -1,13 +1,6 @@
-@extends('layout.master')
-@section('style')
-	{{ HTML::style('css/dashboard.css'); }}
-@stop
+@extends('layout.admin.home')
 
-@section('script')
-	{{ HTML::script('js/admin.js'); }}
-@stop
-
-@section('content')
+@section('content.admin')
 	<nav>
 		<ul>
 			<li class="trall">{{ HTML::link('admin/','Dashboard') }}</li>

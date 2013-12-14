@@ -20,9 +20,11 @@
 	<section class="trall">
 		<div class="trop">
 			@section('content.dashboard')
-				dettagli profilo
+				<p>Nome: {{ Auth::getUser()->nome; }}</p>
+				<p>Cognome: {{ Auth::getUser()->cognome; }}</p>
+				<p>Prodotti bozza: {{ Auth::getUser()->ricercatore->prodottiBozza()->count(); }}</p>
+				<p>Prodotti definitivi: {{ Auth::getUser()->ricercatore->prodottiDefinitivi()->count(); }}</p>
 			@show
 		</div>
 	</section>
-	
 @stop
