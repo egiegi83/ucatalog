@@ -169,7 +169,10 @@ class AccountController extends BaseController {
 	}
 	
 	
-	//Modifica Utente nel DB
+	/**
+	*	Modifica Utente nel DB
+	*	@param int
+	*/
 	public function postUpdate($id=null){
 		$user = User::find($id);
 		$inputs = Input::all();// prelevo tutti gli Input
@@ -182,7 +185,7 @@ class AccountController extends BaseController {
 			'data_anno' => 'required',
 			'tipo' => 'required',
 		);
-		if(Input::get('password')!=null){
+		if(Input::has('password')){
 			$rules['password'] = 'required|min:4|max:20';
 			$rules['password_confirmation'] = 'required|same:password';
 		}
@@ -199,11 +202,11 @@ class AccountController extends BaseController {
 			$rules['dipartimento_id'] = 'required';
 			$rules['area_scientifica_id'] = 'required';
 		}
-		//se la validazione degli Input fallisce reindirizza alla form di inserimento Utente
+		//se la validazione degli Input fallisce reindirizza alla form di modifica Utente
 		$validator = Validator::make($inputs, $rules);
 		if($validator->fails()){
-			return Redirect::to('admin')
-				->withErrors($validator)	
+			return Redirect::to('admin/modifica/'.$id)
+				->withErrors($validator)
 				->withInput(Input::all());
 		}
 		
@@ -212,6 +215,8 @@ class AccountController extends BaseController {
 		$objDataDiNascita->setDate(intval($inputs['data_anno']), intval($inputs['data_mese']), intval($inputs['data_giorno']));
 		$user->setNome($inputs['nome']);
 		$user->setCognome($inputs['cognome']);
+		if (Input::has('password'))
+			$user->setPassword($inputs['password']);
 		$user->setData($objDataDiNascita);
 		$user->setTipo($inputs['tipo']);
 		switch(Input::get('tipo')){
@@ -278,8 +283,11 @@ class AccountController extends BaseController {
 	public function postDelete (){
 
 	}
-	
-	
+
+	/**
+	*	Definisce le regole di base dei campi in input
+	*	@param string
+	*/	
 	private function getBasicRules($tipo){
 		$rules =array(
 			'email'    => 'required|email|unique:utenti,email',
@@ -300,30 +308,38 @@ class AccountController extends BaseController {
 			$rules['area']='required';
 		return $rules;
 	}
-		public function getTest($id){
-			return $this::cancellaVecchioTipo($id);
+
+	public function getTest($id){
+		return $this::cancellaVecchioTipo($id);
+	}
+		
+	/**
+	*	Cancella il vecchio tipo dell'autore durante la modifica
+	*	@param int
+	*/
+	private function cancellaVecchioTipo($id){
+		$user=User::find($id);
+		$ricercatore=Ricercatore::where('utente_id',$user->id)->first();
+		if($ricercatore!=null){
+			$direttore=DirettoreDiDipartimento::where('ricercatore_id', $ricercatore->id)->first();
+			$responsabile=ResponsabileAreaScientifica::where('ricercatore_id', $ricercatore->id)->first();
+		}
+		else{				
+			$direttore=null;
+			$responsabile=null;
+		}
+		$vqr=ResponsabileVQR::Where('utente_id', $user->id)->first();
+		if($vqr!=null){
+			$vqr->delete();
+		}
+		else{
+			if($direttore!=null){
+				$direttore->delete();
 			}
-		private function cancellaVecchioTipo($id){
-			$user=User::find($id);
-			$ricercatore=Ricercatore::where('utente_id',$user->id)->first();
-			if($ricercatore!=null){
-				$direttore=DirettoreDiDipartimento::where('ricercatore_id', $ricercatore->id)->first();
-				$responsabile=ResponsabileAreaScientifica::where('ricercatore_id', $ricercatore->id)->first();
-			}else{
-				$direttore=null;
-				$responsabile=null;
+			if($responsabile!=null){
+				$responsabile->delete();
 			}
-			$vqr=ResponsabileVQR::Where('utente_id', $user->id)->first();
-			if($vqr!=null){
-				$vqr->delete();
-			}else{
-				if($direttore!=null){
-					$direttore->delete();
-				}
-				if($responsabile!=null){
-					$responsabile->delete();
-				}
-			}
+		}
 	}
 }
 
