@@ -10,7 +10,7 @@ ucatalog = {
 			url = url.substr(bp + uc.basePath.length + 1,url.length);
 			url = url.split('/');
 		
-			return url.length==1 ? { controller: url[url.length-1], action: url[url.length-1]+'/'} : { controller: url[url.length-2], action: url[url.length-1] };
+			return url.length==1 ? { controller: url[url.length-1], action: url[url.length-1]} : { controller: url[url.length-2], action: url[url.length-1] };
 		}
 	},
 	query: function(selector){
