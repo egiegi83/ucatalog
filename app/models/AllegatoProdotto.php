@@ -79,6 +79,22 @@ class AllegatoProdotto extends Eloquent {
 	public function setDimensione($dimensione) {
 		$this->dimensione = $dimensione;
 	}
+	
+	/**
+	 * Setta l'estensione del file.
+	 * @param string
+	 */
+	public function setTipoFile($extension) {
+		$this->tipo_file = $extension;
+	}
+
+	/**
+	 * Modifica la dimensione del file.
+	 * @param string
+	 */
+	public function setProdottoId($id) {
+		$this->prodotto_id = $id;
+	}
 
 }
 

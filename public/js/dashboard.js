@@ -39,7 +39,8 @@ uc.addEvent(window,'load',function(){
 			res=uc.query('#tag_autori')[0],
 			ha=uc.query('#hid_autori')[0],
 			lbs=false,
-			hi=uc.query('#addProdotto div.hiddeni.trop')[0];
+			hi=uc.query('#addProdotto div.hiddeni.trop')[0],
+			allegati=uc.query('#addProdotto #allegati')[0];
 			
 			uc.addEvent(uc.query('#addProdotto select[name=tipo]'),'change',function(e){
 				var divs=uc.query('#addProdotto form span[data-type]');
@@ -55,12 +56,23 @@ uc.addEvent(window,'load',function(){
 				}
 			});
 			
+			uc.addEvent(uc.query('#addProdotto input,#addProdotto select,#addProdotto textarea'),'focus',function(e){
+				this.parentNode.querySelector('label').style.display='none';
+			});
+			
 			uc.addEvent(tb_autori,'keyup',function(e){
 				tb_key.call(this,e);
 				searchRicercatore.call(this,e);
 			});
 			uc.addEvent(tb_autori,'focus',function(e){ searchRicercatore.call(this,e); });
 			uc.addEvent(document,'click',function(e){ if(e.target==tb_autori) return; res.classList.remove('open'); });
+			uc.addEvent(uc.query('#addProdotto #add_file'),'click',function(){
+				ouf=document.createElement('input');
+				ouf.type='file';
+				ouf.name='allegati[]';
+				
+				allegati.appendChild(ouf);
+			});
 				
 			function getSelected_autors(){
 				var sps=sa.querySelectorAll('span');
@@ -133,7 +145,10 @@ uc.addEvent(window,'load',function(){
 			
 			var st=uc.query('select[name=tipo]')[0];
 			v = st.options[st.selectedIndex].value;
-			if(v != 0)	uc.query('#addProdotto form div[data-type="'+ v +'"]')[0].classList.add('open');
+			if(v != 0){	
+				uc.each(uc.query('#addProdotto form span[data-type ~= "'+ v +'"]'),function(){ this.classList.add('open'); });
+				hi.classList.add('open');
+			}
 			break;
 	}
 });

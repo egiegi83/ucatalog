@@ -9,9 +9,16 @@ article.prodotto{
 	cursor:not-allowed;
 }
 article.prodotto:hover{ border-color:#c5c5c5;  }
-article.prodotto.selected{border-color:#009645; box-shadow:0 0 10px #009645;}
+article.prodotto.selected{
+	border-color:#009645; 
+	box-shadow:0 0 10px #009645; 
+	-webkit-box-shadow:0 0 10px #009645; 
+	-moz-box-shadow:0 0 10px #009645; 
+	-o-box-shadow:0 0 10px #009645;
+	-ms-box-shadow:0 0 10px #009645;
+}
 article.prodotto>*{ padding:5px 10px; }
-article.prodotto .icon{ width:14px; height:14px; background-size:contain; display:inline-block; margin-right:5px; }
+article.prodotto .icon{ width:14px; height:14px;  display:inline-block; margin-right:5px; }
 article.prodotto a{ text-decoration:none; color:#009645; } 
 article.prodotto header{
 	padding-right:46px;
@@ -34,6 +41,9 @@ article.prodotto footer{
 article.prodotto footer span{ display:block; }
 article.prodotto footer span.autori {}
 article.prodotto footer span.autori a{ background:#009645; color:#fff; border-radius: 2px; padding:0 2px; margin:0 2px;}
+
+article.prodotto footer ul.allegati{ list-style-position: inside;}
+article.prodotto footer ul.allegati{ display:block;  white-space:nowrap; overflow:hidden; text-overflow:ellipsis;}
 
 article.prodotto.newid{ 
 	animation: shownewp .5s 1s ease-out both;

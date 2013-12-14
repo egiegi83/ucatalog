@@ -19,7 +19,7 @@ input,select,textarea,.btn{
 textarea{ height:auto;}
 input[type=file]{ background:none; border:none; padding:0; height:auto; line-height:normal;}
 select{ height:30px; line-height:30px; }
-input:hover,.btn:hover,,select:hover,textarea:hover{ border-color:#c5c5c5;}
+input:hover,.btn:hover,select:hover,textarea:hover{ border-color:#c5c5c5;}
 input:focus,.btn:active,select:active,textarea:focus{ border-color:#009645;}
 
 input[type="submit"],.btn{ 
@@ -47,6 +47,7 @@ input[type="submit"]:active,.btn:active{ border-color:#006838; background-color:
 	-moz-transition: opacity .1s linear;
 	-o-transition: opacity .1s linear;
 	-ms-transition: opacity .1s linear;
+	background-size:contain;
 }
 .icon.params{ background-image: url(icons/params.png); }
 .icon.mail{ background-image: url(icons/mail.png); }

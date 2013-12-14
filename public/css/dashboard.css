@@ -50,6 +50,11 @@ form select[name=tipo]{ margin-bottom:0px; }
 form input[type=file]{ margin-top:10px; }
 form textarea{width:91%; height:140px; resize:none;}
 
+form .addFile{
+	display:block; clear:both;
+	margin:10px 0;
+}
+
 #ctbta{ 
 	background:#fff; display:inline-block;  vertical-align:middle; 
 	height:28px; line-height:28px; 
@@ -88,8 +93,8 @@ form textarea{width:91%; height:140px; resize:none;}
 	display:inline-block;vertical-align:top; 
 }
 
-#tag_autori{ position:absolute; top:100%; left:0; margin-top:2px; width:100%; background:#fff; z-index:10; height:0; opacity:0; }
-#tag_autori.open{height:auto; opacity:1;}
+#tag_autori{ position:absolute; top:100%; left:0; margin-top:2px; width:100%; background:#fff; z-index:10; height:0; max-height:200px; overflow:auto;opacity:0; }
+#tag_autori.open{height:auto;  opacity:1;}
 #tag_autori ul{ list-style:none; padding:0; border:1px solid #c5c5c5; border-top-width:0px; padding:0px 5px;}
 
 

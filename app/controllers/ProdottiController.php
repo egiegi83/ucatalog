@@ -24,6 +24,10 @@ class ProdottiController extends BaseController {
 		$ps=Auth::getUser()->ricercatore->prodottiBozza()->find($ids);
 		foreach($ps as $p){
 			$p->delete();
+			$sps=$p->allegatiProdotto;
+			foreach($sps as $sp){
+				unlink($sp->getURL());
+			}
 		}
 	}
 	
@@ -86,6 +90,35 @@ class ProdottiController extends BaseController {
 			}
 		}
 		
+		if(($files = Input::file('allegati')) != NULL){
+	   		$path = storage_path().'/users/'.Auth::getUser()->id;
+	   		
+	   		if(!file_exists($path)){
+	   			if(mkdir($path,0755) == NULL)
+	   				return Redirect::to('dashboard/aggiungi-prodotto')->withMessage('message','errore creazione cartella allegati utente');
+	   		}
+	   		
+			foreach($files as $file) {
+				if(!$file) continue;
+				
+				$fname=$file->getClientOriginalName();
+				$i=1;
+				while(file_exists($path.'/'.$fname)){
+					$fname = str_replace('.'.$file->getClientOriginalExtension(), '', $file->getClientOriginalName());
+					$fname .= '-' . $i++ . '.' . $file->getClientOriginalExtension();
+				}
+				if($file->move($path,$fname)){
+					$ap = new AllegatoProdotto;
+					$ap->setNomeFile($fname);
+					$ap->setURL($path.'/'.$fname);
+					//$ap->setDimensione($file->getSize());
+					$ap->setTipoFile($file->getClientOriginalExtension());
+					$ap->setProdottoId($product->id);
+					$ap->save();
+				}
+			}
+		}
+		
 		return Redirect::to('dashboard/prodotti')->with('newid',$product->id);
 	}
 	
@@ -94,7 +127,7 @@ class ProdottiController extends BaseController {
 	public static function getBasicRules(){
 		return array('titolo' => 'required|max:40',
 									'area_di_ricerca' => 'required',
-									'descrizione' => 'required|max:100'); 
+									'descrizione' => 'required|max:255'); 
 	}
 	
 	// regole di base più quelle per la tipologia del prodotto scelto
@@ -131,14 +164,14 @@ class ProdottiController extends BaseController {
 					'pagina_finale' => 'required|max:5',
 					'nome_convegno' => 'required|max:30',
 					'luogo_convegno' => 'max:30',
-					'editore_convegno' => 'required|max:20'
+					'editore_convegno' => 'required|max:20',
+					'data_convegno' => 'date_format:"dd/mm/YYYY"'
 				);
 				break;
 			case 'commento':
 				$tmpr = array('lingua' => 'required|max:20');
 				break;
 			case 'brevetto':
-				$tmpr = array('titolo' => 'required|max:40','descrizione' => 'required|max:100');
 				break;
 			case 'altro':
 				$tmpr = array('altra_tipologia' => 'required|max:30');		

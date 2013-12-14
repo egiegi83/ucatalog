@@ -164,7 +164,7 @@ class AccountController extends BaseController {
 	}
 	
 	public function getListaUtenti(){
-		$users=DB::table('utenti')->where('is_valid','1')->get();
+		$users=DB::table('utenti')->where('active','1')->get();
 		return View::make('layout.admin.lista')->with('users', $users);
 	}
 	

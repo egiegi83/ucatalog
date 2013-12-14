@@ -14,7 +14,7 @@
 		<div id="pagesearch" class="page">
 			<div id="search">
 				{{ Form::open(array('url' => 'user/logout')) }}
-					{{ Form::text('Cerca', null, array('placeholder'=>'Ricerca prodotto per titolo, autore, parola chiave...','id' => 'tb_search','autocomplete'=>'off' )) }}
+					{{ Form::text('Cerca', null, array('placeholder'=>'Ricerca prodotto per titolo, autore, parola chiave...','id' => 'tb_search','autocomplete'=>'off' ,'x-webkit-speech')) }}
 					{{ Form::submit('', null, array('id' => 'btn_search' )) }}
 					<span class="icon params tT" data-target="#filtri"></span>
 					<div id="autocomplete">

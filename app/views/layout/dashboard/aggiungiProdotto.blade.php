@@ -7,7 +7,7 @@
 @section('content.dashboard')
 	<h1>Aggiungi prodotto</h1>
 	<div id="addProdotto">
-		{{ Form::open(array('url' => 'prodotti/aggiungi')) }}
+		{{ Form::open(array('url' => 'prodotti/aggiungi', 'files'=> true)) }}
 				<!-- Campi comuni a tutti i tipi di prodotto -->	
 				<span>
 					{{ Form::text('titolo', null, array('placeholder'=>'Titolo','autocomplete'=>'off')) }}
@@ -193,12 +193,13 @@
 				</div>
 				
 				<p>
-					<span>
-						{{ Form::file('allegato', null) }}
-						@if($errors->first('allegato'))
-							<label>{{ $errors->first('allegato') }}</label>
+					<span id="allegati">
+						{{ Form::file('allegati[]', null) }} 
+						@if($errors->first('allegati'))
+							<label>{{ $errors->first('allegati') }}</label>
 						@endif
 					</span>
+					<span class="addFile">+<span class="icon allegato" id="add_file" title="Aggiungi altro file"></span></span>
 				</p>
 				
 				<!-- Altro (tutti i campi) -->

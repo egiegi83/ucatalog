@@ -33,22 +33,32 @@
 				</section>
 				<footer>
 					@if($rpps = $p->ricercatorePartecipaProdotto)
-					  	<span class="autori">Autori:
-					  	@foreach($rpps as $rpp)
-					 		 <?php if(isset($f)) echo ','; ?>
-					 		 @if($rpp->ricercatore_id)
-					 		 	<a href="{{ URL::to('/$rpp->ricercatore_id'); }}">
-					 		 		<?php  $u = $rpp->ricercatore->utente; ?>
-					 		 		{{ $u->nome.' '.$u->cognome}}
-				 		 		</a>
-							@else
-								{{ $rpp->coautore }}
-							@endif
-							<?php $f=true; ?>
-						@endforeach
+					  	<span class="autori">
+						  	<label>Autori</label>
+						  	@foreach($rpps as $rpp)
+						 		 <?php if(isset($f)) echo ','; ?>
+						 		 @if($rpp->ricercatore_id)
+						 		 	<a href="{{ URL::to('/$rpp->ricercatore_id'); }}">
+						 		 		<?php  $u = $rpp->ricercatore->utente; ?>
+						 		 		{{ $u->nome.' '.$u->cognome}}
+					 		 		</a>
+								@else
+									{{ $rpp->coautore }}
+								@endif
+								<?php $f=true; ?>
+							@endforeach
 				  		</span>
 				  	@endif
-					<span><a href="#"><span class="icon allegato"></span>Allegato</a></span>
+					<span>
+						@if($sps=$p->allegatiProdotto)
+							<label>Allegati</label>
+							<ul class="allegati">
+							@foreach($sps as $sp)
+								<li><a href="{{ $sp->getURL() }}" target="_blank"><span class="icon allegato"></span>{{ $sp->getNomeFile() }}</a></span></li>
+							@endforeach
+							</ul>
+						@endif
+					</span>
 					<span>Pubblicato il {{ substr(date_format(date_create($p->data_pubblicazione),'d-m-Y H:i:s'),0,10); }}</span>
 				</footer>
 			</article>
