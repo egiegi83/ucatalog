@@ -19,7 +19,7 @@ Route::controller('user', 'AutenticazioneController');
 Route::controller('dashboard', 'ProfiloController');
 Route::controller('prodotti', 'ProdottiController');
 Route::controller('admin', 'AccountController');
-
+Route::controller('valida', 'ValidazioneController');
 /*
 Route::group(array('before' => 'auth'), function(){
 

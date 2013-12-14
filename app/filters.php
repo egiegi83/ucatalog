@@ -113,10 +113,25 @@ Route::filter('admin', function()
 
 Route::filter('ricercatore', function()
 {
-	if (!Auth::getUser()->tipo== ('1' || '2' || '3')) 
+	if (!((Auth::getUser()->tipo=='1')||(Auth::getUser()->tipo=='1')||(Auth::getUser()->tipo=='1'))) 
 		return Redirect::guest('/');
 });
 
+/*
+|--------------------------------------------------------------------------
+| Validazione Filter
+|--------------------------------------------------------------------------
+|
+| The "guest" filter checks that the current user is "direttore" or "responsabile Area Scientifica". 
+|	
+|
+*/
+
+Route::filter('validazione', function()
+{
+	if (!((Auth::getUser()->tipo=='2' )||(Auth::getUser()->tipo=='3')))
+		return Redirect::guest('/');
+});
 /*
 |--------------------------------------------------------------------------
 | direttore Filter
