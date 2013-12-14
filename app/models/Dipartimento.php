@@ -18,6 +18,10 @@ class Dipartimento extends Eloquent {
 	 */
 	protected $table = 'dipartimenti';
 	
+	/**
+	* La tabella non ha un campo timestamps
+	* @var boolean
+	*/
 	public $timestamps = false;
 
 	/**

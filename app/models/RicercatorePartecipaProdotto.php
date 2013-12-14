@@ -30,7 +30,7 @@ class RicercatorePartecipaProdotto extends Eloquent {
 	 * @return mixed
 	 */
 	public function prodotto() {
-		return $this->hasOne('Prodotto', 'id');
+		return $this->hasOne('Prodotto', 'prodotto_id');
 	}
 
 	/**

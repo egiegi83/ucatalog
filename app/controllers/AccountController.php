@@ -162,7 +162,7 @@ class AccountController extends BaseController {
 				}
 		}
 	}
-	
+	//Restituisce la view con la lista di tutti gli utenti
 	public function getListaUtenti(){
 		$users=DB::table('utenti')->where('active','1')->get();
 		return View::make('layout.admin.lista')->with('users', $users);

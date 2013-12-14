@@ -53,7 +53,7 @@ class Ricercatore extends Eloquent{
 	*/
 	public function utente()
 	{
-		return $this->belongsTo('User','utente_id');
+		return $this->belongsTo('User');
 	}
 	
 	/**

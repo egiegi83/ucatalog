@@ -22,7 +22,7 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
 	protected $table = 'utenti';
 	protected $softDelete = false;
 
-protected $guarded = array();  // Important
+	protected $guarded = array();  // Important
 
 	/**
 	* La tabella non ha un campo timestamps
@@ -81,16 +81,6 @@ protected $guarded = array();  // Important
 	 * @return string
 	 */
 	public function getReminderEmail()
-	{
-		return $this->email;
-	}
-	
-	/**
-	 * Get the e-mail address where password reminders are sent.
-	 *
-	 * @return string
-	 */
-	public function getEmail()
 	{
 		return $this->email;
 	}

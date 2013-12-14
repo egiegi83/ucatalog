@@ -53,14 +53,6 @@ class ValidazioneAreaScientifica extends Eloquent {
 
 	}
 
-	/**
-	 * Modifica la data in cui è avvenuta la validazione.
-	 * @param DateTime
-	 */
-	public function setDataValidazione(DateTime $data_validazione) {
-		$this->data_validazione = $data_validazione;
-	}
-
 }
 
 ?>
