@@ -135,6 +135,10 @@ class ProdottiController extends BaseController {
 				$rpp->setProdottoId($product->id);
 				if(intval($a)) {
 					$rpp->setRicercatoreId($a);
+					$utente = Ricercatore::find($a)->utente()->first();
+					$nome = $utente->getNome();
+					$cognome = $utente->getCognome();
+					$rpp->setCoautore($nome . " " . $cognome);
 				} else {
 					$rpp->setCoautore($a);
 				}
@@ -144,8 +148,8 @@ class ProdottiController extends BaseController {
 	
 		if( Input::has('allegati')){
 			$files = Input::file('allegati');
-	   		$path = storage_path().'/users/'.Auth::getUser()->id;
-	   		
+	   		$path = storage_path(). '/users/' . Auth::getUser()->id;
+
 	   		if(!file_exists($path)){
 	   			if(mkdir($path,0755) == NULL)
 	   				return Redirect::to('dashboard/aggiungi-prodotto')->withMessage('message','errore creazione cartella allegati utente');

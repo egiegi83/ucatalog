@@ -12,14 +12,11 @@
 			<td>Cognome</td>
 			<td>Email</td>
 			<td>Tipo</td>
-			<td>Modifica</td>
+			<td></td>
 		</tr>
 		@foreach ($users as $user)
 			<?php switch($user->tipo)
 			{
-				case '0':
-					$tipo='Amministratore';
-					break;
 				case "1":
 					$tipo='Ricercatore';
 					break;
@@ -33,8 +30,14 @@
 					$tipo='Responsabile VQR';
 					break;
 			}?>
+		@if ($user->active == '1' && $user->tipo != '0')
 			<tr><td>{{$user->cognome }}</td>
-			<td>{{$user->nome }}</td><td> {{$user->email }}</td><td> <?php echo $tipo; ?> </td><td><a href="modifica/<?php echo $user->id;?>">Modifica</a></tr>
+			<td>{{$user->nome }}</td><td> {{$user->email }}</td>
+			<td> <?php echo $tipo; ?> </td>
+			<td>
+				<a href="modifica/<?php echo $user->id;?>">Modifica</a>
+			</tr>
+		@endif
 		@endforeach
 	</table>
 @stop
