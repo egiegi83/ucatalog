@@ -36,13 +36,13 @@ echo $message;
 	{{ Form::selectMonth('data_mese', $month) }} /
 	{{ Form::selectRange('data_anno', 1940, date('Y')-23, $year) }}
     </p>
+	@if($user->tipo!='4')
 	<p>{{ Form::label('Seleziona tipo') }}</p>
 		{{ Form::select('tipo', array(
 		'' => 'Seleziona tipo', 
 		'1' => 'Ricercatore', 
 		'2' => 'Direttore di Dipartimento',
 		'3' => 'Responsabile Area Scientifica',
-		'4' => 'Responsabile VQR',
 	)) }}
 	@if($errors->first('tipo'))
 		<label>{{ $errors->first('tipo') }}</label>
@@ -73,7 +73,7 @@ echo $message;
 			@if($errors->first('area_scientifica_id'))
 			<label>{{ $errors->first('area_scientifica_id') }}</label>
 		@endif
-
+	@endif
     </div>
    
     

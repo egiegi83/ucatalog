@@ -15,6 +15,14 @@ Route::get('/',function(){
 	return View::make('layout.home');
 });
 
+Route::get('{url}/dipartimenti',function(){
+	return Redirect::to('/');
+});
+
+Route::get('{url}/aree-di-ricerca',function(){
+	return Redirect::to('/');
+});
+
 Route::controller('user', 'AutenticazioneController');
 Route::controller('dashboard', 'ProfiloController');
 Route::controller('prodotti', 'ProdottiController');
