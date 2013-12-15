@@ -41,7 +41,7 @@ class AutenticazioneController extends BaseController {
 				$tipo = Auth::user()->getTipo();
 				if($tipo == '0') 							// se è l'admministratore
 					return Redirect::to('admin'); 
-				else if ($tipo == ('1' || '2' || '3') ) 	// se è un ricercatore (o direttore o responsabile area)
+				else if ($tipo == '1' || $tipo == '2' || $tipo == '3') 	// se è un ricercatore (o direttore o responsabile area)
 					return Redirect::intended('dashboard');
 				else if ($tipo == '4')						// se è un responsabile VQR (provvisorio)
 					return Redirect::intended('dashboard');

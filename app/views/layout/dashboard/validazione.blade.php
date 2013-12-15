@@ -1,6 +1,6 @@
-@extends('layout.admin.home')
+@extends('layout.dashboard')
 
-@section('content.admin')
+@section('content.dashboard')
  	<?php if (Session::has('message')) {
 		$message = Session::get('message');
 		echo $message;
