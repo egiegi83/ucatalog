@@ -45,7 +45,7 @@ class ValidazioneController extends BaseController {
 								Auth::getUser()->ricercatore()->first()
 									->responsabile()->first()->area_scientifica_id)->get();
 		}
-		return View::make('layout.dashboard.lista_validazione')->with('prodotti', $prodotti);
+		return View::make('layout.dashboard.validazione')->with('prodotti', $prodotti);
 	}
 	
 	/**
@@ -56,8 +56,12 @@ class ValidazioneController extends BaseController {
 	 *	Non visualizzava già solo i prodotti definitivi, di quel dipartimento (o area) ecc.
 	 *	Se è perché puoi sempre passare l'id di un qualsiasi prodotto all'URL, non puoi farlo
 	 *	con il POST? xD 
+	 *
+	 *	ora il metodo l'ho fatto post, ci sta ancora bisogno dei controlli?
+	 *	te lo chiedo nel caso mi sfugga qualcosa
+	 *
 	 */
-	public function getValida($id=null){
+	public function postValida($id=null){
 		$prodotto=Prodotto::find($id);
 		//se il prodotto non è stato trovato
 		if(!$prodotto)
@@ -65,27 +69,31 @@ class ValidazioneController extends BaseController {
 		
 		//se Direttore di Dipartimento
 		if(Auth::getUser()->tipo=='2'){
-			if(($prodotto->validazione=='0')
+		/*	if(($prodotto->validazione=='0')
 				&&($prodotto->is_definitivo=='1')
 				&&($prodotto->dipartimento_id==Auth::getUser()->ricercatore()->first()
 					->direttore()->first()->dipartimento_id))
-				
+		*/		
 					$prodotto->setValidazione(1);
-			else
-				return Redirect::to('valida/lista-prodotti');
+		/*	else
+				return Redirect::to('valida/lista-prodotti');		*/
 		}
 		//se Responsabile Area Scientifica
 		else{
-			if(($prodotto->validazione=='1')
+		/*	if(($prodotto->validazione=='1')
 				&&($prodotto->is_definitivo=='1')
 				&&($prodotto->area_scientifica_id==Auth::getUser()->ricercatore()->first()
 					->responsabile()->first()->area_scientifica_id))
 				
-					$prodotto->setValidazione(2);
-			else
-				return Redirect::to('valida/lista-prodotti');
+		*/			$prodotto->setValidazione(2);
+		/*	else
+				return Redirect::to('valida/lista-prodotti');		*/
 		}
 		$prodotto->update();
+		return Redirect::to('valida/lista-prodotti');
+	}
+	
+	public function getValida(){
 		return Redirect::to('valida/lista-prodotti');
 	}
 }

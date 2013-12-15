@@ -23,7 +23,9 @@
 			?>
 			<td> {{$utente->cognome ." ". $utente->nome}}</td>
 			<td>
-				<a href="valida/<?php echo $prodotto->id;?>">Valida</a>
+				{{ Form::open(array('url' => array('valida/valida', $prodotto->id))) }}
+					{{ Form::submit('valida') }}
+				{{ Form::close() }}
 			</tr>
 		@endforeach
 	</table>
