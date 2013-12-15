@@ -1,0 +1,70 @@
+@extends('layout.dashboard')
+
+@section('substyle')
+	{{ HTML::style('css/article.css'); }}
+@stop
+
+@section('content.dashboard')
+	<nav>
+		<ul>
+			<li>{{ HTML::link('dashboard/aggiungi-prodotto','Aggiungi prodotto',array('class'=>'btn')) }}</li>
+			<li><a href="#" class="btn" id="del_prodotti">Elimina selezionati</a></li>
+		</ul>
+	</nav>
+	<div>
+		@foreach ($prodotti as $p) 
+			<article class="prodotto trall @if(Session::has('newid') && $p->id == Session::get('newid')) {{ 'newid' }} @endif" data-id="{{ $p->id }}" @if(!$p->is_definitivo) {{ 'selectable' }} @endif>
+				<header>
+					<hgroup>
+						<h1>{{ $p->titolo }}</h1>
+						<h2><a href="#">{{ $p->areaScientifica['nome'] }}</a></h2>
+						@if($p->tipo) <h3><a href="#">{{ $p->tipo }}</a></h3> @endif
+					</hgroup>
+					@if(!$p->is_definitivo)
+						<a href="{{ URL::to('dashboard/modifica') . '/' . $p->id }}"><span class="icon edit" title="Modifica" data-id="{{ $p->id }}"></span></a>
+						<span class="icon remove" title="Elimina" data-id="{{ $p->id }}"></span>
+					@else
+						<span class="icon lock" title="Prodotto definitivo"></span>
+					@endif
+					
+				 </header>
+				 <section>
+				 	{{ $p->descrizione }}
+				</section>
+				<footer>
+					@if($rpps = $p->ricercatorePartecipaProdotto)
+					  	<span class="autori">
+						  	<label>Autori</label>
+						  	@foreach($rpps as $rpp)
+						 		 <?php if(isset($f)) echo ','; ?>
+						 		 @if($rpp->ricercatore_id)
+						 		 	<a href="{{ URL::to('/$rpp->ricercatore_id'); }}">
+						 		 		<?php  $u = $rpp->ricercatore->utente; ?>
+						 		 		{{ $u->nome.' '.$u->cognome}}
+					 		 		</a>
+								@else
+									{{ $rpp->coautore }}
+								@endif
+								<?php $f=true; ?>
+							@endforeach
+				  		</span>
+				  	@endif
+					<span>
+						@if($sps=$p->allegatiProdotto)
+							<label>Allegati</label>
+							<ul class="allegati">
+							@foreach($sps as $sp)
+								<li><a href="{{ $sp->getURL() }}" target="_blank"><span class="icon allegato"></span>{{ $sp->getNomeFile() }}</a></span></li>
+							@endforeach
+							</ul>
+						@endif
+					</span>
+					<span>Pubblicato il {{ substr(date_format(date_create($p->data_pubblicazione),'d-m-Y H:i:s'),0,10); }}</span>
+				</footer>
+			</article>
+		@endforeach
+			{{ Form::open(array('url' => 'prodotti/remove')) }}
+				{{ Form::hidden('prodotti_da_eliminare', null,array('id'=>'ips')) }}
+			{{  Form::close() }}
+	</div>
+@stop
