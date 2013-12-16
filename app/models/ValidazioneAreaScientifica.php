@@ -31,7 +31,7 @@ class ValidazioneAreaScientifica extends Eloquent {
 	 * @return mixed
 	 */
 	public function validazioneDipartimento() {
-		return $this->hasOne('ValidazioneDipartimento', 'validazione_dipartimento_id');
+		return $this->belongsTo('ValidazioneDipartimento', 'validazione_dipartimento_id');
 	}
 
 	/**

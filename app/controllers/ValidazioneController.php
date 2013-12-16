@@ -75,6 +75,9 @@ class ValidazioneController extends BaseController {
 					->direttore()->first()->dipartimento_id))
 		*/		
 					$prodotto->setValidazione(1);
+					$validaDip=new ValidazioneDipartimento();
+					$validaDip->direttore_id=Auth::getUser()->ricercatore()->first()->direttore()->first()->id;
+					$prodotto->validazioneDipartimento()->save($validaDip);
 		/*	else
 				return Redirect::to('valida/lista-prodotti');		*/
 		}
@@ -86,6 +89,10 @@ class ValidazioneController extends BaseController {
 					->responsabile()->first()->area_scientifica_id))
 				
 		*/			$prodotto->setValidazione(2);
+					$validaArea=new ValidazioneAreaScientifica();
+					$validaDip=ValidazioneDipartimento::where('prodotto_id', $prodotto->id)->first();
+					$validaArea->responsabile_area_scientifica_id=Auth::getUser()->ricercatore()->first()->responsabile()->first()->id;
+					$validaDip->validazioneArea()->save($validaArea);
 		/*	else
 				return Redirect::to('valida/lista-prodotti');		*/
 		}
@@ -97,7 +104,15 @@ class ValidazioneController extends BaseController {
 		return Redirect::to('valida/lista-prodotti');
 	}
 	
+	/**
+	 * 	Riceve un'array di id prodotto dal form e li valida tramite postValida()
+	 *	
+	 */
 	public function postValidaSelezionati(){
+		//Se non c'è almeno un prodotto selezionato 
+		if(!Input::has('validaid'))
+			return Redirect::to('valida/lista-prodotti'); //messaggio di errore?
+			
 		$prodotti=Input::get('validaid');
 		foreach($prodotti as $prodotto){
 			$this::postValida($prodotto);

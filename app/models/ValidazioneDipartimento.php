@@ -17,7 +17,7 @@ class ValidazioneDipartimento extends Eloquent {
 	 * Specifica la tabella usata dal modello.
 	 * @var string
 	 */
-	protected $table = 'validazioni_dipartimento';
+	protected $table = 'validazioni_dipartimenti';
 	
 	/**
 	* La tabella non ha un campo timestamps
@@ -30,7 +30,7 @@ class ValidazioneDipartimento extends Eloquent {
 	 * @return mixed
 	 */
 	public function prodotto() {
-		return $this->hasOne('Prodotto', 'prodotto_id');
+		return $this->belongsTo('Prodotto', 'prodotto_id');
 	}
 
 	/**
@@ -42,6 +42,15 @@ class ValidazioneDipartimento extends Eloquent {
 		return $this->hasOne('DirettoreDipartimento', 'direttore_dipartimento_id');
 	}
 
+	/**
+	 * Relazione: ogni validazione di Dipartimento è associata a una validazione di
+	 * Area Scientifica.
+	 * @return mixed
+	 */
+	public function validazioneArea(){
+		return $this->hasOne('ValidazioneAreaScientifica', 'validazione_dipartimento_id');
+	}
+	
 	/**
 	 * Restituisce la data in cui è avvenuta la validazione.
 	 * @return DateTime

@@ -70,6 +70,14 @@ class Prodotto extends Eloquent {
 		return $this->hasMany('RicercatorePartecipaProdotto','prodotto_id');
 	}	
 	
+	/**
+	 * Relazione: ogni prodotto può essere validato da un direttore di Dipartimento.
+	 * @return mixed
+	 */
+	public function validazioneDipartimento() {
+		return $this->hasOne('ValidazioneDipartimento','prodotto_id');
+	}	
+	
 	/**   -----------------------------------------------------------
 	*	  	Relazioni per Tipologia di prodotto
 	*	  -----------------------------------------------------------
