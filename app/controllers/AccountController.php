@@ -183,23 +183,17 @@ class AccountController extends BaseController {
 			'data_giorno' => 'required',
 			'data_mese' => 'required',
 			'data_anno' => 'required',
-			'tipo' => 'required',
 		);
 		if(Input::has('password')){
 			$rules['password'] = 'required|min:4|max:20';
 			$rules['password_confirmation'] = 'required|same:password';
 		}
-		if(Input::get('tipo')=='1'){
+		if((Input::get('tipo')!='4')&&(Input::has('tipo'))){
 			$rules['ruolo'] = 'required';
 			$rules['dipartimento_id'] = 'required';
+			$rules['tipo']= 'required';
 		}
-		if(Input::get('tipo')=='2'){
-			$rules['ruolo'] = 'required';
-			$rules['dipartimento_id'] = 'required';
-		}
-		if(Input::get('tipo')=='3'){
-			$rules['ruolo'] = 'required';
-			$rules['dipartimento_id'] = 'required';
+		if((Input::get('tipo')=='3')&&(Input::has('tipo'))){
 			$rules['area_scientifica_id'] = 'required';
 		}
 		//se la validazione degli Input fallisce reindirizza alla form di modifica Utente
@@ -217,10 +211,13 @@ class AccountController extends BaseController {
 		$user->setCognome($inputs['cognome']);
 		if (Input::has('password'))
 			$user->setPassword($inputs['password']);
+			
 		$user->setData($objDataDiNascita);
-		$user->setTipo($inputs['tipo']);
-		switch(Input::get('tipo')){
-			case '1':
+		//se non è responsavile VQR
+		if(Input::has('tipo')){
+			switch(Input::get('tipo')){
+				case '1':
+					$user->setTipo($inputs['tipo']);
 					$user->update();
 					if(!$ricercatore = Ricercatore::where('utente_id',$user->id)->first()){
 						$ricercatore=new Ricercatore();
@@ -230,7 +227,8 @@ class AccountController extends BaseController {
 					$ricercatore->setRuolo($inputs['ruolo']);
 					$user->ricercatore()->save($ricercatore);
 					break;
-			case '2':
+				case '2':
+					$user->setTipo($inputs['tipo']);
 					$user->update();
 					if(!$ricercatore = Ricercatore::where('utente_id',$user->id)->first()){
 						$ricercatore=new Ricercatore();
@@ -246,7 +244,8 @@ class AccountController extends BaseController {
 					$direttore->setDipartimento($ricercatore->dipartimento_id);
 					$ricercatore->direttore()->save($direttore);
 					break;
-			case '3':
+				case '3':
+					$user->setTipo($inputs['tipo']);
 					$user->update(); 
 					if(!$ricercatore = Ricercatore::where('utente_id',$user->id)->first()){
 						$ricercatore=new Ricercatore();
@@ -262,15 +261,10 @@ class AccountController extends BaseController {
 					$responsabile->setArea($inputs['area_scientifica_id']);
 					$ricercatore->responsabile()->save($responsabile);
 					break;
-			case '4':
-					$user->update();
-					if(!$responsabile=ResponsabileVQR::where('utente_id',$user->id)->first()){
-						$responsabile=new ResponsabileVQR();
-						$this->cancellaVecchioTipo($user->id);
-						Ricercatore::where('utente_id',$user->id)->first()->delete();
-					}
-					$user->responsabileVQR()->save($responsabile);
-					break;
+			}
+		//se responsabile VQR
+		}else{
+			$user->update(); 
 		}
 		return Redirect::to('admin/lista-utenti'); //aggiungere messaggio
 	}
