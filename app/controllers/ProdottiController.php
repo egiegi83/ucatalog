@@ -180,7 +180,7 @@ class ProdottiController extends BaseController {
 		
 		$files = Input::file('allegati');
 		if($files[0]){
-			$path = storage_path(). '/users/' . Auth::getUser()->id;
+			$path = public_path(). '/users/' . Auth::getUser()->id;
 
 	   		if(!file_exists($path)){
 	   			if(mkdir($path,0755) == NULL)
@@ -199,7 +199,7 @@ class ProdottiController extends BaseController {
 				if($file->move($path,$fname)){
 					$ap = new AllegatoProdotto;
 					$ap->setNomeFile($fname);
-					$ap->setURL($path.'/'.$fname);
+					$ap->setURL('/ucatalog/users/'.Auth::getUser()->id.'/'.$fname);
 					//$ap->setDimensione($file->getSize());
 					$ap->setTipoFile($file->getClientOriginalExtension());
 					$ap->setProdottoId($product->id);
@@ -322,7 +322,7 @@ class ProdottiController extends BaseController {
 		
 		$files = Input::file('allegati');
 		if($files[0]){
-			$path = storage_path(). '/users/' . Auth::getUser()->id;
+			$path = public_path(). '/users/' . Auth::getUser()->id;
 
 	   		if(!file_exists($path)){
 	   			if(mkdir($path,0755) == NULL)
@@ -341,7 +341,7 @@ class ProdottiController extends BaseController {
 				if($file->move($path,$fname)){
 					$ap = new AllegatoProdotto;
 					$ap->setNomeFile($fname);
-					$ap->setURL($path.'/'.$fname);
+					$ap->setURL('/ucatalog/users/'.Auth::getUser()->id.'/'.$fname);
 					//$ap->setDimensione($file->getSize());
 					$ap->setTipoFile($file->getClientOriginalExtension());
 					$ap->setProdottoId($product->id);
