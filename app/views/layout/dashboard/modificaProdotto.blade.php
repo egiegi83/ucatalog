@@ -198,7 +198,7 @@
 							Allegati: 
 							<ul>
 							 	@foreach($sps as $sp)
-							 		<li><label>{{ $sp->getNomeFile() }}</label><span data-id="{{ $sp->getId() }}" class="icon remove" title="Cancella file"></span></li>
+							 		<li class="trop"><label>{{ $sp->getNomeFile() }}</label><span data-id="{{ $sp->getId() }}" class="icon remove" title="Cancella file"></span></li>
 							 	@endforeach
 							</ul>
 						</div>

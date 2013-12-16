@@ -77,8 +77,12 @@ uc.addEvent(window,'load',function(){
 			
 			var oldalldel = uc.query('#addProdotto .oldallegati li .icon.remove');
 			uc.addEvent(oldalldel,'click',function(e){
+				var t=this;
 				uc.post(uc.url('prodotti/rimuovi-allegato'), {ra: this.dataset.id},function(data,e){
-					console.log(data);
+					t.parentNode.classList.add('removed');
+					window.setTimeout(function(){
+						t.parentNode.style.display='none';
+					},500);
 				});
 			});	
 				
