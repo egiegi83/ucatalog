@@ -341,7 +341,7 @@ class ProdottiController extends BaseController {
 	
 	// regole di base più quelle per la tipologia del prodotto scelto
 	private static function getAllRules($type = false){
-		$rules = ProdottiController::getBasicRules();
+		$rules = ProdottiController::getBasicRules($type);
 		
 		$t = ($type ? $type : Input::get('tipo'));
 		// regole per tipologia in un array temporaneo

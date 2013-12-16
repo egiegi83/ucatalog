@@ -153,6 +153,11 @@ uc.addEvent(window,'load',function(){
 				uc.each(uc.query('#addProdotto form span[data-type ~= "'+ v +'"]'),function(){ this.classList.add('open'); });
 				hi.classList.add('open');
 			}
+			
+			if(sa.offsetWidth > tbc.offsetWidth){
+					tbc.style.width = (tbc.offsetWidth + sa.offsetWidth) +'px';
+			}
+			
 			break;
 	}
 });

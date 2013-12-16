@@ -35,8 +35,21 @@
 					<label>Autori:</label>
 					<div id="ctbta">
 						<div id="tbc">
-							<span id="selected_autori"></span>
-							<span id="tb_autori" placeholder="Autore" contenteditable="true"></span>
+							<?php 
+								$co = $prodotto->prodotto->getCoautori();
+								$sa=''; $nsa=''; $f=false;  
+								if(count($co)>0){
+							  		foreach($co as $c){
+								 		 if($c['type']=='1')
+								 		 	$sa .= '<span data-id="' . $c['id'] . '">' . $c['coautore'] . '</span>';
+										else
+											$nsa .= ($f ? ',' : '') . $c['coautore'];
+										$f=true;
+									}
+								}
+							?>
+							<span id="selected_autori">{{ $sa }}</span>
+							<span id="tb_autori" placeholder="Autore" contenteditable="true">{{ $nsa }}</span>
 						</div>
 						<div id="tag_autori" ></div>
 						{{ Form::hidden('autori', null, array('autocomplete'=>'off','id' => 'hid_autori' )) }}
