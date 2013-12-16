@@ -20,16 +20,165 @@ class ProdottiController extends BaseController {
 	}
 	
 	public function postEliminaProdottiSelezionati(){
-			$ids=Input::get('data');
-			$ps=Auth::getUser()->ricercatore->prodottiBozza()->find($ids);
-			foreach($ps as $p){
-				$sps=$p->allegatiProdotto;
-				foreach($sps as $sp){
-					$url=$sp->getURL();
-					if(File::exists($url)) File::delete($url);
+		$ids=Input::get('data');
+		foreach($ids as $id){
+			$this->EliminaProdotto($id);			
+		}
+	}
+	
+	private function EliminaProdotto($id){
+		$p=Auth::getUser()->ricercatore->prodottiBozza()->find($id);
+		$sps=$p->allegatiProdotto;
+		foreach($sps as $sp){
+			$url=$sp->getURL();
+			if(File::exists($url)) File::delete($url);
+		}
+		$p->delete();
+	}
+	
+	public function postEliminaProdotto($id){
+		$this->EliminaProdotto($id);
+	}
+	
+	public function postModificaProdotto($id){
+		$product= Prodotto::find($id);
+		if(!$product ||  !$product->ricercatore_id == Auth::getUser()->ricercatore->id){
+			return Redirect::to('dashboard/modifica/'.$id);
+		}
+		
+		if(Input::has('save_def')) {
+			$is_def=1;
+			$validator =  Validator::make(Input::all(), $this::getAllRules($product->tipo));
+		} else if(Input::has('update_boz')){
+			$is_def=0;
+			$validator = Validator::make(Input::all(), $this::getBasicRules());
+		} else if(Input::has('del_boz')){
+			$this->EliminaProdotto($id);
+			return Redirect::to('dashboard/prodotti');
+		} else { 
+			return Redirect::to('dashboard/modifica-prodotto/'.$id); 
+		}
+		
+		$inputAll=Input::all();
+		if ($validator->fails()) { 
+			return Redirect::to('dashboard/modifica-prodotto/'.$id)
+				->withErrors($validator) 
+				->withInput($inputAll); 
+		}
+		
+		$product->setTitolo($inputAll['titolo']);
+		$product->setDescrizione($inputAll['descrizione']);
+		$product->setIsDefinitivo($is_def);
+		$product->setDataPubblicazione($inputAll['data_p_year'].'-'.$inputAll['data_p_month'].'-'.$inputAll['data_p_day']);
+		$product->area_scientifica_id=($inputAll['area_di_ricerca']);
+		$product->dipartimento_id=Auth::getUser()->ricercatore->dipartimento_id;
+		$product->ricercatore_id=Auth::getUser()->ricercatore->id;
+		$product->setTipo($inputAll['tipo']);
+		$product->save();
+		
+		switch ($inputAll['tipo']) {
+			case 'articoli_su_rivista':
+				$rivista = $product->ArticoloSuRivista;
+				$rivista->setTitoloRivista($inputAll['titolo_rivista']);
+				$rivista->setISSN((strlen($inputAll['issn'])>0 ? $inputAll['issn'] : 0));
+				$rivista->setPaginaIniziale($inputAll['pagina_iniziale']);
+				$rivista->setPaginaFinale($inputAll['pagina_finale']);
+				$rivista->setNumeroRivista((strlen($inputAll['numero_rivista']) > 0 ? $inputAll['numero_rivista'] : 0));
+				$rivista->setDOI((strlen($inputAll['doi'])>0 ? $inputAll['doi'] : 0));
+				$rivista->setEditore($inputAll['editore']);
+				$rivista->prodotto_id=$product->id;
+				$rivista->save();
+				break;
+			case 'libri':
+				$libro = $product->Libro;
+				$libro->setPaginaIniziale($inputAll['pagina_iniziale']);
+				$libro->setPaginaFinale($inputAll['pagina_finale']);
+				$libro->setDOI((strlen($inputAll['doi'])>0 ? $inputAll['doi'] : 0));
+				$libro->setTitoloLibro($inputAll['titolo_libro']);
+				$libro->setISBN((strlen($inputAll['isbn'])>0 ? $inputAll['isbn'] : 0));
+				$libro->setEditore($inputAll['editore']);
+				$libro->prodotto_id = $product->id;
+				$libro->save();
+				break;
+			case 'convegni':
+				$convegno = $product->Convegno;
+				$convegno->setPaginaIniziale($inputAll['pagina_iniziale']);
+				$convegno->setPaginaFinale($inputAll['pagina_finale']);
+				$convegno->setDOI((strlen($inputAll['doi'])>0 ? $inputAll['doi'] : 0));
+				$convegno->setISBN((strlen($inputAll['isbn'])>0 ? $inputAll['isbn'] : 0));
+				$convegno->setEditore($inputAll['editore']);
+				$convegno->setDataConvegno($inputAll['data_con_year'].'-'.$inputAll['data_con_month'].'-'.$inputAll['data_con_day']);
+				$convegno->setLuogoConvegno($inputAll['luogo_convegno']);
+				$convegno->setNomeConvegno($inputAll['nome_convegno']);
+				$convegno->prodotto_id = $product->id;
+				$convegno->save();
+				break;
+			case 'brevetti':
+				$brevetto = $product->Brevetto;
+				$brevetto->prodotto_id = $product->id;
+				$brevetto->save();
+				break;
+			case 'traduzioni':
+				$traduzione = $product->Traduzione;
+				$traduzione->setLingua($inputAll['lingua']);
+				$traduzione->prodotto_id = $product->id;
+				$traduzione->save();
+				break;
+			case 'altri_prodotti':
+				$altra = $product->AltroProdotto;
+				$altra->setAltraTipologia($inputAll['altra_tipologia']);
+				$altra->prodotto_id = $product->id;
+				$altra->save();
+				break;
+		}
+		
+		if(Input::has('autori')){
+			$autori=json_decode(Input::get('autori'))->data;
+			foreach($autori as $a){
+				$rpp = new RicercatorePartecipaProdotto;
+				$rpp->setProdottoId($product->id);
+				if(intval($a)) {
+					$rpp->setRicercatoreId($a);
+					$utente = Ricercatore::find($a)->utente()->first();
+					$nome = $utente->getNome();
+					$cognome = $utente->getCognome();
+					$rpp->setCoautore($nome . " " . $cognome);
+				} else {
+					$rpp->setCoautore($a);
 				}
-				$p->delete();
+				$rpp->save();
 			}
+		}
+	
+		if( Input::has('allegati')){
+			$files = Input::file('allegati');
+	   		$path = storage_path(). '/users/' . Auth::getUser()->id;
+
+	   		if(!file_exists($path)){
+	   			if(mkdir($path,0755) == NULL)
+	   				return Redirect::to('dashboard/aggiungi-prodotto')->withMessage('message','errore creazione cartella allegati utente');
+	   		}
+	   		
+			foreach($files as $file) {
+				if(!$file) continue;
+				
+				$fname=$file->getClientOriginalName();
+				$i=1;
+				while(file_exists($path.'/'.$fname)){
+					$fname = str_replace('.'.$file->getClientOriginalExtension(), '', $file->getClientOriginalName());
+					$fname .= '-' . $i++ . '.' . $file->getClientOriginalExtension();
+				}
+				if($file->move($path,$fname)){
+					$ap = new AllegatoProdotto;
+					$ap->setNomeFile($fname);
+					$ap->setURL($path.'/'.$fname);
+					//$ap->setDimensione($file->getSize());
+					$ap->setTipoFile($file->getClientOriginalExtension());
+					$ap->setProdottoId($product->id);
+					$ap->save();
+				}
+			}
+		}
 	}
 
 	public function postAggiungi(){
@@ -99,7 +248,7 @@ class ProdottiController extends BaseController {
 				$convegno->prodotto_id = $product->id;
 				$convegno->save();
 				break;
-			case 'commenti':
+			case 'traduzione':
 				$commento = new Traduzione;
 				$commento->setLingua($inputAll['lingua']);
 				$commento->prodotto_id = $product->id;
@@ -185,9 +334,10 @@ class ProdottiController extends BaseController {
 	}
 	
 	// regole di base più quelle per la tipologia del prodotto scelto
-	private static function getAllRules(){
+	private static function getAllRules($type = false){
 		$rules = ProdottiController::getBasicRules();
 		
+		$t = ($type ? $type : Input::get('tipo'));
 		// regole per tipologia in un array temporaneo
 		switch (Input::get('tipo')) {
 			case 'articoli_su_rivista':
@@ -222,7 +372,7 @@ class ProdottiController extends BaseController {
 					//'data_convegno' => 'date_format:"dd/mm/YYYY"'
 				);
 				break;
-			case 'commenti':
+			case 'traduzione':
 				$tmpr = array('lingua' => 'required|max:20');
 				break;
 			case 'brevetti':

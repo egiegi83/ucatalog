@@ -57,7 +57,7 @@ return array(
 			'host'      => '127.0.0.1',
 			'database'  => 'u_catalog',
 			'username'  => 'root',
-			'password'  => '',
+			'password'  => 'sayco92',
 			'charset'   => 'utf8',
 			'collation' => 'utf8_unicode_ci',
 			'prefix'    => '',

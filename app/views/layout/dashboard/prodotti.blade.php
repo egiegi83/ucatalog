@@ -17,8 +17,8 @@
 				<header>
 					<hgroup>
 						<h1>{{ $p->titolo }}</h1>
-						<h2><a href="#">{{ $p->areaScientifica['nome'] }}</a></h2>
-						@if($p->tipo) <h3><a href="#">{{ $p->tipo }}</a></h3> @endif
+						<h2><a href="#">{{ $p->areaScientifica()->get()->first()->nome }}</a></h2>
+						<h3><a href="#">{{ $p->tipo }}</a></h3>
 					</hgroup>
 					@if(!$p->is_definitivo)
 						<a href="{{ URL::to('dashboard/modifica') . '/' . $p->id }}" class="icon edit" title="Modifica"></a>
@@ -32,18 +32,18 @@
 				 	{{ $p->descrizione }}
 				</section>
 				<footer>
-					@if($rpps = $p->ricercatorePartecipaProdotto)
+					<?php $co = $p->getCoautori() ?>
+					@if(count($co)>0)
 					  	<span class="autori">
 						  	<label>Autori</label>
-						  	@foreach($rpps as $rpp)
+						  	@foreach($co as $c)
 						 		 <?php if(isset($f)) echo ','; ?>
-						 		 @if($rpp->ricercatore_id)
+						 		 @if($c['type']=='1')
 						 		 	<a href="{{ URL::to('/$rpp->ricercatore_id'); }}">
-						 		 		<?php  $u = $rpp->ricercatore->utente; ?>
-						 		 		{{ $u->nome.' '.$u->cognome}}
+						 		 		{{ $c['coautore'] }}
 					 		 		</a>
 								@else
-									{{ $rpp->coautore }}
+									{{ $c['coautore'] }}
 								@endif
 								<?php $f=true; ?>
 							@endforeach

@@ -30,7 +30,7 @@ class Prodotto extends Eloquent {
 	 */	
 	public function ricercatore() {
 		
-		return $this->hasOne('Ricercatore', 'id');
+		return $this->belongsTo('Ricercatore', 'ricercatore_id');
 		
 	}
 	
@@ -50,7 +50,7 @@ class Prodotto extends Eloquent {
 	 */
 	public function areaScientifica() {
 		
-		return $this->hasOne('AreaScientifica','id');
+		return $this->belongsTo('AreaScientifica','area_scientifica_id');
 	
 	}
 	
@@ -219,6 +219,27 @@ class Prodotto extends Eloquent {
 		return $this->validazione;
 	
 	}
+	
+	public function getCoautori(){
+		$co = array();
+		$rpps=$this->ricercatorePartecipaProdotto;
+  	  	if($rpps){	
+  	  		foreach($rpps as $rpp){
+  	  			$c = array();
+		 		 if($rpp->ricercatore_id){
+		 		 	$c['type'] = 1;
+		 		 	$c['id'] = $rpp->ricercatore_id;
+		 		 	$u = $rpp->ricercatore->utente; 
+		 		 	$c['coautore'] = $u->nome . ' ' . $u->cognome;
+	 		 	} else {
+					$c['type'] = 0;
+		 		 	$c['coautore'] = $rpp->coautore;
+				}
+				$co[] = $c;
+			}
+		}
+		return $co;
+	}
 
 	/**
 	 * Modifica lo stato.
@@ -275,9 +296,33 @@ class Prodotto extends Eloquent {
 	 * @param string
 	 */
 	public function setValidazione($validazione) {
-	
 		$this->validazione = $validazione;
+	}
 	
+	/**
+	*	Ritorna il nome della tabella nel nome del Model
+	*/
+	public static function TypeToModel($type){
+		switch($type){
+			case 'articoli_su_rivista':
+					return 'ArticoloSuRivista';
+				break;
+			case 'libri':
+				return 'Libro';
+				break;
+			case 'convegni':
+			return 'Convegno';
+				break;
+			case 'traduzione':
+			return 'Traduzione';
+				break;
+			case 'brevetti':
+				return 'Brevetto';
+				break;
+			case 'altri_prodotti':
+				return 'AltroProdotto';
+				break;
+		}
 	}
 }
 

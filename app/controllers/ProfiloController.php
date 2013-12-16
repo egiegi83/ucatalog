@@ -19,8 +19,7 @@ class ProfiloController extends BaseController {
 	}
 	
 	public function getProdotti(){
-		return View::make('layout.dashboard.prodotti')
-			->with('prodotti', Auth::getUser()->ricercatore->prodotti()->get());
+		return View::make('layout.dashboard.prodotti')->with('prodotti', Auth::getUser()->ricercatore->prodotti()->get());
 	}
 	
 	public function getAggiungiProdotto(){
@@ -29,9 +28,11 @@ class ProfiloController extends BaseController {
 		
 	public function getModifica($id){
 		$prodotto = Prodotto::find($id);
-		if($prodotto)
-			return View::make('layout.dashboard.modificaProdotto')->with('prodotto',$prodotto);
-		return View::make('layout.dashboard.prodotti');
+		if($prodotto && $prodotto->ricercatore_id == Auth::getUser()->ricercatore->id){
+			$prodotto=call_user_func(array($prodotto, Prodotto::TypeToModel($prodotto->tipo)));
+			return View::make('layout.dashboard.modificaProdotto')->with('prodotto',$prodotto->get()->first());
+		}
+		return Redirect::to('dashboard/prodotti');
 	}
 	
 	public function postRemove(){

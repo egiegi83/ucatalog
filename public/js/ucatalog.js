@@ -8,10 +8,11 @@ ucatalog = {
 			if(! typeof uc._url == 'undefined') return uc._url;
 			var 	url=document.URL,
 			bp=url.indexOf(uc.basePath);
-			url = url.substr(bp + uc.basePath.length + 1,url.length);
-			url = url.split('/');
-			
-			uc._url=null;
+			url = url.substr(bp + uc.basePath.length + 1,url.length),
+			ou = url;
+		
+			url = url.split('/'); 
+			uc._url = {};
 			switch(url.length){
 				case 0:
 					uc._url = { controller : '/', action:'', data:'' }; 
@@ -26,6 +27,7 @@ ucatalog = {
 					uc._url = { controller : url[0], action:url[1], data:url[2] };
 					break;
 			}
+			uc._url.current=ou;
 			return uc._url;
 		}
 	},

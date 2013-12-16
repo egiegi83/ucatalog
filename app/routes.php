@@ -50,9 +50,10 @@ Route::group(array('before' => 'auth'), function(){
 		if (Request::ajax()){			
 			if(Input::has('q')){
 				$s = Input::get('q');
-				$response = Response::json(User::where('tipo','=','1')
+				$response = Response::json(User::where('nome','LIKE','%'.$s.'%')
+																				->OrWhere('cognome','LIKE','%'.$s.'%')
+																				->where('tipo','=','1')
 																				->where('id','<>',Auth::getUser()->id)
-																				->where('nome','LIKE','%'.$s.'%')
 																				->with('ricercatore')
 																				->get()->toArray());
 				$response->header('Content-Type', 'application/json');

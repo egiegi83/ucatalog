@@ -1,7 +1,7 @@
 uc.addEvent(window,'load',function(){
 	var ca=uc.url(),t;
 	
-	t=uc.query('body>section>nav a[href *= "' + ca.action + '"]')[0];
+	t=uc.query('body>section>nav a[href *= "' + ca.current + '"]')[0];
 	if(t) t.parentNode.classList.add('current');
 	
 	uc.query('body>section>section')[0].classList.add('loaded');
@@ -48,7 +48,7 @@ uc.addEvent(window,'load',function(){
 				var divs=uc.query('#addProdotto form span[data-type]');
 				for(var i=0; len=divs.length, i<len; i++) 
 					divs[i].classList.remove('open');
-				if(this.value != 0) {
+				if(this.value != 0 && this.value != 'brevetti') {
 					uc.each(uc.query('#addProdotto form .hiddeni span[data-type ~="'+ this.value +'"]'), function(){ this.classList.add('open') });
 					hi.classList.add('open');
 				} else {
@@ -58,7 +58,7 @@ uc.addEvent(window,'load',function(){
 			});
 			
 			uc.addEvent(uc.query('#addProdotto input,#addProdotto select,#addProdotto textarea'),'focus',function(e){
-				this.parentNode.querySelector('label').style.display='none';
+				this.parentNode.querySelector('label.err').style.display='none';
 			});
 			
 			uc.addEvent(tb_autori,'keyup',function(e){
@@ -120,7 +120,7 @@ uc.addEvent(window,'load',function(){
 					tmp='<ul>';
 					if(data.length){
 						for(d in data){
-							tmp+='<li data-id="'+ data[d].id +'" onclick="select_autore(this)">'+ data[d].utente.nome +' '+ data[d].utente.cognome +'</li>';
+							tmp+='<li data-id="'+ data[d].ricercatore.id +'" onclick="select_autore(this)">'+ data[d].nome +' '+ data[d].cognome +'</li>';
 						}
 					} else {
 						tmp+='<li>Nessun risultato</li>';
@@ -145,7 +145,7 @@ uc.addEvent(window,'load',function(){
 			
 			var st=uc.query('select[name=tipo]')[0];
 			v = st.options[st.selectedIndex].value;
-			if(v != 0){	
+			if(v != 0 && v != 'brevetti'){	
 				uc.each(uc.query('#addProdotto form span[data-type ~= "'+ v +'"]'),function(){ this.classList.add('open'); });
 				hi.classList.add('open');
 			}

@@ -29,7 +29,7 @@ class Ricercatore extends Eloquent{
 	*/
 	public function prodotti()
 	{
-		return $this->hasMany('Prodotto');
+		return $this->hasMany('Prodotto','id');
 	}
 
 	/*

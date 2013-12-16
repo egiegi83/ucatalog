@@ -1,6 +1,9 @@
 uc.addEvent(window,'load',function(){
-	var ca=uc.url();
-	//uc.query('body>section>nav a[href $= "' + ca.action + '"]')[0].parentNode.classList.add('current');
+	var ca=uc.url(),t;
+	
+	t=uc.query('body>section>nav a[href $= "' + ca.current + '"]')[0];
+	if(t) t.parentNode.classList.add('current');
+	
 	uc.query('body>section>section')[0].classList.add('loaded');
 	
 	switch(ca.action){
