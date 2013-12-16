@@ -96,4 +96,12 @@ class ValidazioneController extends BaseController {
 	public function getValida(){
 		return Redirect::to('valida/lista-prodotti');
 	}
+	
+	public function postValidaSelezionati(){
+		$prodotti=Input::get('validaid');
+		foreach($prodotti as $prodotto){
+			$this::postValida($prodotto);
+		}
+		return Redirect::to('valida/lista-prodotti');
+	}
 }
