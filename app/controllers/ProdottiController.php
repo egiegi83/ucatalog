@@ -188,7 +188,7 @@ class ProdottiController extends BaseController {
 	   		}
 	   		
 			foreach($files as $file) {
-				if(!$file) continue;
+				if(!$file->isValid()) continue;
 				
 				$fname=$file->getClientOriginalName();
 				$i=1;

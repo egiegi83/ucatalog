@@ -93,15 +93,7 @@
 						
 						<p>{{ Form::submit('Crea utente') }}</p>
 						<p>{{ Form::close() }}</p>
-		
-						<br>		
-						Test Modifica Utente:
-		
-						<br>
-						Test Rimozione Utente:
-		
-						<br>
-						Test Visualizzazione Utente:
+					
 					@show
 			</div>
 		</section>

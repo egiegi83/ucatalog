@@ -79,13 +79,4 @@ echo $message;
     
     <p>{{ Form::submit('Modifica utente') }}</p>
 <p>{{ Form::close() }}</p>
-
-<br>		
-Test Modifica Utente:
-
-<br>
-Test Rimozione Utente:
-
-<br>
-Test Visualizzazione Utente:
 @stop
