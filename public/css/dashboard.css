@@ -55,6 +55,12 @@ form .addFile{
 	margin:10px 0;
 }
 
+.oldallegati{ display:block;  clear:both;  margin: 0 10px;}
+.oldallegati ul{ list-style-position:inside;}
+.oldallegati li{ color:#222; font-size:13px; line-height:18px; }
+.oldallegati li > *{ display:inline-block; vertical-align:middle; }
+.oldallegati li .icon{ margin-left:10px; width:16px; height:16px;}
+
 #ctbta{ 
 	background:#fff; display:inline-block;  vertical-align:middle; 
 	height:28px; line-height:28px; 

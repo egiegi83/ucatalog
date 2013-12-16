@@ -74,6 +74,13 @@ uc.addEvent(window,'load',function(){
 				
 				allegati.appendChild(ouf);
 			});
+			
+			var oldalldel = uc.query('#addProdotto .oldallegati li .icon.remove');
+			uc.addEvent(oldalldel,'click',function(e){
+				uc.post(uc.url('prodotti/rimuovi-allegato'), {ra: this.dataset.id},function(data,e){
+					console.log(data);
+				});
+			});	
 				
 			function getSelected_autors(){
 				var sps=sa.querySelectorAll('span');

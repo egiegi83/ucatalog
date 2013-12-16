@@ -44,6 +44,21 @@ class ProdottiController extends BaseController {
 	}
 	
 	/**
+	*
+	*/
+	public function postRimuoviAllegato(){
+		$id=Input::get('ra');
+		$ap=AllegatoProdotto::find($id);
+		$p = Auth::getUser()->ricercatore->prodottiBozza()->find($ap->prodotto_id);
+		if($p){
+			$url=$ap->getURL();
+			if(File::exists($url)) File::delete($url);
+			$ap->delete();
+		}
+	}
+	
+	
+	/**
 	* Modifica di un prodotto
 	* @param id: Identity del prodotto da modificare
 	*/
@@ -162,10 +177,10 @@ class ProdottiController extends BaseController {
 				$rpp->save();
 			}
 		}
-	
-		if(($files = Input::file('allegati')[0]) != NULL){
-			$files = Input::file('allegati');
-	   		$path = storage_path(). '/users/' . Auth::getUser()->id;
+		
+		$files = Input::file('allegati');
+		if($files[0]){
+			$path = storage_path(). '/users/' . Auth::getUser()->id;
 
 	   		if(!file_exists($path)){
 	   			if(mkdir($path,0755) == NULL)
@@ -315,7 +330,7 @@ class ProdottiController extends BaseController {
 	   		}
 	   		
 			foreach($files as $file) {
-				if(!$file) continue;
+				if(!$file->isValid()) continue;
 				
 				$fname=$file->getClientOriginalName();
 				$i=1;

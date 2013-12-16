@@ -194,14 +194,14 @@
 				 
 				 @if($sps=$prodotto->prodotto->allegatiProdotto)
 					@if($sps->count() > 0)
-						<p>
-							<span class="old allegati">
-							 	Allegati: 
+						<div class="oldallegati">
+							Allegati: 
+							<ul>
 							 	@foreach($sps as $sp)
-							 		<span data-id="{{ $sp->getId() }}">{{ $sp->getNomeFile() }}</span>
+							 		<li><label>{{ $sp->getNomeFile() }}</label><span data-id="{{ $sp->getId() }}" class="icon remove" title="Cancella file"></span></li>
 							 	@endforeach
-							</span>
-						</p>
+							</ul>
+						</div>
 					@endif
 				@endif
 				
