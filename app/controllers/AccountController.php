@@ -303,9 +303,6 @@ class AccountController extends BaseController {
 		return $rules;
 	}
 
-	public function getTest($id){
-		return $this::cancellaVecchioTipo($id);
-	}
 		
 	/**
 	*	Cancella il vecchio tipo dell'autore durante la modifica
