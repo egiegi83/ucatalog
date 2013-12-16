@@ -30,7 +30,7 @@ class ProfiloController extends BaseController {
 	public function getModifica($id){
 		$prodotto = Prodotto::find($id);
 		if($prodotto && $prodotto->ricercatore_id == Auth::getUser()->ricercatore->id){
-			$prodotto=call_user_func(array($prodotto, Prodotto::TypeToModel($prodotto->tipo)));
+			$prodotto=call_user_func(array($prodotto, Prodotto::typeToModel($prodotto->tipo)));
 			return View::make('layout.dashboard.modificaProdotto')->with('prodotto',$prodotto->get()->first());
 		}
 		return Redirect::to('dashboard/prodotti');

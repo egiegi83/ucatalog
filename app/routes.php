@@ -59,12 +59,12 @@ Route::group(array('before' => 'auth'), function(){
 			if(Input::has('q')){
 				$s = Input::get('q');
 				$response = Response::json(User::where('tipo','=','1')
-																				->where('id','<>',Auth::getUser()->id)
-																				->where(function($query) use ($s){
-																					$query->where('nome','LIKE','%'.$s.'%')->OrWhere('cognome','LIKE','%'.$s.'%');
-																				})
-																				->with('ricercatore')
-																				->get()->toArray());
+					->where('id','<>',Auth::getUser()->id)
+					->where(function($query) use ($s){
+					$query->where('nome','LIKE','%'.$s.'%')->OrWhere('cognome','LIKE','%'.$s.'%');
+					})
+					->with('ricercatore')
+					->get()->toArray());
 				$response->header('Content-Type', 'application/json');
 				return $response;
 			}

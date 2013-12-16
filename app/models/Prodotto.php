@@ -302,7 +302,7 @@ class Prodotto extends Eloquent {
 	/**
 	*	Ritorna il nome della tabella nel nome del Model
 	*/
-	public static function TypeToModel($type){
+	public static function typeToModel($type){
 		switch($type){
 			case 'articoli_su_rivista':
 					return 'ArticoloSuRivista';

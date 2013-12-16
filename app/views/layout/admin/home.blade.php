@@ -11,6 +11,7 @@
 	<nav>
 		<ul>
 			<li class="trall">{{ HTML::link('admin/lista-utenti','Utenti') }}</li>	
+			
 			<li class="trall">{{ HTML::link('admin/messaggi','Messaggi') }}</li>
 	</nav>
 	<section class="trall">
