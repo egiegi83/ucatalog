@@ -19,7 +19,8 @@ class ProfiloController extends BaseController {
 	}
 	
 	public function getProdotti(){
-		return View::make('layout.dashboard.prodotti')->with('prodotti', Auth::getUser()->ricercatore->prodotti()->get());
+		return View::make('layout.dashboard.prodotti')
+			->with('prodotti', Auth::getUser()->ricercatore->prodotti()->get());
 	}
 	
 	public function getAggiungiProdotto(){

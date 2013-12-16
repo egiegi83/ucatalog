@@ -51,19 +51,20 @@ class ProdottiController extends BaseController {
 			$validator =  Validator::make(Input::all(), $this::getAllRules($product->tipo));
 		} else if(Input::has('update_boz')){
 			$is_def=0;
-			$validator = Validator::make(Input::all(), $this::getBasicRules());
+			$validator = Validator::make(Input::all(), $this::getBasicRules(true));
 		} else if(Input::has('del_boz')){
 			$this->EliminaProdotto($id);
 			return Redirect::to('dashboard/prodotti');
 		} else { 
-			return Redirect::to('dashboard/modifica-prodotto/'.$id); 
+			return Redirect::to('dashboard/modifica/'.$id); 
 		}
 		
 		$inputAll=Input::all();
 		if ($validator->fails()) { 
-			return Redirect::to('dashboard/modifica-prodotto/'.$id)
+			return Redirect::to('dashboard/modifica/'.$id)
 				->withErrors($validator) 
 				->withInput($inputAll); 
+			exit;
 		}
 		
 		$product->setTitolo($inputAll['titolo']);
@@ -73,10 +74,9 @@ class ProdottiController extends BaseController {
 		$product->area_scientifica_id=($inputAll['area_di_ricerca']);
 		$product->dipartimento_id=Auth::getUser()->ricercatore->dipartimento_id;
 		$product->ricercatore_id=Auth::getUser()->ricercatore->id;
-		$product->setTipo($inputAll['tipo']);
 		$product->save();
 		
-		switch ($inputAll['tipo']) {
+		switch ($product->getTipo()) {
 			case 'articoli_su_rivista':
 				$rivista = $product->ArticoloSuRivista;
 				$rivista->setTitoloRivista($inputAll['titolo_rivista']);
@@ -132,6 +132,9 @@ class ProdottiController extends BaseController {
 				break;
 		}
 		
+		$rpp = $product->RicercatorePartecipaProdotto;
+		foreach($rpp as $r){ $r->delete(); }
+		
 		if(Input::has('autori')){
 			$autori=json_decode(Input::get('autori'))->data;
 			foreach($autori as $a){
@@ -150,7 +153,7 @@ class ProdottiController extends BaseController {
 			}
 		}
 	
-		if( Input::has('allegati')){
+		/*if( Input::has('allegati')){
 			$files = Input::file('allegati');
 	   		$path = storage_path(). '/users/' . Auth::getUser()->id;
 
@@ -179,6 +182,8 @@ class ProdottiController extends BaseController {
 				}
 			}
 		}
+		*/
+		return Redirect::to('dashboard/prodotti');
 	}
 
 	public function postAggiungi(){
@@ -326,11 +331,12 @@ class ProdottiController extends BaseController {
 	
 	
 	// regole di base per l'inserimento di un prodotto (definitivo o bozza)
-	public static function getBasicRules(){
-		return array('titolo' => 'required|max:40',
+	public static function getBasicRules($reqType=false){
+		$br = array('titolo' => 'required|max:40',
 									'area_di_ricerca' => 'required',
-									'descrizione' => 'required|max:255',
-									'tipo' => 	'required'); 
+									'descrizione' => 'required|max:255');
+		if(!$reqType) $br['tipo'] = 'required';
+		return $br;
 	}
 	
 	// regole di base più quelle per la tipologia del prodotto scelto

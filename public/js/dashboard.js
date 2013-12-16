@@ -115,18 +115,22 @@ uc.addEvent(window,'load',function(){
 				
 			function searchRicercatore(e){
 				uc.post(uc.url('autori/tag'), {q: this.textContent},function(data,e){
-					if(data == '') return;
-					data=JSON.parse(data);
-					tmp='<ul>';
-					if(data.length){
-						for(d in data){
-							tmp+='<li data-id="'+ data[d].ricercatore.id +'" onclick="select_autore(this)">'+ data[d].nome +' '+ data[d].cognome +'</li>';
+					if(data != '') {
+						data=JSON.parse(data);
+						tmp='<ul>';
+						if(data.length){
+							for(d in data){
+								tmp+='<li data-id="'+ data[d].ricercatore.id +'" onclick="select_autore(this)">'+ data[d].nome +' '+ data[d].cognome +'</li>';
+							}
+						} else {
+							tmp+='<li>Nessun risultato</li>';
 						}
+						res.innerHTML = tmp + '</ul>';
+						res.classList.add('open');
 					} else {
-						tmp+='<li>Nessun risultato</li>';
+						res.innerHTML = '<ul><li>Nessun risultato</li></ul>';
+						res.classList.add('open');
 					}
-					res.innerHTML = tmp + '</ul>';
-					res.classList.add('open');
 				});
 			}
 			

@@ -39,7 +39,7 @@
 						  	@foreach($co as $c)
 						 		 <?php if(isset($f)) echo ','; ?>
 						 		 @if($c['type']=='1')
-						 		 	<a href="{{ URL::to('/$rpp->ricercatore_id'); }}">
+						 		 	<a href="{{ URL::to('ricercatore/'.$c['id']); }}">
 						 		 		{{ $c['coautore'] }}
 					 		 		</a>
 								@else

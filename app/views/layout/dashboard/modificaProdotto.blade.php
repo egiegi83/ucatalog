@@ -7,7 +7,7 @@
 @section('content.dashboard')
 	<h1>Modifica prodotto</h1>
 	<div id="addProdotto">
-		{{ Form::model($prodotto, array('url' => array('prodotti/modifica-prodotto',$prodotto->id ), 'files' => true)) }}
+		{{ Form::model($prodotto, array('url' => array('prodotti/modifica-prodotto',$prodotto->prodotto->id ), 'files' => true)) }}
 				<span>
 					{{ Form::text('titolo', $prodotto->prodotto->titolo, array('placeholder'=>'Titolo','autocomplete'=>'off')) }}
 					@if($errors->first('titolo'))
