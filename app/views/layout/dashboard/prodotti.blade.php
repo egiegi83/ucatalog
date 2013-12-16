@@ -32,12 +32,12 @@
 				 	{{ $p->descrizione }}
 				</section>
 				<footer>
-					<?php $co = $p->getCoautori() ?>
+					<?php $co = $p->getCoautori(); $f=false; ?>
 					@if(count($co)>0)
 					  	<span class="autori">
 						  	<label>Autori</label>
 						  	@foreach($co as $c)
-						 		 <?php if(isset($f)) echo ','; ?>
+						 		 <?php if($f) echo ','; ?>
 						 		 @if($c['type']=='1')
 						 		 	<a href="{{ URL::to('ricercatore/'.$c['id']); }}">
 						 		 		{{ $c['coautore'] }}
@@ -49,16 +49,19 @@
 							@endforeach
 				  		</span>
 				  	@endif
-					<span>
-						@if($sps=$p->allegatiProdotto)
-							<label>Allegati</label>
-							<ul class="allegati">
-							@foreach($sps as $sp)
-								<li><a href="{{ $sp->getURL() }}" target="_blank"><span class="icon allegato"></span>{{ $sp->getNomeFile() }}</a></span></li>
-							@endforeach
-							</ul>
+					
+					@if($sps=$p->allegatiProdotto)
+						@if($sps->count()>0)
+							<span>
+								<label>Allegati</label>
+								<ul class="allegati">
+								@foreach($sps as $sp)
+									<li><a href="{{ $sp->getURL() }}" target="_blank"><span class="icon allegato"></span>{{ $sp->getNomeFile() }}</a></span></li>
+								@endforeach
+								</ul>
+							</span>
 						@endif
-					</span>
+					@endif
 					<span>Pubblicato il {{ substr(date_format(date_create($p->data_pubblicazione),'d-m-Y H:i:s'),0,10); }}</span>
 				</footer>
 			</article>

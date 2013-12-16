@@ -191,6 +191,19 @@
 						@endif
 					</span>
 				</div>
+				 
+				 @if($sps=$prodotto->prodotto->allegatiProdotto)
+					@if($sps->count() > 0)
+						<p>
+							<span class="old allegati">
+							 	Allegati: 
+							 	@foreach($sps as $sp)
+							 		<span data-id="{{ $sp->getId() }}">{{ $sp->getNomeFile() }}</span>
+							 	@endforeach
+							</span>
+						</p>
+					@endif
+				@endif
 				
 				<p>
 					<span id="allegati">

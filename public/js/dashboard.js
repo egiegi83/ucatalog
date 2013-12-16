@@ -14,7 +14,7 @@ uc.addEvent(window,'load',function(){
 			
 			uc.addEvent(uc.query('#del_prodotti'),'click',function(e){
 				e.preventDefault();
-				var ps=uc.query('body>section>section article.prodotto.selected'),
+				var ps=uc.query('body>section>section article.prodotto.selected:not(.removed)'),
 				tmp=[];
 				for(var i=0; len=ps.length, i<len; i++){
 					tmp[i]=ps[i].dataset.id;

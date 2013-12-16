@@ -29,9 +29,18 @@ class AllegatoProdotto extends Eloquent {
 	 * @return mixed
 	 */
 	public function prodotto() {
-		return $this->hasOne('Prodotto', 'prodotto_id');
+		return $this->belongsTo('Prodotto');
 	}
-
+	
+	/**
+	 * Restiuisce l'id dell'allegato.
+	 * @return int
+	 */
+	public function getId() {
+		return $this->id;
+	}
+	
+	
 	/**
 	 * Restiuisce il nome del file.
 	 * @return string

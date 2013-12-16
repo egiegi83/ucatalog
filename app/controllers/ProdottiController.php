@@ -19,6 +19,9 @@ class ProdottiController extends BaseController {
 		return Prodotto::where('prodotto_id','>',$lastid)->orderBy($order_name,$order_type)->take($limit);
 	}
 	
+	/**
+	* Elimina i prodotti selezionati da un ricercatore nella view 'dashboard/prodotti'
+	*/
 	public function postEliminaProdottiSelezionati(){
 		$ids=Input::get('data');
 		foreach($ids as $id){
@@ -26,6 +29,10 @@ class ProdottiController extends BaseController {
 		}
 	}
 	
+	/**
+	* Elimina un singolo prodotto del ricercatore loggato ed i relativi file salvati sul Filesystem
+	* @params id: identity del prodotto da eliminare
+	*/
 	private function EliminaProdotto($id){
 		$p=Auth::getUser()->ricercatore->prodottiBozza()->find($id);
 		$sps=$p->allegatiProdotto;
@@ -36,12 +43,14 @@ class ProdottiController extends BaseController {
 		$p->delete();
 	}
 	
-	public function postEliminaProdotto($id){
-		$this->EliminaProdotto($id);
-	}
-	
+	/**
+	* Modifica di un prodotto
+	* @param id: Identity del prodotto da modificare
+	*/
 	public function postModificaProdotto($id){
 		$product= Prodotto::find($id);
+		
+		// Controllo se il prodotto esiste e se appartiene al ricercatore connesso
 		if(!$product ||  !$product->ricercatore_id == Auth::getUser()->ricercatore->id){
 			return Redirect::to('dashboard/modifica/'.$id);
 		}
@@ -132,6 +141,7 @@ class ProdottiController extends BaseController {
 				break;
 		}
 		
+		// elimino i vecchi coautori
 		$rpp = $product->RicercatorePartecipaProdotto;
 		foreach($rpp as $r){ $r->delete(); }
 		
@@ -153,7 +163,7 @@ class ProdottiController extends BaseController {
 			}
 		}
 	
-		/*if( Input::has('allegati')){
+		if(($files = Input::file('allegati')[0]) != NULL){
 			$files = Input::file('allegati');
 	   		$path = storage_path(). '/users/' . Auth::getUser()->id;
 
@@ -182,7 +192,6 @@ class ProdottiController extends BaseController {
 				}
 			}
 		}
-		*/
 		return Redirect::to('dashboard/prodotti');
 	}
 
@@ -295,10 +304,10 @@ class ProdottiController extends BaseController {
 				$rpp->save();
 			}
 		}
-	
-		if( Input::has('allegati')){
-			$files = Input::file('allegati');
-	   		$path = storage_path(). '/users/' . Auth::getUser()->id;
+		
+		$files = Input::file('allegati');
+		if($files[0]){
+			$path = storage_path(). '/users/' . Auth::getUser()->id;
 
 	   		if(!file_exists($path)){
 	   			if(mkdir($path,0755) == NULL)
@@ -325,7 +334,6 @@ class ProdottiController extends BaseController {
 				}
 			}
 		}
-		
 		return Redirect::to('dashboard/prodotti')->with('newid',$product->id);
 	}
 	

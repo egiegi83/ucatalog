@@ -59,7 +59,7 @@ class Prodotto extends Eloquent {
 	 * @return mixed
 	 */
 	public function allegatiProdotto() {
-		return $this->hasMany('AllegatoProdotto','prodotto_id');
+		return $this->hasMany('AllegatoProdotto');
 	}
 
 	/**
