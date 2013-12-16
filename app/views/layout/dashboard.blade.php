@@ -15,6 +15,9 @@
 		<ul>
 			<li class="trall">{{ HTML::link('dashboard','Dashboard') }}</li>
 			<li class="trall">{{ HTML::link('dashboard/prodotti','Prodotti') }}</li>
+			@if (Auth::getUser()->getTipo() == 2 || Auth::getUser()->getTipo() == 3)
+			<li class="trall">{{ HTML::link('valida/lista-prodotti','Validazione') }}</li>
+			@endif
 			<li class="trall">{{ HTML::link('dashboard/messaggi','Messaggi') }}</li>	
 	</nav>
 	<section class="trall">

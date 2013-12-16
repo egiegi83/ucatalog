@@ -1,6 +1,6 @@
-@extends('layout.admin.home')
+@extends('layout.dashboard')
 
-@section('content.admin')
+@section('content.dashboard')
  	<?php if (Session::has('message')) {
 		$message = Session::get('message');
 		echo $message;
@@ -23,7 +23,9 @@
 			?>
 			<td> {{$utente->cognome ." ". $utente->nome}}</td>
 			<td>
-				<a href="valida/<?php echo $prodotto->id;?>">Valida</a>
+				{{ Form::open(array('url' => array('valida/valida', $prodotto->id))) }}
+					{{ Form::submit('valida') }}
+				{{ Form::close() }}
 			</tr>
 		@endforeach
 	</table>

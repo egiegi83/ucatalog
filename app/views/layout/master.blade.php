@@ -27,7 +27,7 @@
 						@include('layout.master.login')
 					@else
 						<a href="
-						@if (Auth::getUser()->is_amministratore)
+						@if (Auth::getUser()->getTipo() == 0)
 							{{ URL::to('/admin') }}
 						@else
 							{{ URL::to('/dashboard') }}
