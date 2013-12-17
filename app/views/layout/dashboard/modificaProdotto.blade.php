@@ -153,16 +153,14 @@
 						@endif
 					</span>
 					<span data-type="convegni" >
-						
-					<!--
-						{{ Form::text('data_convegno', null, array('placeholder'=>'Data convegno','autocomplete'=>'off' )) }}
-						@if($errors->first('data_convegno'))
-							<label class="err">{{ $errors->first('data_convegno') }}</label>
-						@endif
-					-->
-						{{ Form::selectRange('data_con_day',1,31) }} 
-						{{ Form::selectMonth('data_con_month') }} 
-						{{ Form::selectRange('data_con_year', 2000, date('Y') ) }}
+					
+					<!-- probabilmente il controllo commentato non serve -->	
+					<!--@if ($prodotto->prodotto->getTipo() == 'convegni') -->
+						<?php $dp = explode('-',$prodotto->prodotto->convegno->data_convegno); ?>
+						{{ Form::selectRange('data_con_day',1,31, $dp[2]) }} 
+						{{ Form::selectMonth('data_con_month', $dp[1]) }} 
+						{{ Form::selectRange('data_con_year', 2000, date('Y'), $dp[0] ) }}
+					<!-- @endif -->	
 						@if($errors->first('data_convegno'))
 							<label class="err">{{ $errors->first('data_convegno') }}</label>
 						@endif
