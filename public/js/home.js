@@ -1,14 +1,19 @@
 uc.addEvent(window,'load',function(){
 	var tb_search = uc.query('#tb_search')[0],
 			ac = uc.query('#autocomplete')[0],
-			btn_search = uc.query('#btn_search')[0];
+			btn_search = uc.query('#btn_search')[0],
+			prodotti = uc.query('#prodotti')[0],
+			h2r = uc.query('#h2r')[0];
 		
-	uc.addEvent(tb_search,'keyup',function(){
+	uc.addEvent(tb_search,'keyup',function(e){
+		if(e.keyCode == 13 || e.keyCode ==40 || e.keyCode == 37 || e.keyCode == 39) return; 
 		uc.post('search', {Cerca:this.value},function(data,e){
 			data=JSON.parse(data);
-			tmp='<ul>';
+			tmp='<ul tabindex="0">';
+			i=1;
 			for(d in data){
-				tmp+='<li onclick="sotb(this)">'+data[d].titolo+'</li>';
+				tmp+='<li tabindex="'+i+'" onclick="sotb(this)">'+data[d].titolo+'</li>';
+				i++;
 			}
 			tmp+='</ul>';
 			ac.innerHTML = tmp;
@@ -32,6 +37,7 @@ uc.addEvent(window,'load',function(){
 	});
 	uc.addEvent(uc.query('#arrow>span.left')[0],'click',function(){ 
 		tb_search.parentNode.parentNode.classList.remove('active');
+		h2r.style.visibility='visible';
 		uc.query('body>section')[0].style.left= '0px';
 		c=this.parentNode.children;
 		c[1].style.display='block';
@@ -40,12 +46,22 @@ uc.addEvent(window,'load',function(){
 	uc.addEvent(document,'keyup',function(e){ 
 		switch(e.keyCode){
 			case 37:
+				if(e.target === tb_search) return;
 				uc.query('#arrow>span.left')[0].click();
-			break;			
+				break;			
 			case 39:
+				if(e.target === tb_search) return;
 				uc.query('#arrow>span.right')[0].click();
-			break;
+				break;
+			case 40:
+				ac.children[0].firstChild.focus();
+				break;
+			case 13:
+				if(e.target.parentNode.parentNode === ac) 
+					e.target.click();
+				break;
 		}	
+		return true;
 	});
 	
 	
@@ -53,12 +69,18 @@ uc.addEvent(window,'load',function(){
 		e.preventDefault();
 		uc.query('#arrow>span.right')[0].click();
 		sl=uc.query('#arrow>span.left')[0];
+		
 		tb_search.parentNode.parentNode.classList.add('active');
+		h2r.style.visibility='hidden';
+		
+		ac.classList.remove('open');
+		
 		
 		form=this.parentNode;
 		uc.post(form.action, uc.serialize(form),function(data,e){
 			data=JSON.parse(data);
-			console.log(data);
+			prodotti.innerHTML = data.html;
+			h2r.innerHTML = data.count + ' risultati trovati per <i>\'' + data.query + '\'</i>';
 		});
 		
 	});

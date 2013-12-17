@@ -11,8 +11,8 @@ class ProdottiController extends BaseController {
 	|
 	*/
 	public function __construct(){
-		$this->beforeFilter('auth');
-		$this->beforeFilter('ricercatore');
+		$this->beforeFilter('auth',array('except' =>'getDownload'));
+		$this->beforeFilter('ricercatore',array('except' =>'getDownload'));
 	}
 	
 	public static function getListaProdotti($order_name = 'data_inserimento',$order_type = 'ASC',$limit=30,$lastid=0){

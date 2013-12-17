@@ -23,7 +23,10 @@
 					</div>
 					<div id="filtri">
 						<span>
-							{{ Form::select('tipologia', array('0' => 'Tutte le tipologie', '1' => 'Libro','2' => 'Rivista','3' => 'Articolo')) }}
+							{{ Form::select('area_di_ricerca',  BaseController::getAreeDiRicerca()) }}
+						</span>
+						<span>
+							{{ Form::select('dipartimento',  BaseController::getDipartimenti()) }}
 						</span>
 						<span>
 							{{ Form::text('autori', null, array('placeholder'=>'Autori separati da ,','size'=>'16'))}}
@@ -39,8 +42,8 @@
 		</div>
 		<div id="pagelatest" class="page trop">
 			<div class="pagecontent">
-				<h2>Ultimi caricamenti</h2>
-				<div class="prodotti">
+				<h2 id="h2r">Ultimi caricamenti</h2>
+				<div class="prodotti" id="prodotti">
 					@foreach ($prodotti as $p) 
 					<article class="prodotto">
 						<header>
@@ -66,8 +69,8 @@
 							 		 		</a>
 										@else
 											{{ $c['coautore'] }}
+											<?php $f=true; ?>
 										@endif
-										<?php $f=true; ?>
 									@endforeach
 						  		</span>
 						  	@endif
