@@ -41,10 +41,13 @@ Route::group(array('before' => 'auth'), function(){
 	Route::post('/admin','UtentiController@addUser');
 });
 */
+
+/*
+* Ricerca nell'homepage
+*/
 Route::post('/search',function(){
 	if (Request::ajax()){
 		$query = Input::get('Cerca');	
-		
 		$response = Response::json(Prodotto::where('titolo','like','%'.$query.'%')->get()->toArray());
 		
 		$response->header('Content-Type', 'application/json');
@@ -52,8 +55,13 @@ Route::post('/search',function(){
 	}
 });
 
+
 Route::group(array('before' => 'auth'), function(){
 	
+	
+	/*
+	* Tagga autore
+	*/
 	Route::post('/autori/tag',function(){
 		if (Request::ajax()){			
 			if(Input::has('q')){

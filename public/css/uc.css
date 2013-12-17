@@ -55,6 +55,7 @@ input[type="submit"]:active,.btn:active{ border-color:#006838; background-color:
 .icon.edit{ background-image: url(icons/pen.png); }
 .icon.remove{ background-image: url(icons/trash.png); }
 .icon.lock{ background-image: url(icons/lock.png); }
+.icon.tag{ background-image: url(icons/tag.png); }
 
 .icon.active{ opacity:1!important;}
 .icon:hover{ opacity:.6; }

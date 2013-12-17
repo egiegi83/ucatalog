@@ -324,6 +324,31 @@ class Prodotto extends Eloquent {
 				break;
 		}
 	}
+	/*
+	* Ritorna il nome della tabella in un nome user-friendly
+	*/
+	public static function typeToString($type){
+		switch($type){
+			case 'articoli_su_rivista':
+					return 'Articolo su rivista';
+				break;
+			case 'libri':
+				return 'Libro';
+				break;
+			case 'convegni':
+			return 'Convegno';
+				break;
+			case 'traduzione':
+			return 'Traduzione';
+				break;
+			case 'brevetti':
+				return 'Brevetto';
+				break;
+			case 'altri_prodotti':
+				return 'Altro prodotto';
+				break;
+		}
+	}
 }
 
 ?>

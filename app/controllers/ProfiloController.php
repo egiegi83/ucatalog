@@ -19,8 +19,13 @@ class ProfiloController extends BaseController {
 	}
 	
 	public function getProdotti(){
-		return View::make('layout.dashboard.prodotti')
-			->with('prodotti', Auth::getUser()->ricercatore->prodotti()->get());
+		$prodotti=Prodotto::where('ricercatore_id','=',Auth::getUser()->ricercatore->id)->orWhereIn('id',function($query){
+            $query->select('prodotto_id')
+                  ->from('ricercatore_partecipa_prodotto')
+                  ->whereRaw('ricercatore_partecipa_prodotto.ricercatore_id = ' . Auth::getUser()->ricercatore->id);
+        });
+         return View::make('layout.dashboard.prodotti')
+         	->with('prodotti',$prodotti->get());
 	}
 	
 	public function getAggiungiProdotto(){
