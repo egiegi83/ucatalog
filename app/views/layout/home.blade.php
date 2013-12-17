@@ -12,11 +12,11 @@
 
 @section('content')
 	<section>
-		<div id="pagesearch" class="page">
-			<div id="search">
-				{{ Form::open(array('url' => 'user/logout')) }}
+		<div id="pagesearch" class="page trop">
+			<div id="search" class="trall" >
+				{{ Form::open(array('url' => 'advanced-search')) }}
 					{{ Form::text('Cerca', null, array('placeholder'=>'Ricerca prodotto per titolo, autore, parola chiave...','id' => 'tb_search','autocomplete'=>'off' ,'x-webkit-speech')) }}
-					{{ Form::submit('', null, array('id' => 'btn_search' )) }}
+					{{ Form::submit('', array('id' => 'btn_search' )) }}
 					<span class="icon params tT" data-target="#filtri"></span>
 					<div id="autocomplete">
 				
@@ -37,63 +37,68 @@
 				{{ Form::close() }}
 			</div>
 		</div>
-		<div id="pagelatest" class="page">
-			@foreach ($prodotti as $p) 
-			<article class="prodotto">
-				<header>
-					<hgroup>
-						<h1>{{ $p->titolo }}</h1>
-						<h2><a href="#">{{ $p->areaScientifica()->get()->first()->nome }}</a></h2>
-						<h3><a href="#">{{ Prodotto::typeToString($p->tipo) }}</a></h3>
-					</hgroup>
-				</header>
-				 <section>
-				 	{{ $p->descrizione }}
-				</section>
-				<footer>
-					<?php $co = $p->getCoautori(); $f=false; ?>
-					@if(count($co)>0)
-					  	<span class="autori">
-						  	<label>Autori</label>
-						  	@foreach($co as $c)
-						 		 <?php if($f) echo ','; ?>
-						 		 @if($c['type']=='1')
-						 		 	<a href="{{ URL::to('timeline/' . str_replace(' ','-',$c['coautore']) . '-'. $c['id']) }}">
-						 		 		{{ $c['coautore'] }}
-					 		 		</a>
-								@else
-									{{ $c['coautore'] }}
-								@endif
-								<?php $f=true; ?>
-							@endforeach
-				  		</span>
-				  	@endif
+		<div id="pagelatest" class="page trop">
+			<div class="pagecontent">
+				<h2>Ultimi caricamenti</h2>
+				<div class="prodotti">
+					@foreach ($prodotti as $p) 
+					<article class="prodotto">
+						<header>
+							<hgroup>
+								<h1>{{ $p->titolo }}</h1>
+								<h2><a href="#">{{ $p->areaScientifica()->get()->first()->nome }}</a></h2>
+								<h3><a href="#">{{ Prodotto::typeToString($p->tipo) }}</a></h3>
+							</hgroup>
+						</header>
+						 <section>
+						 	{{ $p->descrizione }}
+						</section>
+						<footer>
+							<?php $co = $p->getCoautori(); $f=false; ?>
+							@if(count($co)>0)
+							  	<span class="autori">
+								  	<label>Autori</label>
+								  	@foreach($co as $c)
+								 		 <?php if($f) echo ','; ?>
+								 		 @if($c['type']=='1')
+								 		 	<a href="{{ URL::to('timeline/' . str_replace(' ','-',$c['coautore']) . '-'. $c['id']) }}">
+								 		 		{{ $c['coautore'] }}
+							 		 		</a>
+										@else
+											{{ $c['coautore'] }}
+										@endif
+										<?php $f=true; ?>
+									@endforeach
+						  		</span>
+						  	@endif
 					
-					@if($sps=$p->allegatiProdotto)
-						@if($sps->count()>0)
+							@if($sps=$p->allegatiProdotto)
+								@if($sps->count()>0)
+									<span>
+										<label>Allegati</label>
+										<ul class="allegati">
+										@foreach($sps as $sp)
+											<li><a href="{{ URL::to('prodotti/download/'.$sp->getId()) }}" target="_blank"><span class="icon allegato"></span>{{ $sp->getNomeFile() }}</a></span></li>
+										@endforeach
+										</ul>
+									</span>
+								@endif
+							@endif
+							<?php $u = Ricercatore::find($p->ricercatore_id)->utente ?>
 							<span>
-								<label>Allegati</label>
-								<ul class="allegati">
-								@foreach($sps as $sp)
-									<li><a href="{{ URL::to('prodotti/download/'.$sp->getId()) }}" target="_blank"><span class="icon allegato"></span>{{ $sp->getNomeFile() }}</a></span></li>
-								@endforeach
-								</ul>
+								<label>Pubblicato</label> 
+								da <a href="{{ URL::to('timeline/' . $u->getNome() . '-' . $u->getCognome() . '-'. $p->ricercatore_id) }}">
+									{{  $u->getNome() . ' ' . $u->getCognome() }}
+								</a>
+								@if(($dp = substr(date_format(date_create($p->data_pubblicazione),'d-m-Y H:i:s'),0,10)) != '01-01-2000')
+									il {{ $dp }}
+								@endif
 							</span>
-						@endif
-					@endif
-					<?php $u = Ricercatore::find($p->ricercatore_id)->utente ?>
-					<span>
-						<label>Pubblicato</label> 
-						da <a href="{{ URL::to('timeline/' . $u->getNome() . '-' . $u->getCognome() . '-'. $p->ricercatore_id) }}">
-							{{  $u->getNome() . ' ' . $u->getCognome() }}
-						</a>
-						@if(($dp = substr(date_format(date_create($p->data_pubblicazione),'d-m-Y H:i:s'),0,10)) != '01-01-2000')
-							il {{ $dp }}
-						@endif
-					</span>
-				</footer>
-			</article>
-		@endforeach
+						</footer>
+					</article>
+				@endforeach
+				</div>
+			</div>
 		</div>
 		
 		<div id="arrow">

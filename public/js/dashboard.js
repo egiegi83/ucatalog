@@ -8,9 +8,12 @@ uc.addEvent(window,'load',function(){
 	
 	switch(ca.action){
 		case 'prodotti':
-			uc.addEvent(uc.query('body>section>section article.prodotto[selectable] .remove'),'click',function(){
-				this.parentNode.parentNode.classList.toggle('selected');
-			});
+			var selectable=uc.query('body>section>section article.prodotto[selectable] .remove');
+			if(selectable.length>0){
+				uc.addEvent(selectable,'click',function(){
+					this.parentNode.parentNode.classList.toggle('selected');
+				});
+			}
 			
 			uc.addEvent(uc.query('#del_prodotti'),'click',function(e){
 				e.preventDefault();
@@ -152,7 +155,6 @@ uc.addEvent(window,'load',function(){
 			select_autore = function(t){
 				var _sa=getSelected_autors(),f=false;
 				for(var j=0; len=_sa.length, j<len; j++){ if(_sa[j]==t.dataset.id){ f=true; break;}}
-				if(f) return;
 				tb_autori.textContent='';
 				sa.innerHTML += '<span data-id="' + t.dataset.id + '">'+t.innerHTML+'</span>';
 				tb_autori.focus();

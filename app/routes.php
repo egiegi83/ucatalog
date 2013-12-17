@@ -12,7 +12,7 @@
 */
 
 Route::get('/',function(){
-	$prodotti = ProdottiController::getListaProdotti();
+	$prodotti = ProdottiController::getListaProdotti('data_pubblicazione','DESC');
 	return View::make('layout.home')->with('prodotti',$prodotti);
 });
 

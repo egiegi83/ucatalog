@@ -319,7 +319,7 @@ class ProdottiController extends BaseController {
 					$ap = new AllegatoProdotto;
 					$ap->setNomeFile($fname);
 					$ap->setURL($path . '/' . $fname);
-					//$ap->setDimensione($file->getSize());
+					$ap->setDimensione(round($file->getClientSize()/1048576,4));
 					$ap->setTipoFile($file->getClientOriginalExtension());
 					$ap->setProdottoId($pid);
 					$ap->save();

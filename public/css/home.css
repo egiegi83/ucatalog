@@ -1,4 +1,7 @@
 body{ overflow:hidden; }
+
+body.load .page.trop{ opacity:1; }
+
 body>footer{position:absolute; bottom:0px; left:0px; }
 
 body>section{ 
@@ -16,6 +19,7 @@ body>section .page{
 	position:relative;
 	display:block;
 	float:left;
+	opacity:0;
 }
 body>section .page+.page{ }
 
@@ -63,9 +67,24 @@ body>section .page+.page{ }
 	left:50%;
 	width:590px;
 	height:38px;
-	margin:-18px -280px;
+	transform:translate(-280px,-18px);
+	-webkit-transform:translate(-280px,-18px);
+	-moz-transform:translate(-280px,-18px);
+	-o-transform:translate(-280px,-18px);
+	-ms-transform:translate(-280px,-18px);
+	
 	font-size:0px; letter-spacing:0px; word-spacing:0px;
+	z-index:10;
 }
+#search.active{ 
+	top:77px;  left:100%;  
+	transform:translate(100px,-60px);
+	-webkit-transform:translate(100px,-60px);
+	-moz-transform:translate(100px,-60px);
+	-o-transform:translate(100px,-60px);
+	-ms-transform:translate(100px,-60px);
+}
+
 #search form>*{ display:inline-block; vertical-align:middle; font-size:16px;}
 #search input#tb_search{
 	width:460px;
@@ -129,3 +148,20 @@ body>section .page+.page{ }
 #search #filtri.open{ height:30px; padding:10px; }
 #search #filtri.open>*{ opacity:1; }
 #search #filtri span{ margin: 0 2px;}
+
+
+.page .pagecontent{ display:block; margin:20px 100px; height:100%; }
+.page .pagecontent h2{ color:#bbb; }
+
+.pagecontent .prodotti{ 
+	margin:20px 0; 
+	padding:0 0 20px; 
+	height:calc(100% - 90px); 
+	height:-webkit-calc(100% - 90px); 
+	height:-moz-calc(100% - 90px);
+	height:-o-calc(100% - 90px);
+	height:-ms-calc(100% - 90px);   
+	display:block; 
+	overflow:auto;
+}
+
