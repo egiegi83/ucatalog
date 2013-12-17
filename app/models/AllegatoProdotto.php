@@ -40,6 +40,14 @@ class AllegatoProdotto extends Eloquent {
 		return $this->id;
 	}
 	
+	/**
+	 * Restiuisce l'estensione dell'allegato.
+	 * @return string
+	 */
+	public function getTipoFile() {
+		return $this->tipo_file;
+	}
+	
 	
 	/**
 	 * Restiuisce il nome del file.

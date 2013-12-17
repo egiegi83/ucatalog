@@ -331,18 +331,25 @@ class ProdottiController extends BaseController {
 	public function getDownload($id){
 		$ap=AllegatoProdotto::find($id);
 		if($ap->prodotto->ricercatore->id == Auth::getUser()->ricercatore->id && file_exists($ap->getURL())){
-			header("Content-type: Application/octet-stream");
-			header("Content-Disposition: attachment; filename=".$ap->getNomeFile());
-			header("Content-Description: File Transfer");
-			header("Content-Transfer-Encoding: binary");
-			header('Connection: Keep-Alive');
-			header('Expires: 0');
-			header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
-			header('Pragma: public');
-			header('Content-Length: ' . $ap->getURL());
-			ob_clean();
-			flush();
-			readfile($ap->getURL());	
+			$ext = $ap->getTipoFIle();
+				
+			if($ext != 'pdf') {
+				header('Content-type: octet/Application-stream');
+				header('Content-Disposition: attachment; filename="' . $ap->getNomeFile() . '"');
+				header('Content-Description: File Transfer');
+			} else {
+				header('Content-type: application/pdf');
+				header('Content-Disposition: inline; filename="'. $ap->getNomeFile() . '"');
+				header('Content-Description: Show pdf file');
+				header('Accept-Ranges: bytes');
+			}
+			header('Content-Transfer-Encoding: binary');
+			header('Content-Length: ' . filesize($ap->getURL()));
+			
+			@readfile($ap->getURL());	
+			
+		} else {
+			return "Il file non esiste";
 		}
 	}
 	
