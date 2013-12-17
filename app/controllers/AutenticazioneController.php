@@ -48,7 +48,7 @@ class AutenticazioneController extends BaseController {
 			} 
 			else{	 	
 				// il login non ha avuto successo
-				return Redirect::to('/')->with('message', 'Errore login');
+				return Redirect::to('/')->with('message', 'email e/o password errati');
 			}
 		}
 	}

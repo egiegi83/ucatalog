@@ -46,16 +46,21 @@ Route::group(array('before' => 'auth'), function(){
 /*
 * Ricerca nell'homepage
 */
+/*
 Route::post('search',function(){
 	if (Request::ajax()){
 		$query = Input::get('Cerca');	
-		$response = Response::json(Prodotto::where('titolo','like','%'.$query.'%')->get()->toArray());
-		
+		$response = Response::json(Prodotto::where('titolo','like','%'.$query.'%')->get()->toArray());		
 		$response->header('Content-Type', 'application/json');
 		return $response;
 	}
 });
+*/
 
+Route::post('search','PublicController@postSearch');
+Route::post('advanced-search', 'PublicController@postAdvancedSearch');
+
+/*
 Route::post('advanced-search',function(){
 	if (Request::ajax()){
 		$q = (Input::has('Cerca') ? Input::get('Cerca') : '');
@@ -129,8 +134,9 @@ Route::post('advanced-search',function(){
 		
 		return $response;
 	}
-});
 
+});
+*/
 
 Route::group(array('before' => 'auth'), function(){
 
