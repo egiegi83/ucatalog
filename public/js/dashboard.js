@@ -76,16 +76,20 @@ uc.addEvent(window,'load',function(){
 			});
 			
 			var oldalldel = uc.query('#addProdotto .oldallegati li .icon.remove');
-			uc.addEvent(oldalldel,'click',function(e){
-				var t=this;
-				uc.post(uc.url('prodotti/rimuovi-allegato'), {ra: this.dataset.id},function(data,e){
-					t.parentNode.classList.add('removed');
-					window.setTimeout(function(){
-						t.parentNode.style.display='none';
-					},500);
-				});
-			});	
-				
+			if(oldalldel.length>0){
+				uc.addEvent(oldalldel,'click',function(e){
+					var t=this;
+					if(confirm('Sei sicuro di voler cancellare il file?')){
+						uc.post(uc.url('prodotti/rimuovi-allegato'), {ra: this.dataset.id},function(data,e){
+							t.parentNode.classList.add('removed');
+							window.setTimeout(function(){
+								t.parentNode.style.display='none';
+							},500);
+						});
+					}
+				});	
+			}
+			
 			function getSelected_autors(){
 				var sps=sa.querySelectorAll('span');
 				arry=[];

@@ -178,35 +178,7 @@ class ProdottiController extends BaseController {
 			}
 		}
 		
-		$files = Input::file('allegati');
-		if($files[0]){
-			$path = public_path(). '/users/' . Auth::getUser()->id;
-
-	   		if(!file_exists($path)){
-	   			if(mkdir($path,0755) == NULL)
-	   				return Redirect::to('dashboard/aggiungi-prodotto')->withMessage('message','errore creazione cartella allegati utente');
-	   		}
-	   		
-			foreach($files as $file) {
-				if(!$file->isValid()) continue;
-				
-				$fname=$file->getClientOriginalName();
-				$i=1;
-				while(file_exists($path.'/'.$fname)){
-					$fname = str_replace('.'.$file->getClientOriginalExtension(), '', $file->getClientOriginalName());
-					$fname .= '-' . $i++ . '.' . $file->getClientOriginalExtension();
-				}
-				if($file->move($path,$fname)){
-					$ap = new AllegatoProdotto;
-					$ap->setNomeFile($fname);
-					$ap->setURL('/ucatalog/users/'.Auth::getUser()->id.'/'.$fname);
-					//$ap->setDimensione($file->getSize());
-					$ap->setTipoFile($file->getClientOriginalExtension());
-					$ap->setProdottoId($product->id);
-					$ap->save();
-				}
-			}
-		}
+		$this->salva_allegati($product->id);
 		return Redirect::to('dashboard/prodotti');
 	}
 
@@ -320,9 +292,14 @@ class ProdottiController extends BaseController {
 			}
 		}
 		
+		$this->salva_allegati($product->id);
+		return Redirect::to('dashboard/prodotti')->with('newid',$product->id);
+	}
+	
+	public function salva_allegati($pid){
 		$files = Input::file('allegati');
 		if($files[0]){
-			$path = public_path(). '/users/' . Auth::getUser()->id;
+			$path = storage_path(). '/users/' . Auth::getUser()->id;
 
 	   		if(!file_exists($path)){
 	   			if(mkdir($path,0755) == NULL)
@@ -334,24 +311,40 @@ class ProdottiController extends BaseController {
 				
 				$fname=$file->getClientOriginalName();
 				$i=1;
-				while(file_exists($path.'/'.$fname)){
-					$fname = str_replace('.'.$file->getClientOriginalExtension(), '', $file->getClientOriginalName());
+				while(file_exists($path . '/' . $fname)){
+					$fname = str_replace('.' . $file->getClientOriginalExtension(), '', $file->getClientOriginalName());
 					$fname .= '-' . $i++ . '.' . $file->getClientOriginalExtension();
 				}
 				if($file->move($path,$fname)){
 					$ap = new AllegatoProdotto;
 					$ap->setNomeFile($fname);
-					$ap->setURL('/ucatalog/users/'.Auth::getUser()->id.'/'.$fname);
+					$ap->setURL($path . '/' . $fname);
 					//$ap->setDimensione($file->getSize());
 					$ap->setTipoFile($file->getClientOriginalExtension());
-					$ap->setProdottoId($product->id);
+					$ap->setProdottoId($pid);
 					$ap->save();
 				}
 			}
 		}
-		return Redirect::to('dashboard/prodotti')->with('newid',$product->id);
 	}
 	
+	public function getDownload($id){
+		$ap=AllegatoProdotto::find($id);
+		if($ap->prodotto->ricercatore->id == Auth::getUser()->ricercatore->id && file_exists($ap->getURL())){
+			header("Content-type: Application/octet-stream");
+			header("Content-Disposition: attachment; filename=".$ap->getNomeFile());
+			header("Content-Description: File Transfer");
+			header("Content-Transfer-Encoding: binary");
+			header('Connection: Keep-Alive');
+			header('Expires: 0');
+			header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
+			header('Pragma: public');
+			header('Content-Length: ' . $ap->getURL());
+			ob_clean();
+			flush();
+			readfile($ap->getURL());	
+		}
+	}
 	
 	// regole di base per l'inserimento di un prodotto (definitivo o bozza)
 	public static function getBasicRules($reqType=false){

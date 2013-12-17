@@ -56,7 +56,7 @@
 								<label>Allegati</label>
 								<ul class="allegati">
 								@foreach($sps as $sp)
-									<li><a href="{{ $sp->getURL() }}" target="_blank"><span class="icon allegato"></span>{{ $sp->getNomeFile() }}</a></span></li>
+									<li><a href="{{ URL::to('prodotti/download/'.$sp->getId()) }}" target="_blank"><span class="icon allegato"></span>{{ $sp->getNomeFile() }}</a></span></li>
 								@endforeach
 								</ul>
 							</span>
