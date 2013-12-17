@@ -172,6 +172,7 @@ uc.addEvent(window,'load',function(){
 			if(sa.offsetWidth > tbc.offsetWidth){
 					tbc.style.width = (tbc.offsetWidth + sa.offsetWidth) +'px';
 			}
+			select_autor_ids();
 			
 			break;
 	}

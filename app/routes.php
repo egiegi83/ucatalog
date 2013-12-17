@@ -12,7 +12,8 @@
 */
 
 Route::get('/',function(){
-	return View::make('layout.home');
+	$prodotti = ProdottiController::getListaProdotti();
+	return View::make('layout.home')->with('prodotti',$prodotti);
 });
 
 Route::get('{url}/dipartimenti',function(){

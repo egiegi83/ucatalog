@@ -39,11 +39,15 @@ article.prodotto footer{
 	font-size:12px;
 }
 article.prodotto footer span{ display:block; }
+article.prodotto footer span label{ display:block; }
 article.prodotto footer span.autori {}
 article.prodotto footer span.autori a{ background:#009645; color:#fff; border-radius: 2px; padding:0 2px; margin:0 2px;}
+article.prodotto footer span.autori a:first-child{ margin-left:0px; }
 
 article.prodotto footer ul.allegati{ list-style-position: inside;}
 article.prodotto footer ul.allegati{ display:block;  white-space:nowrap; overflow:hidden; text-overflow:ellipsis;}
+
+article.prodotto footer span+span{ margin-top:6px; padding-top:4px; border-top:1px dashed #ccc;}
 
 article.prodotto.newid{ 
 	animation: shownewp .5s 1s ease-out both;

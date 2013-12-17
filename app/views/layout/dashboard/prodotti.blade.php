@@ -25,7 +25,7 @@
 						<span class="icon remove" title="Elimina" data-id="{{ $p->id }}"></span>
 					@elseif($p->ricercatore_id != Auth::getUser()->ricercatore->id)
 						<?php $u=Ricercatore::find($p->ricercatore_id)->utente; ?>
-						<a class="icon tag" title="Sei stato da {{ $u->getNome() . ' ' . $u->getCognome()  }}" href="{{ URL::to('timeline/' . $u->getNome() . '-' . $u->getCognome() . '-' . $p->ricercatore_id) }}"></a>
+						<a class="icon tag" title="Sei stato taggato come coautore da {{ $u->getNome() . ' ' . $u->getCognome()  }}" href="{{ URL::to('timeline/' . $u->getNome() . '-' . $u->getCognome() . '-' . $p->ricercatore_id) }}"></a>
 						<span class="icon lock" title="Non sei l'autore di questo prodotto"></span>
 					@else
 						<span class="icon lock" title="Prodotto definitivo"></span>

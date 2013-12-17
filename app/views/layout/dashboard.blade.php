@@ -27,6 +27,15 @@
 				<p>Cognome: {{ Auth::getUser()->cognome; }}</p>
 				<p>Prodotti bozza: {{ Auth::getUser()->ricercatore->prodottiBozza()->count(); }}</p>
 				<p>Prodotti definitivi: {{ Auth::getUser()->ricercatore->prodottiDefinitivi()->count(); }}</p>
+				<p>
+					Prodotti in cui sei taggato: {{ 
+						$prodotti=Prodotto::WhereIn('id',function($query){
+							$query->select('prodotto_id')
+							->from('ricercatore_partecipa_prodotto')
+							->whereRaw('ricercatore_partecipa_prodotto.ricercatore_id = ' . Auth::getUser()->ricercatore->id);
+						})->count();
+					 }}
+				 </p>
 			@show
 		</div>
 	</section>

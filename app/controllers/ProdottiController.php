@@ -15,8 +15,8 @@ class ProdottiController extends BaseController {
 		$this->beforeFilter('ricercatore');
 	}
 	
-	public static function getListaProdotti($order_name,$order_type,$limit=30,$lastid=0){
-		return Prodotto::where('prodotto_id','>',$lastid)->orderBy($order_name,$order_type)->take($limit);
+	public static function getListaProdotti($order_name = 'data_inserimento',$order_type = 'ASC',$limit=30,$lastid=0){
+		return Prodotto::where('id','>',$lastid)->orderBy($order_name,$order_type)->take($limit)->get();
 	}
 	
 	/**

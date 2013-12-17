@@ -40,11 +40,12 @@
 								$sa=''; $nsa=''; $f=false;  
 								if(count($co)>0){
 							  		foreach($co as $c){
-								 		 if($c['type']=='1')
+								 		 if($c['type']=='1') {
 								 		 	$sa .= '<span data-id="' . $c['id'] . '">' . $c['coautore'] . '</span>';
-										else
+										} else {
 											$nsa .= ($f ? ',' : '') . $c['coautore'];
-										$f=true;
+											$f=true;
+										}
 									}
 								}
 							?>
