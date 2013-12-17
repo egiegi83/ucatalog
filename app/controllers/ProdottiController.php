@@ -330,7 +330,7 @@ class ProdottiController extends BaseController {
 	
 	public function getDownload($id){
 		$ap=AllegatoProdotto::find($id);
-		if($ap->prodotto->ricercatore->id == Auth::getUser()->ricercatore->id && file_exists($ap->getURL())){
+		if(file_exists($ap->getURL())){
 			$ext = $ap->getTipoFIle();
 				
 			if($ext != 'pdf') {
