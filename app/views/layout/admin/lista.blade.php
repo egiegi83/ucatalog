@@ -1,6 +1,13 @@
 @extends('layout.admin.home')
 
 @section('content.admin')
+	<nav>
+		<ul>
+			<li><a href="{{ URL::to('admin/aggiungi-account') }}" class="btn">Crea account</a></li>
+		</ul>
+	</nav>
+	
+	
  	<?php if (Session::has('message')) {
 		$message = Session::get('message');
 		echo $message;
@@ -35,7 +42,7 @@
 			<td>{{$user->nome }}</td><td> {{$user->email }}</td>
 			<td> <?php echo $tipo; ?> </td>
 			<td>
-				<a href="modifica/<?php echo $user->id;?>">Modifica</a>
+				<a href="{{ URL::to('admin/modifica/' . $user->id) }}">Modifica</a>
 			</tr>
 		@endif
 		@endforeach

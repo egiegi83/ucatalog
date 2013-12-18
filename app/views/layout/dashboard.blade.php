@@ -18,7 +18,8 @@
 			@if (Auth::getUser()->getTipo() == 2 || Auth::getUser()->getTipo() == 3)
 			<li class="trall">{{ HTML::link('valida/lista-prodotti','Validazione') }}</li>
 			@endif
-			<li class="trall">{{ HTML::link('dashboard/messaggi','Messaggi') }}</li>	
+			<li class="trall">{{ HTML::link('#','Messaggi') }}</li>	
+			<li class="trall">{{ HTML::link('timeline/' . Auth::getUser()->nome .'-' . Auth::getUser()->cognome . '-' . Auth::getUser()->ricercatore->id ,'Timeline') }}</li>	
 	</nav>
 	<section class="trall">
 		<div class="trop">

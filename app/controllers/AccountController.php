@@ -20,9 +20,15 @@ class AccountController extends BaseController {
 	
 	//Restituisce la View per l'inserimento di un nuovo utente
 	public function getIndex(){
-		return View::make('layout.admin.home')
-			->with('dipartimenti',$this->getDipartimenti())
-			->with('aree_di_ricerca',$this->getAreeDiRicerca());
+		$users = DB::table('utenti')->where('active','1')->get();
+		return View::make('layout.admin.lista')
+						->with('users',$users);
+	}
+	
+	public function getAggiungiAccount(){
+		return View::make('layout.admin.aggiungi-account')
+		->with('dipartimenti',$this->getDipartimenti())
+		->with('aree_di_ricerca',$this->getAreeDiRicerca());
 	}
 	
 	/**
@@ -39,7 +45,7 @@ class AccountController extends BaseController {
 		//faccio il controllo con il Validator
 		$validator = Validator::make($dati, $rules);
 		if($validator->fails()){
-			return Redirect::to('admin')
+			return Redirect::to('admin/aggiungi-account')
 				->withErrors($validator)	
 				->withInput(Input::all());
 		}

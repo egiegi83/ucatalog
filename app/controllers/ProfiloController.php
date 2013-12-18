@@ -18,6 +18,25 @@ class ProfiloController extends BaseController {
 		return View::make('layout.dashboard');
 	}
 	
+	public function getTimeline($nome,$cognome,$ricercatore_id){	
+		$ricercatore = Ricercatore::find($ricercatore_id);
+		if($ricercatore->tipo < 1 && $ricercatore->tipo > 3)
+			return Redirect::to('/');
+		
+		echo "1";
+		echo $ricercatore->utente->tipo;
+		echo "2";
+		echo Ricercatore::typeToModel($ricercatore->tipo);
+		exit;
+		
+		if($ricercatore->tipo != 1)
+			$ricercatore = call_user_func(array($ricercatore, Ricercatore::typeToModel($ricercatore->tipo)));
+		
+		var_dump($ricercatore);
+		return View::make('layout.timeline')
+									->with('ricercatore',$ricercatore);
+	}
+	
 	public function getProdotti(){
 		$prodotti=Prodotto::where('ricercatore_id','=',Auth::getUser()->ricercatore->id)->orWhereIn('id',function($query){
             $query->select('prodotto_id')

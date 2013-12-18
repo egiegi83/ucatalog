@@ -117,5 +117,22 @@ class Ricercatore extends Eloquent{
 	{
 		$this->dipartimento_id=$dipartimento;
 	}
+	
+	
+	/**
+	*	Ritorna il nome del modello in base al tipo di ricercatore
+	* @tipo tipo del ricercatore 
+	* @return nome del modello
+	*/
+	public static function typeToModel($tipo){
+		switch($tipo){
+			case '2':
+				return 'DirettoreDiDipartimento';
+				break;
+			case '3':
+				return 'ResponsabileAreaScientifica';
+				break;
+		}
+	}
 
 }

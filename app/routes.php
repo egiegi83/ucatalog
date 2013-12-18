@@ -25,7 +25,11 @@ Route::get('{url}/aree-di-ricerca',function(){
 });
 
 Route::controller('user', 'AutenticazioneController');
+
 Route::controller('dashboard', 'ProfiloController');
+
+Route::get('timeline/{nome}-{cognome}-{ricercatore_id}','ProfiloController@getTimeline');
+
 Route::controller('prodotti', 'ProdottiController');
 Route::controller('admin', 'AccountController');
 Route::controller('valida', 'ValidazioneController');

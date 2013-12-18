@@ -10,5 +10,5 @@
 
 
 @section('content')
-	timeline
+	ciao
 @stop
